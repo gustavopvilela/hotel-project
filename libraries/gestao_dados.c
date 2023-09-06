@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "gestao_dados.h"
 
 
 /* CRUD Hotel */
 void inserirHotel (Hotel hotel) {
     FILE *hotelBin;
-    hotelBin = fopen("hotel.bin", "ab");
+    hotelBin = fopen("..\\files\\hotel.bin", "ab");
     
     /* Verificação da abertura. */
     if (hotelBin == NULL) {
@@ -35,17 +36,13 @@ void inserirHotel (Hotel hotel) {
 }
 
 /* CRUD Hospedes */
-int buscarHospedePorId (FILE* hospedeBin, int id) {
-
-}
-
 void inserirHospede(Hospede hospede){
     FILE *hospedeBin;
-    hospedeBin = fopen("exemplo.bin", "ab");
+    hospedeBin = fopen("..\\files\\hospede.bin", "ab");
 
     /* Verificação da abertura. */
     if(hospedeBin == NULL){
-        printf("Erro na abertura do arquivo\n");
+        printf("Erro na abertura do arquivo.\n");
         exit(1);
     }
 
@@ -68,6 +65,3 @@ void inserirHospede(Hospede hospede){
     fclose(hospedeBin);
     
 }
-
-void listarHospedes(){}
-
