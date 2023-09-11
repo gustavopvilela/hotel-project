@@ -10,7 +10,7 @@ typedef struct {
     int codigo;
     char nome[100];
     char endereco[300];
-    char cpf[15]; /* O CPF contém os pontos e traços. */
+    char cpf[12]; /* O CPF contém os pontos e traços. */
     char telefone[12];  /* O telefone não comporta os parênteses do DDD. */
     char email[100];
     char sexo[10];
@@ -19,6 +19,7 @@ typedef struct {
 } Hospede;
 
 void inserirHospede(Hospede hospede);
+void lerHospede (Hospede *hospede);
 
 /* Estruturas e funções referentes aos hotéis. */
 typedef struct {
@@ -37,9 +38,11 @@ typedef struct {
 } Hotel;
 
 void inserirHotel (Hotel hotel);
-    
+int validarCPF (char* cpf);
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* GESTAO_DADOS_H */
+

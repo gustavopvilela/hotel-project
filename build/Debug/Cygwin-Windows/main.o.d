@@ -1,2 +1,2 @@
-build/Debug/Cygwin-Windows/main.o: main.c libraries/gestao_dados.h
-libraries/gestao_dados.h:
+build/Debug/Cygwin-Windows/main.o: main.c gestao_dados.h
+gestao_dados.h:

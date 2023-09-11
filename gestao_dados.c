@@ -7,7 +7,7 @@
 /* CRUD Hotel */
 void inserirHotel (Hotel hotel) {
     FILE *hotelBin;
-    hotelBin = fopen("..\\files\\hotel.bin", "ab");
+    hotelBin = fopen("hotel.bin", "ab");
     
     /* Verificação da abertura. */
     if (hotelBin == NULL) {
@@ -36,9 +36,9 @@ void inserirHotel (Hotel hotel) {
 }
 
 /* CRUD Hospedes */
-void inserirHospede(Hospede hospede){
+void inserirHospede (Hospede hospede) {
     FILE *hospedeBin;
-    hospedeBin = fopen("..\\files\\hospede.bin", "ab");
+    hospedeBin = fopen("hospede.bin", "ab");
 
     /* Verificação da abertura. */
     if(hospedeBin == NULL){
@@ -47,21 +47,76 @@ void inserirHospede(Hospede hospede){
     }
 
     /* Inserindo no arquivo binário. */
-    while (!feof(hospedeBin)) {
-        fwrite(&hospede.codigo, sizeof(int), 1, hospedeBin);
-        fwrite(hospede.nome, sizeof(char), strlen(hospede.nome), hospedeBin);
-        fwrite(hospede.endereco, sizeof(char), strlen(hospede.endereco), hospedeBin);
-        fwrite(hospede.cpf, sizeof(char), strlen(hospede.cpf), hospedeBin);
-        fwrite(hospede.telefone, sizeof(char), strlen(hospede.telefone), hospedeBin);
-        fwrite(hospede.email, sizeof(char), strlen(hospede.email), hospedeBin);
-        fwrite(hospede.sexo, sizeof(char), strlen(hospede.sexo), hospedeBin);
-        fwrite(hospede.estadoCivil, sizeof(char), strlen(hospede.estadoCivil), hospedeBin);
-        fwrite(hospede.dataNascimento, sizeof(char), strlen(hospede.dataNascimento), hospedeBin);
+    if (!feof(hospedeBin)) {
+        fwrite(&hospede, sizeof(Hospede), 1, hospedeBin);
     }
-
+    else {
+        printf("Arquivo cheio.\n");
+        exit(1);
+    }
     
 
     /*Fechando o arquivo*/
     fclose(hospedeBin);
+}
+
+void lerHospede (Hospede *hospede) {
+    FILE *hospedeBin;
+    hospedeBin = fopen("hospede.bin", "rb");
     
+    fread(hospede, sizeof(Hospede), 1, hospedeBin);
+    
+    fclose(hospedeBin);
+}
+
+int validarCPF(char* cpf) {
+    int soma = 0;
+    int resto;
+   
+    if (strlen(cpf) != 11) {
+        return 0;
+    }
+   
+    /* Verifica se todos os dígitos são iguais */
+    for (int i = 0; i < 10; i++) {
+        if (cpf[i] != cpf[i+1]) {
+            break;
+        }
+        if (i == 9) {
+            return 0;
+        }
+    }
+
+    /* Calcula o primeiro dígito verificador */
+    for (int i = 0; i < 9; i++) {
+        soma += (cpf[i] - '0') * (10 - i);
+    }
+    resto = soma % 11;
+    if (resto < 2) {
+        if (cpf[9] - '0' != 0) {
+            return 0;
+        }
+    } else {
+        if (cpf[9] - '0' != 11 - resto) {
+            return 0;
+        }
+    }
+
+    /* Calcula o segundo dígito verificador */
+    soma = 0;
+    for (int i = 0; i < 10; i++) {
+        soma += (cpf[i] - '0') * (11 - i);
+    }
+    resto = soma % 11;
+    if (resto < 2) {
+        if (cpf[10] - '0' != 0) {
+            return 0;
+        }
+    } else {
+        if (cpf[10] - '0' != 11 - resto) {
+            return 0;
+        }
+    }
+
+    return 1; /* O CPF é válido. */
 }

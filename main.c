@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "libraries/gestao_dados.h"
+#include "gestao_dados.h"
 
 int main(int argc, char** argv) {
 
@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
 
     Hospede newHospedes;
 
-    newHospedes.codigo = 1;
+    /*newHospedes.codigo = 1;
     strcpy(newHospedes.nome,"Maria");
     strcpy(newHospedes.endereco,"Avenida das Flores");
     strcpy(newHospedes.cpf,"111.111.111-11");
@@ -20,6 +20,18 @@ int main(int argc, char** argv) {
     strcpy(newHospedes.dataNascimento,"23/11/2023");
 
     inserirHospede(newHospedes);
-    printf("Hóspede inserido com sucesso!!!!!");
+    printf("\nHóspede inserido com sucesso!!!!!"); */
+    
+    lerHospede(&newHospedes);
+    
+    printf("Nome: %s", newHospedes.nome);
+    
+    /*if (validarCPF("14089499623") == 1) {
+        printf("\nCPF válido!");
+    }
+    else {
+        printf ("\nCPF inválido!");
+    } */
+    
     return (EXIT_SUCCESS);
 }
