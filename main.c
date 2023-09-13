@@ -8,23 +8,23 @@ int main(int argc, char** argv) {
     printf("BEM-VINDO");
 
     Hospede newHospedes;
+    char* nome;
 
-    /*newHospedes.codigo = 1;
-    strcpy(newHospedes.nome,"Maria");
-    strcpy(newHospedes.endereco,"Avenida das Flores");
-    strcpy(newHospedes.cpf,"111.111.111-11");
-    strcpy(newHospedes.telefone,"37999999999");
-    strcpy(newHospedes.email,"socorro@gmail.com");
-    strcpy(newHospedes.sexo,"Feminino");
-    strcpy(newHospedes.estadoCivil,"Casado");
-    strcpy(newHospedes.dataNascimento,"23/11/2023");
+    newHospedes.codigo = 3;
+    strcpy(newHospedes.nome,"Bernadete do UK");
+    strcpy(newHospedes.endereco,"Palacio do Paes");
+    strcpy(newHospedes.cpf,"00032178422");
+    strcpy(newHospedes.telefone,"37988888899");
+    strcpy(newHospedes.email,"@gmail.com");
+    strcpy(newHospedes.sexo,"Masculino");
+    strcpy(newHospedes.estadoCivil,"Solteiro");
+    strcpy(newHospedes.dataNascimento,"12/09/2024");
 
-    inserirHospede(newHospedes);
-    printf("\nHóspede inserido com sucesso!!!!!"); */
+    deletarHospede(&newHospedes, 2);
     
-    lerHospede(&newHospedes);
-    
-    printf("Nome: %s", newHospedes.nome);
+    //nome = lerHospede(&newHospedes, 1);
+        
+    //printf("%s", nome);
     
     /*if (validarCPF("14089499623") == 1) {
         printf("\nCPF válido!");

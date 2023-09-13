@@ -16,19 +16,12 @@ void inserirHotel (Hotel hotel) {
     }
 
     /* Inserindo no arquivo binário. */
-    while (!feof(hotelBin)) {
-        fwrite(hotel.nomeFantasia, sizeof(char), strlen(hotel.nomeFantasia), hotelBin);
-        fwrite(hotel.razaoSocial, sizeof(char), strlen(hotel.razaoSocial), hotelBin);
-        fwrite(hotel.inscricaoEstadual, sizeof(char), strlen(hotel.inscricaoEstadual), hotelBin);
-        fwrite(hotel.cnpj, sizeof(char), strlen(hotel.cnpj), hotelBin);
-        fwrite(hotel.endereco, sizeof(char), strlen(hotel.endereco), hotelBin);
-        fwrite(hotel.telefone, sizeof(char), strlen(hotel.telefone), hotelBin);
-        fwrite(hotel.email, sizeof(char), strlen(hotel.email), hotelBin);
-        fwrite(hotel.responsavel, sizeof(char), strlen(hotel.responsavel), hotelBin);
-        fwrite(hotel.telefoneResponsavel, sizeof(char), strlen(hotel.telefoneResponsavel), hotelBin);
-        fwrite(hotel.horarioCheckIn, sizeof(char), strlen(hotel.horarioCheckIn), hotelBin);
-        fwrite(hotel.horarioCheckOut, sizeof(char), strlen(hotel.horarioCheckOut), hotelBin);
-        fwrite(&hotel.margemLucro, sizeof(float), 1, hotelBin);
+    if (!feof(hotelBin)) {
+        fwrite(&hotel, sizeof(Hotel), 1, hotelBin);
+    }
+    else {
+        printf("Arquivo cheio.\n");
+        exit(1);
     }
 
 
@@ -60,13 +53,87 @@ void inserirHospede (Hospede hospede) {
     fclose(hospedeBin);
 }
 
-void lerHospede (Hospede *hospede) {
+char* lerHospede (Hospede *hospede, int codigo) {
     FILE *hospedeBin;
     hospedeBin = fopen("hospede.bin", "rb");
     
+    /* Verificação da abertura. */
+    if(hospedeBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fseek(hospedeBin, codigo * sizeof(Hospede), SEEK_SET);
     fread(hospede, sizeof(Hospede), 1, hospedeBin);
     
     fclose(hospedeBin);
+    
+    return hospede->nome;
+}
+
+void atualizarHospede (Hospede *hospede, int codigo) {
+    FILE *hospedeBin;
+    hospedeBin = fopen("hospede.bin", "r+b");
+    
+    /* Verificação da abertura. */
+    if(hospedeBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    /* Atualizando o hóspede no arquivo binário. */
+    fseek(hospedeBin, codigo * sizeof(Hospede), SEEK_SET);
+    fwrite(hospede, sizeof(Hospede), 1, hospedeBin);
+    
+    fclose(hospedeBin);
+}
+
+void deletarHospede(Hospede *hospede, int codigo) {
+    int dadoAchado = 0;
+    
+    FILE *hospedeBin;
+    hospedeBin = fopen("hospede.bin", "rb");
+    
+    /* Verificação da abertura. */
+    if(hospedeBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    FILE *hospedeBin_tmp;
+    hospedeBin_tmp = fopen("hospede_tmp.bin", "wb");
+    
+    /* Verificação da abertura. */
+    if(hospedeBin_tmp == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    while (fread(hospede, sizeof(Hospede), 1, hospedeBin) != NULL) {
+        if (hospede->codigo == codigo) {
+            printf("Deleção concluída!");
+            dadoAchado = 1;
+        }
+        else {
+            fwrite(hospede, sizeof(Hospede), 1, hospedeBin_tmp);
+        }
+    }
+    
+    if (dadoAchado == 0) {
+        printf("Nenhum hóspede foi encontrado com este código: %d.\n", codigo);
+    }
+    
+    fclose(hospedeBin);
+    fclose(hospedeBin_tmp);
+    
+    remove("hospede.bin");
+    rename("hospede_tmp.bin", "hospede.bin");
+    
+    /* Apaga o hóspede do arquivo binário. */
+    /*fseek(hospedeBin, codigo * sizeof(Hospede), SEEK_SET);
+    fwrite(NULL, sizeof(Hospede), 1, hospedeBin);
+    
+    fclose(hospedeBin);*/
 }
 
 int validarCPF(char* cpf) {

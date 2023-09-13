@@ -19,7 +19,9 @@ typedef struct {
 } Hospede;
 
 void inserirHospede(Hospede hospede);
-void lerHospede (Hospede *hospede);
+char* lerHospede (Hospede *hospede, int codigo);
+void atualizarHospede (Hospede *hospede, int codigo);
+void deletarHospede(Hospede *hospede, int codigo);
 
 /* Estruturas e funções referentes aos hotéis. */
 typedef struct {
