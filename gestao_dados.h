@@ -19,16 +19,17 @@ typedef struct {
 } Hospede;
 
 void inserirHospede(Hospede hospede);
-char* lerHospede (Hospede *hospede, int codigo);
-void atualizarHospede (Hospede *hospede, int codigo);
-void deletarHospede(Hospede *hospede, int codigo);
+/*char* */int lerHospede (/*Hospede *hospede,*/ int codigo);
+void listarHospedes();
+void atualizarHospede (Hospede novosDados, int codigo);
+void deletarHospede(/*Hospede *hospede,*/ int codigo);
 
 /* Estruturas e funções referentes aos hotéis. */
 typedef struct {
     char nomeFantasia[200];
     char razaoSocial[200];
     char inscricaoEstadual[200];
-    char cnpj[19]; /* O CNPJ contém os pontos e traços. */
+    char cnpj[15]; /* O CNPJ contém os pontos e traços. */
     char endereco[300];
     char telefone[12]; /* O telefone não comporta os parênteses do DDD. */
     char email[100];

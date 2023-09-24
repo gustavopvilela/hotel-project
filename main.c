@@ -10,17 +10,25 @@ int main(int argc, char** argv) {
     Hospede newHospedes;
     char* nome;
 
-    newHospedes.codigo = 3;
-    strcpy(newHospedes.nome,"Bernadete do UK");
-    strcpy(newHospedes.endereco,"Palacio do Paes");
-    strcpy(newHospedes.cpf,"00032178422");
-    strcpy(newHospedes.telefone,"37988888899");
-    strcpy(newHospedes.email,"@gmail.com");
-    strcpy(newHospedes.sexo,"Masculino");
+    newHospedes.codigo = 1;
+    strcpy(newHospedes.nome,"IIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAMMMMMMMMMMMM");
+    strcpy(newHospedes.endereco,"LOOKATMEHERE Street, Malibu");
+    strcpy(newHospedes.cpf,"77733344422");
+    strcpy(newHospedes.telefone,"08977663322");
+    strcpy(newHospedes.email,"youre.here@gmail.com");
+    strcpy(newHospedes.sexo,"Feminino");
     strcpy(newHospedes.estadoCivil,"Solteiro");
-    strcpy(newHospedes.dataNascimento,"12/09/2024");
+    strcpy(newHospedes.dataNascimento,"12/09/1967");
+    
+    atualizarHospede(newHospedes, newHospedes.codigo);
+    
+    //inserirHospede(newHospedes);
+    
+    //listarHospedes();
+    
+    //printf("\n%d", lerHospede(2));
 
-    deletarHospede(&newHospedes, 2);
+    //deletarHospede(1);
     
     //nome = lerHospede(&newHospedes, 1);
         
