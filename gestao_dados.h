@@ -41,6 +41,23 @@ typedef struct {
 } Hotel;
 
 void inserirHotel (Hotel hotel);
+
+/* Estruturas e funções referentes às categorias de acomodações. */
+typedef struct {
+    int codigo;
+    char descricao[300];
+    char categoria;
+    float valorDiaria;
+    int qtdeAdultos;
+    int qtdeCriancas;
+} CategoriaAcomodacao;
+
+void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom);
+int lerCategoriaAcomodacao (int codigo);
+void listarCategoriaAcomodacao ();
+void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo);
+void deletarCategoriaAcomodacao (int codigo);
+
 int validarCPF (char* cpf);
 
 #ifdef __cplusplus

@@ -4,7 +4,7 @@
 #include "gestao_dados.h"
 
 
-/* CRUD Hotel */
+/* CRUD do hotel */
 void inserirHotel (Hotel hotel) {
     FILE *hotelBin;
     hotelBin = fopen("hotel.bin", "ab");
@@ -28,7 +28,11 @@ void inserirHotel (Hotel hotel) {
     fclose(hotelBin);
 }
 
-/* CRUD Hospedes */
+int lerHotel (int codigo) {
+    
+}
+
+/* CRUD dos hóspedes */
 void inserirHospede (Hospede hospede) {
     FILE *hospedeBin;
     hospedeBin = fopen("hospede.bin", "ab");
@@ -199,6 +203,166 @@ void deletarHospede(/*Hospede *hospede,*/ int codigo) {
     fwrite(NULL, sizeof(Hospede), 1, hospedeBin);
     
     fclose(hospedeBin);*/
+}
+
+/* CRUD das categorias de acomodações. */
+void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom) {
+    FILE *catAcomBin;
+    catAcomBin = fopen("catAcom.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(catAcomBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+
+    /* Inserindo no arquivo binário. */
+    if (!feof(catAcomBin)) {
+        fwrite(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin);
+    }
+    else {
+        printf("Arquivo cheio.\n");
+        exit(1);
+    }
+
+    /*Fechando o arquivo*/
+    fclose(catAcomBin);
+}
+
+int lerCategoriaAcomodacao (int codigo) {
+    FILE *catAcomBin;
+    catAcomBin = fopen("catAcom.bin", "rb");
+
+    /* Verificação da abertura. */
+    if(catAcomBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    rewind(catAcomBin);
+    CategoriaAcomodacao catAcom;
+    int encontrado = 0;
+    while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
+        if (catAcom.codigo == codigo) {
+            printf("Código: %d\n", catAcom.codigo);
+            printf("Descrição: %s\n", catAcom.descricao);
+            printf("Categoria: %s\n", catAcom.categoria);
+            printf("Valor da diária: %s\n", catAcom.valorDiaria);
+            printf("Quantidade de adultos: %s\n", catAcom.qtdeAdultos);
+            printf("Quantidade de crianças: %s\n", catAcom.qtdeCriancas);
+            printf("\n");
+            encontrado = 1;
+            return 1;
+        }
+    }
+    if (!encontrado) {
+        printf("Categoria de acomodação com código %d não encontrado.\n", codigo);
+        return 0;
+    }
+    
+    /*Fechando o arquivo*/
+    fclose(catAcomBin);
+}
+
+void listarCategoriaAcomodacao () {
+    FILE *catAcomBin;
+    catAcomBin = fopen("catAcom.bin", "rb");
+
+    /* Verificação da abertura. */
+    if(catAcomBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    rewind(catAcomBin);
+    CategoriaAcomodacao catAcom;
+    while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
+        printf("Código: %d\n", catAcom.codigo);
+        printf("Descrição: %s\n", catAcom.descricao);
+        printf("Categoria: %s\n", catAcom.categoria);
+        printf("Valor da diária: %s\n", catAcom.valorDiaria);
+        printf("Quantidade de adultos: %s\n", catAcom.qtdeAdultos);
+        printf("Quantidade de crianças: %s\n", catAcom.qtdeCriancas);
+        printf("\n");
+    }
+    
+    fclose(catAcomBin);
+}
+
+void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo) {
+    /* Como as funções lerCategoriaAcomodacao e deletarCategoriaAcomodacao possuem printf's dentro
+     * delas, o seguinte comando "bloqueará" o terminal para que não apareça
+     * nada quando essas funções forem chamadas (descarta-se o output). */
+    freopen("/dev/null", "w", stdout);
+    
+    if (lerCategoriaAcomodacao(codigo) != 0) {
+        deletarCategoriaAcomodacao(codigo);
+        
+        FILE *catAcomBin;
+        catAcomBin = fopen("catAcom.bin", "ab");
+
+        /* Verificação da abertura. */
+        if(catAcomBin == NULL){
+            printf("Erro na abertura do arquivo.\n");
+            exit(1);
+        }
+        
+        /* O comando seguinte "desbloqueará" o terminal para que os printf's
+         * sejam exibidos novamente. */
+        freopen("/dev/tty", "w", stdout);
+        
+        fwrite(&novosDados, sizeof(CategoriaAcomodacao), 1, catAcomBin);
+        printf("Atualizado a categoria de acomodação de código %d.", codigo);
+        
+        fclose(catAcomBin);
+    }
+    else {
+        printf("Categoria de acomodacao de código %d não encontrado.", codigo);
+    }
+}
+
+void deletarCategoriaAcomodacao (int codigo) {
+    int dadoAchado = 0;
+    
+    FILE *catAcomBin;
+    catAcomBin = fopen("catAcom.bin", "rb");
+    
+    /* Verificação da abertura. */
+    if(catAcomBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    FILE *catAcomBin_tmp;
+    catAcomBin_tmp = fopen("catAcom_tmp.bin", "wb");
+    
+    /* Verificação da abertura. */
+    if(catAcomBin_tmp == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    rewind(catAcomBin);
+    CategoriaAcomodacao catAcom;
+    while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
+        if (catAcom.codigo == codigo) {
+            printf("Deleção concluída!");
+            dadoAchado = 1;
+        }
+        else {
+            fwrite(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin_tmp);
+        }
+    }
+    
+    if (dadoAchado == 0) {
+        printf("Nenhuma categoria de acomodação foi encontrada com este código: %d.\n", codigo);
+    }
+    
+    fclose(catAcomBin);
+    fclose(catAcomBin_tmp);
+    
+    remove("catAcom.bin");
+    rename("catAcom_tmp.bin", "catAcom.bin");
 }
 
 int validarCPF(char* cpf) {

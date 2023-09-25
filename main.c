@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     strcpy(newHospedes.estadoCivil,"Solteiro");
     strcpy(newHospedes.dataNascimento,"12/09/1967");
     
-    atualizarHospede(newHospedes, newHospedes.codigo);
+    //atualizarHospede(newHospedes, newHospedes.codigo);
     
     //inserirHospede(newHospedes);
     
