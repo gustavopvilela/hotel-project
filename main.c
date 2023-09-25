@@ -17,7 +17,31 @@
  * 
  */
 int main(int argc, char** argv) {
-
+    char dataEnt[11];
+    char dataSai[11];
+    char categoria[50];
+    int qtdAdul;
+    int qtdCrian;
+    char facilidade[100];
+    printf("---Reserva---\n\n");
+    printf("procure por um quarto\n");
+    printf("os campos que não forem de seu interesse digite apenas um ponto (.)");
+    printf("\n\nData entrada: ");
+    scanf("%s",&dataEnt);
+    
+    printf("Data saida: ");
+    scanf("%s",&dataSai);
+    
+    printf("Categoria: ");
+    scanf("%s",&categoria);
+    
+    printf("Quantidade adultos: ");
+    scanf("%d", qtdAdul);
+    printf("Quantidade criancas: ");
+    scanf("%d", qtdCrian);
+    
+    printf("Alguma facilidade? (Ex. banheira, tv...)");
+    scanf("%s",&facilidade);
     return (EXIT_SUCCESS);
 }
 
