@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "reservas.h"
 
 /*
  * 
@@ -42,6 +43,8 @@ int main(int argc, char** argv) {
     
     printf("Alguma facilidade? (Ex. banheira, tv...)");
     scanf("%s",&facilidade);
+    
+    pesquisa(dataEnt, dataSai, categoria, qtdAdul, qtdCrian, facilidade);
     return (EXIT_SUCCESS);
 }
 

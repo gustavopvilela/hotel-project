@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-
+void pesquisa(char* dataEnt, char* dataSai, char* categoria, int qtdAd, int qtdCr, char* facilidade);
 
 
 #ifdef __cplusplus
