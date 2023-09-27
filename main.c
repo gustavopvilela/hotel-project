@@ -7,18 +7,20 @@ int main(int argc, char** argv) {
 
     printf("BEM-VINDO");
 
-    Hospede newHospedes;
-    char* nome;
+    Acomodacao acom;
+    //char* nome;
 
-    newHospedes.codigo = 1;
-    strcpy(newHospedes.nome,"IIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAMMMMMMMMMMMM");
-    strcpy(newHospedes.endereco,"LOOKATMEHERE Street, Malibu");
-    strcpy(newHospedes.cpf,"77733344422");
-    strcpy(newHospedes.telefone,"08977663322");
-    strcpy(newHospedes.email,"youre.here@gmail.com");
-    strcpy(newHospedes.sexo,"Feminino");
-    strcpy(newHospedes.estadoCivil,"Solteiro");
-    strcpy(newHospedes.dataNascimento,"12/09/1967");
+    acom.codigo = 1;
+    acom.categoria = 1;
+    strcpy(acom.facilidades,"Ar-condicionado");
+    strcpy(acom.descricao,"Quarto 2");
+    /* strcpy(acom.telefone,"08977663322");
+    strcpy(acom.email,"youre.here@gmail.com");
+    strcpy(acom.sexo,"Feminino");
+    strcpy(acom.estadoCivil,"Solteiro");
+    strcpy(acom.dataNascimento,"12/09/1967"); */
+    
+    inserirAcomodacao(acom);
     
     //atualizarHospede(newHospedes, newHospedes.codigo);
     

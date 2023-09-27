@@ -218,7 +218,13 @@ void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom) {
 
     /* Inserindo no arquivo binário. */
     if (!feof(catAcomBin)) {
-        fwrite(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin);
+        if (lerAcomodacao() == 0) {
+            fwrite(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin);
+        }
+        else {
+            printf("Categoria de acomodação com este código já existente.");
+        }
+        
     }
     else {
         printf("Arquivo cheio.\n");
@@ -247,9 +253,9 @@ int lerCategoriaAcomodacao (int codigo) {
             printf("Código: %d\n", catAcom.codigo);
             printf("Descrição: %s\n", catAcom.descricao);
             printf("Categoria: %s\n", catAcom.categoria);
-            printf("Valor da diária: %s\n", catAcom.valorDiaria);
-            printf("Quantidade de adultos: %s\n", catAcom.qtdeAdultos);
-            printf("Quantidade de crianças: %s\n", catAcom.qtdeCriancas);
+            printf("Valor da diária: %f\n", catAcom.valorDiaria);
+            printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
+            printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
             printf("\n");
             encontrado = 1;
             return 1;
@@ -280,9 +286,9 @@ void listarCategoriaAcomodacao () {
         printf("Código: %d\n", catAcom.codigo);
         printf("Descrição: %s\n", catAcom.descricao);
         printf("Categoria: %s\n", catAcom.categoria);
-        printf("Valor da diária: %s\n", catAcom.valorDiaria);
-        printf("Quantidade de adultos: %s\n", catAcom.qtdeAdultos);
-        printf("Quantidade de crianças: %s\n", catAcom.qtdeCriancas);
+        printf("Valor da diária: %f\n", catAcom.valorDiaria);
+        printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
+        printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
         printf("\n");
     }
     
@@ -363,6 +369,285 @@ void deletarCategoriaAcomodacao (int codigo) {
     
     remove("catAcom.bin");
     rename("catAcom_tmp.bin", "catAcom.bin");
+}
+
+/* CRUD das acomodações */
+void inserirAcomodacao (Acomodacao acomodacao) {
+    FILE *acomodacaoBin;
+    acomodacaoBin = fopen("acomodacao.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(acomodacaoBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+
+    /* Inserindo no arquivo binário. */
+    if (!feof(acomodacaoBin)) {
+        fwrite(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin);
+    }
+    else {
+        printf("Arquivo cheio.\n");
+        exit(1);
+    }
+    
+
+    /* Fechando o arquivo. */
+    fclose(acomodacaoBin);
+}
+
+int lerAcomodacao (int codigo) {
+    FILE *acomodacaoBin;
+    acomodacaoBin = fopen("acomodacao.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(acomodacaoBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    rewind(acomodacaoBin);
+    Acomodacao acomodacao;
+    int encontrado = 0;
+    while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
+        if (acomodacao.codigo == codigo) {
+            printf("Código: %d\n", acomodacao.codigo);
+            printf("Descrição: %s\n", acomodacao.descricao);
+            printf("Categoria: %d\n", acomodacao.categoria);
+            printf("Facilidades: %s\n", acomodacao.facilidades);
+            printf("\n");
+            encontrado = 1;
+            return 1;
+        }
+    }
+    if (!encontrado) {
+        printf("Acomodação com código %d não encontrado.\n", codigo);
+        return 0;
+    }
+    
+    /*Fechando o arquivo*/
+    fclose(acomodacaoBin);
+}
+
+void listarAcomodacoes () {
+    FILE *acomodacaoBin;
+    acomodacaoBin = fopen("acomodacao.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(acomodacaoBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    rewind(acomodacaoBin);
+    Acomodacao acomodacao;
+    while (fread(&acomodacao, sizeof(CategoriaAcomodacao), 1, acomodacaoBin) == 1) {
+        printf("Código: %d\n", acomodacao.codigo);
+        printf("Descrição: %s\n", acomodacao.descricao);
+        printf("Categoria: %d\n", acomodacao.categoria);
+        printf("Facilidades: %s\n", acomodacao.facilidades);
+        printf("\n");
+    }
+    
+    fclose(acomodacao);
+}
+
+void atualizarAcomodacao () {
+    
+}
+
+void deletarAcomodacao (int codigo) {
+    int dadoAchado = 0;
+    
+    FILE *acomodacaoBin;
+    acomodacaoBin = fopen("acomodacao.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(acomodacaoBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    FILE *acomodacaoBin_tmp;
+    acomodacaoBin_tmp = fopen("acomodacao_tmp.bin", "wb");
+    
+    /* Verificação da abertura. */
+    if(acomodacaoBin_tmp == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    rewind(acomodacaoBin);
+    Acomodacao acomodacao;
+    while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
+        if (acomodacao.codigo == codigo) {
+            printf("Deleção concluída!");
+            dadoAchado = 1;
+        }
+        else {
+            fwrite(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin_tmp);
+        }
+    }
+    
+    if (dadoAchado == 0) {
+        printf("Nenhuma categoria de acomodação foi encontrada com este código: %d.\n", codigo);
+    }
+    
+    fclose(acomodacaoBin);
+    fclose(acomodacaoBin_tmp);
+    
+    remove("acmodacao.bin");
+    rename("acomodacao_tmp.bin", "acomodacao.bin");
+}
+
+void inserirProduto (Produto produto) {
+    FILE *produtoBin;
+    produtoBin = fopen("produto.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(produtoBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+
+    /* Inserindo no arquivo binário. */
+    if (!feof(produtoBin)) {
+        fwrite(&produto, sizeof(Produto), 1, produtoBin);
+    }
+    else {
+        printf("Arquivo cheio.\n");
+        exit(1);
+    }
+   
+
+    /*Fechando o arquivo*/
+    fclose(produtoBin);
+}
+
+int lerProduto (int codigo) {
+    FILE *produtoBin;
+    produtoBin = fopen("produto.bin", "rb");
+   
+    /* Verificação da abertura. */
+    if(produtoBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+   
+   
+    rewind(produtoBin);
+    Produto produto;
+    int encontrado = 0;
+    while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
+        if (produto.codigo == codigo) {
+            printf("Código: %d\n", produto.codigo);
+            printf("Descrição: %s\n", produto.descricao);
+            printf("Estoque: %d\n", produto.estoque);
+            printf("Estoque mínimo: %d\n", produto.estoqueMin);
+            printf("Preço de custo: %.2f\n", produto.precoCusto);
+            printf("Preço de venda: %.2f\n", produto.precoVenda);
+            printf("\n");
+            encontrado = 1;
+            return 1;
+        }
+    }
+    if (!encontrado) {
+        printf("Produto com código %d não encontrado.\n", codigo);
+        return 0;
+    }
+}
+
+void listarProdutos() {
+    FILE *produtoBin;
+    produtoBin = fopen("produto.bin", "rb");
+   
+    rewind(produtoBin);
+    Produto produto;
+    while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
+        printf("Código: %d\n", produto.codigo);
+        printf("Descrição: %s\n", produto.descricao);
+        printf("Estoque: %d\n", produto.estoque);
+        printf("Estoque mínimo: %d\n", produto.estoqueMin);
+        printf("Preço de custo: %.2f\n", produto.precoCusto);
+        printf("Preço de venda: %.2f\n", produto.precoVenda);
+        printf("\n");
+    }
+   
+    fclose(produtoBin);
+}
+
+void atualizarProduto (Produto novosDados, int codigo) {
+    freopen("/dev/null", "w", stdout);
+   
+    if (lerProduto(codigo) != 0) {
+        deletarProduto(codigo);
+       
+        FILE *produtoBin;
+        produtoBin = fopen("produto.bin", "ab");
+
+        /* Verificação da abertura. */
+        if(produtoBin == NULL){
+            printf("Erro na abertura do arquivo.\n");
+            exit(1);
+        }
+       
+        /* O comando seguinte "desbloqueará" o terminal para que os printf's
+         * sejam exibidos novamente. */
+        freopen("/dev/tty", "w", stdout);
+       
+        fwrite(&novosDados, sizeof(Produto), 1, produtoBin);
+        printf("Atualizado o produto de código %d.", codigo);
+       
+        fclose(produtoBin);
+    }
+    else {
+        printf("Produto de código %d não encontrado.", codigo);
+    }
+}
+
+void deletarProduto(int codigo) {
+    int dadoAchado = 0;
+   
+    FILE *produtoBin;
+    produtoBin = fopen("produto.bin", "rb");
+   
+    /* Verificação da abertura. */
+    if(produtoBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+   
+    FILE *produtoBin_tmp;
+    produtoBin_tmp = fopen("produto_tmp.bin", "wb");
+   
+    /* Verificação da abertura. */
+    if(produtoBin_tmp == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+   
+    rewind(produtoBin);
+    Produto produto;
+    while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
+        if (produto.codigo == codigo) {
+            printf("Deleção concluída!");
+            dadoAchado = 1;
+        }
+        else {
+            fwrite(&produto, sizeof(Produto), 1, produtoBin_tmp);
+        }
+    }
+   
+    if (dadoAchado == 0) {
+        printf("Nenhum produto foi encontrado com este código: %d.\n", codigo);
+    }
+   
+    fclose(produtoBin);
+    fclose(produtoBin_tmp);
+   
+    remove("produto.bin");
+    rename("produto_tmp.bin", "produto.bin");
+   
 }
 
 int validarCPF(char* cpf) {

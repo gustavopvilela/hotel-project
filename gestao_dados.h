@@ -46,7 +46,7 @@ void inserirHotel (Hotel hotel);
 typedef struct {
     int codigo;
     char descricao[300];
-    char categoria;
+    char categoria[100];
     float valorDiaria;
     int qtdeAdultos;
     int qtdeCriancas;
@@ -57,6 +57,32 @@ int lerCategoriaAcomodacao (int codigo);
 void listarCategoriaAcomodacao ();
 void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo);
 void deletarCategoriaAcomodacao (int codigo);
+
+/* Estruturas e funções referentes às acomodações. */
+typedef struct {
+    int codigo;
+    char descricao[300];
+    char* facilidades;
+    int categoria; /* Chave estrangeira de CategoriaAcomodacao. */
+} Acomodacao;
+
+void inserirAcomodacao (Acomodacao acomodacao);
+
+/* Estruturas e funções referentes aos produtos. */
+typedef struct {
+    int codigo;
+    char descricao[300];
+    int estoque;
+    int estoqueMin;
+    float precoCusto;
+    float precoVenda;
+} Produto;
+
+void inserirProduto(Produto produto);
+int lerProduto (int codigo);
+void listarProduto();
+void atualizarProduto (Produto novosDados, int codigo);
+void deletarProduto(int codigo);
 
 int validarCPF (char* cpf);
 
