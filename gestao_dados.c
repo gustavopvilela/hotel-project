@@ -452,8 +452,36 @@ void listarAcomodacoes () {
     fclose(acomodacao);
 }
 
-void atualizarAcomodacao () {
+void atualizarAcomodacao (Acomodacao novosDados, int codigo) {
+    /* Como as funções lerAcomodacao e deletarAcomodacao possuem printf's dentro
+     * delas, o seguinte comando "bloqueará" o terminal para que não apareça
+     * nada quando essas funções forem chamadas (descarta-se o output). */
+    freopen("/dev/null", "w", stdout);
     
+    if (lerAcomodacao(codigo) != 0) {
+        deletarAcomodacao(codigo);
+        
+        FILE *acomodacaoBin;
+        acomodacaoBin = fopen("acomodacao.bin", "ab");
+
+        /* Verificação da abertura. */
+        if(acomodacaoBin == NULL){
+            printf("Erro na abertura do arquivo.\n");
+            exit(1);
+        }
+        
+        /* O comando seguinte "desbloqueará" o terminal para que os printf's
+         * sejam exibidos novamente. */
+        freopen("/dev/tty", "w", stdout);
+        
+        fwrite(&novosDados, sizeof(Acomodacao), 1, acomodacaoBin);
+        printf("Atualizada a acomodação de código %d.", codigo);
+        
+        fclose(acomodacaoBin);
+    }
+    else {
+        printf("Acomodação de código %d não encontrado.", codigo);
+    }
 }
 
 void deletarAcomodacao (int codigo) {
@@ -500,6 +528,7 @@ void deletarAcomodacao (int codigo) {
     rename("acomodacao_tmp.bin", "acomodacao.bin");
 }
 
+/* CRUD dos produtos */
 void inserirProduto (Produto produto) {
     FILE *produtoBin;
     produtoBin = fopen("produto.bin", "ab");
@@ -647,6 +676,161 @@ void deletarProduto(int codigo) {
    
     remove("produto.bin");
     rename("produto_tmp.bin", "produto.bin");
+   
+}
+
+/* CRUD dos fornecedores */
+void inserirFornecedor (Fornecedor fornecedor) {
+    FILE *fornecedorBin;
+    fornecedorBin = fopen("fornecedor.bin", "ab");
+
+    /* Verificação da abertura. */
+    if( == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+
+    /* Inserindo no arquivo binário. */
+    if (!feof(fornecedorBin)) {
+        fwrite(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin);
+    }
+    else {
+        printf("Arquivo cheio.\n");
+        exit(1);
+    }
+   
+
+    /*Fechando o arquivo*/
+    fclose(fornecedorBin);
+}
+
+int lerFornecedor (int codigo) {
+    FILE *fornecedorBin;
+    fornecedorBin = fopen("fornecedor.bin", "rb");
+   
+    /* Verificação da abertura. */
+    if(fornecedorBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+   
+   
+    rewind(fornecedorBin);
+    Fornecedor fornecedor;
+    int encontrado = 0;
+    while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
+        if (fornecedor.codigo == codigo) {
+            printf("Código: %d\n", fornecedor.codigo);
+            printf("Nome Fantasia: %s\n", fornecedor.nomeFantasia);
+            printf("Razão Social: %s\n", fornecedor.razaoSocial);
+            printf("Inscrição Estadual: %s\n", fornecedor.inscricaoEstadual);
+            printf("CNPJ: %s\n", fornecedor.cnpj);
+            printf("Endereço: %s\n", fornecedor.endereco);
+            printf("Telefone: %s\n", fornecedor.telefone);
+            printf("E-mail: %s\n", fornecedor.email);
+            printf("\n");
+            encontrado = 1;
+            return 1;
+        }
+    }
+    if (!encontrado) {
+        printf("Fornecedor com código %d não encontrado.\n", codigo);
+        return 0;
+    }
+}
+
+void listarFornecedors() {
+    FILE *fornecedorBin;
+    fornecedorBin = fopen("fornecedor.bin", "rb");
+   
+    rewind(fornecedorBin);
+    Fornecedor fornecedor;
+    while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
+        printf("Código: %d\n", fornecedor.codigo);
+            printf("Nome Fantasia: %s\n", fornecedor.nomeFantasia);
+            printf("Razão Social: %s\n", fornecedor.razaoSocial);
+            printf("Inscrição Estadual: %s\n", fornecedor.inscricaoEstadual);
+            printf("CNPJ: %s\n", fornecedor.cnpj);
+            printf("Endereço: %s\n", fornecedor.endereco);
+            printf("Telefone: %s\n", fornecedor.telefone);
+            printf("E-mail: %s\n", fornecedor.email);
+        printf("\n");
+    }
+   
+    fclose(fornecedorBin);
+}
+
+void atualizarFornecedor (Fornecedor novosDados, int codigo) {
+    freopen("/dev/null", "w", stdout);
+   
+    if (lerFornecedor(codigo) != 0) {
+        deletarFornecedor(codigo);
+       
+        FILE *fornecedorBin;
+        fornecedorBin = fopen("fornecedor.bin", "ab");
+
+        /* Verificação da abertura. */
+        if(fornecedorBin == NULL){
+            printf("Erro na abertura do arquivo.\n");
+            exit(1);
+        }
+       
+        /* O comando seguinte "desbloqueará" o terminal para que os printf's
+         * sejam exibidos novamente. */
+        freopen("/dev/tty", "w", stdout);
+       
+        fwrite(&novosDados, sizeof(Fornecedor), 1, fornecedorBin);
+        printf("Atualizado o fornecedor de código %d.", codigo);
+       
+        fclose(fornecedorBin);
+    }
+    else {
+        printf("Fornecedor de código %d não encontrado.", codigo);
+    }
+}
+
+void deletarFornecedor(int codigo) {
+    int dadoAchado = 0;
+   
+    FILE *fornecedorBin;
+    fornecedorBin = fopen("fornecedor.bin", "rb");
+   
+    /* Verificação da abertura. */
+    if(fornecedorBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+   
+    FILE *fornecedorBin_tmp;
+    fornecedorBin_tmp = fopen("fornecedor_tmp.bin", "wb");
+   
+    /* Verificação da abertura. */
+    if(fornecedorBin_tmp == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+   
+    rewind(fornecedorBin);
+    Fornecedor fornecedor;
+    while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
+        if (fornecedor.codigo == codigo) {
+            printf("Deleção concluída!");
+            dadoAchado = 1;
+        }
+        else {
+            fwrite(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin_tmp);
+        }
+    }
+   
+    if (dadoAchado == 0) {
+        printf("Nenhum fornecedor foi encontrado com este código: %d.\n", codigo);
+    }
+   
+    fclose(fornecedorBin);
+    fclose(fornecedorBin_tmp);
+   
+    remove("fornecedor.bin");
+    rename("fornecedor_tmp.bin", "fornecedor.bin");
    
 }
 

@@ -84,6 +84,24 @@ void listarProduto();
 void atualizarProduto (Produto novosDados, int codigo);
 void deletarProduto(int codigo);
 
+/* Estruturas e funções referentes aos fornecedores */
+typedef struct {
+    int codigo;
+    char nomeFantasia[200];
+    char razaoSocial[200];
+    char inscricaoEstadual[200];
+    char cnpj[15]; /* O CNPJ contém os pontos e traços. */
+    char endereco[300];
+    char telefone[12]; /* O telefone não comporta os parênteses do DDD. */
+    char email[100];
+} Fornecedor;
+
+void inserirFornecedor(Fornecedor fornecedor);
+int lerFornecedor(int codigo);
+void listarFornecedor();
+void atualizarFornecedor(Fornecedor novosDados, int codigo);
+void deletarFornecedor(int codigo);
+
 int validarCPF (char* cpf);
 
 #ifdef __cplusplus
