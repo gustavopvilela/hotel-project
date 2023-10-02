@@ -102,6 +102,21 @@ void listarFornecedor();
 void atualizarFornecedor(Fornecedor novosDados, int codigo);
 void deletarFornecedor(int codigo);
 
+/* Estruturas e funções referentes aos operadores do sistema. */
+typedef struct {
+    int codigo;
+    char nome[200];
+    char usuario[200];
+    char senha[10];
+    char* permissoes;//quais modulos serao acessiveis pelo operador
+} Operador;
+
+void inserirOperador(Operador operador);
+int lerOperador(int codigo);
+void listarOperadores();
+void atualizarOperador(Operador novosDados, int codigo);
+void deletarOperador(int codigo);
+
 int validarCPF (char* cpf);
 
 #ifdef __cplusplus

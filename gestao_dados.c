@@ -833,6 +833,154 @@ void deletarFornecedor(int codigo) {
     rename("fornecedor_tmp.bin", "fornecedor.bin");
    
 }
+/* CRUD operadores do sistema */
+void inserirOperador(Operador operador) {
+    FILE *operadorBin;
+    operadorBin = fopen("operador.bin", "ab");
+
+    /* Verificação da abertura. */
+    if (operadorBin == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+
+    /* Inserindo no arquivo binário. */
+    if (!feof(operadorBin)) {
+        fwrite(&operador, sizeof (Operador), 1, operadorBin);
+    } else {
+        printf("Arquivo cheio.\n");
+        exit(1);
+    }
+
+
+    /*Fechando o arquivo*/
+    fclose(operadorBin);
+}
+
+int lerOperador(int codigo) {
+    FILE *operadorBin;
+    operadorBin = fopen("operador.bin", "rb");
+
+    /* Verificação da abertura. */
+    if (operadorBin == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+
+    rewind(operadorBin);
+    Operador operador;
+    int encontrado = 0;
+    while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
+        if (operador.codigo == codigo) {
+            printf("Código: %d\n", operador.codigo);
+            printf("Nome: %s\n", operador.nome);
+            printf("Usuário: %s\n", operador.usuario);
+            printf("Senha: %s\n", operador.senha);
+            printf("Permissões: %s\n", operador.permissoes);
+            printf("\n");
+            encontrado = 1;
+            return 1;
+        }
+    }
+    if (!encontrado) {
+        printf("Operador com código %d não encontrado.\n", codigo);
+        return 0;
+    }
+}
+
+void listarOperadores() {
+    FILE *operadorBin;
+    operadorBin = fopen("operador.bin", "rb");
+
+    rewind(operadorBin);
+    Operador operador;
+    while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
+        printf("Código: %d\n", operador.codigo);
+        printf("Nome: %s\n", operador.nome);
+        printf("Usuário: %s\n", operador.usuario);
+        printf("Senha: %s\n", operador.senha);
+        printf("Permissões: %s\n", operador.permissoes);
+        printf("\n");
+    }
+
+    fclose(operadorBin);
+}
+
+void atualizarOperador(Operador novosDados, int codigo) {
+
+    /* Como as funções lerOperador e deletarOperador possuem printf's dentro
+     * delas, o seguinte comando "bloqueará" o terminal para que não apareça
+     * nada quando essas funções forem chamadas (descarta-se o output). */
+    freopen("/dev/null", "w", stdout);
+
+    if (lerOperador(codigo) != 0) {
+        deletarOperador(codigo);
+
+        FILE *operadorBin;
+        operadorBin = fopen("operador.bin", "ab");
+
+        /* Verificação da abertura. */
+        if (operadorBin == NULL) {
+            printf("Erro na abertura do arquivo.\n");
+            exit(1);
+        }
+
+        /* O comando seguinte "desbloqueará" o terminal para que os printf's
+         * sejam exibidos novamente. */
+        freopen("/dev/tty", "w", stdout);
+
+        fwrite(&novosDados, sizeof (Operador), 1, operadorBin);
+        printf("Atualizado o operador de código %d.", codigo);
+
+        fclose(operadorBin);
+    } else {
+        printf("operador de código %d não encontrado.", codigo);
+
+    }
+}
+
+void deletarOperador(int codigo) {
+    int dadoAchado = 0;
+
+    FILE *operadorBin;
+    operadorBin = fopen("operador.bin", "rb");
+
+    /* Verificação da abertura. */
+    if (operadorBin == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+
+    FILE *operadorBin_tmp;
+    operadorBin_tmp = fopen("operador_tmp.bin", "wb");
+
+    /* Verificação da abertura. */
+    if (operadorBin_tmp == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+
+    rewind(operadorBin);
+    Operador operador;
+    while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
+        if (operador.codigo == codigo) {
+            printf("Deleção concluída!");
+            dadoAchado = 1;
+        } else {
+            fwrite(&operador, sizeof (Operador), 1, operadorBin_tmp);
+        }
+    }
+
+    if (dadoAchado == 0) {
+        printf("Nenhum operador foi encontrado com este código: %d.\n", codigo);
+    }
+
+    fclose(operadorBin);
+    fclose(operadorBin_tmp);
+
+    remove("operador.bin");
+    rename("operador_tmp.bin", "operador.bin");
+}
 
 int validarCPF(char* cpf) {
     int soma = 0;
