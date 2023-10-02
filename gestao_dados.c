@@ -28,9 +28,7 @@ void inserirHotel (Hotel hotel) {
     fclose(hotelBin);
 }
 
-int lerHotel (int codigo) {
-    
-}
+
 
 /* CRUD dos hóspedes */
 void inserirHospede (Hospede hospede) {
@@ -57,7 +55,7 @@ void inserirHospede (Hospede hospede) {
     fclose(hospedeBin);
 }
 
-/*char* */int lerHospede (/*Hospede *hospede,*/ int codigo) {
+int lerHospede (int codigo) {
     FILE *hospedeBin;
     hospedeBin = fopen("hospede.bin", "rb");
     
@@ -449,7 +447,7 @@ void listarAcomodacoes () {
         printf("\n");
     }
     
-    fclose(acomodacao);
+    fclose(acomodacaoBin);
 }
 
 void atualizarAcomodacao (Acomodacao novosDados, int codigo) {
@@ -685,7 +683,7 @@ void inserirFornecedor (Fornecedor fornecedor) {
     fornecedorBin = fopen("fornecedor.bin", "ab");
 
     /* Verificação da abertura. */
-    if( == NULL){
+    if(fornecedorBin == NULL){
         printf("Erro na abertura do arquivo.\n");
         exit(1);
     }
