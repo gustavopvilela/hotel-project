@@ -41,6 +41,9 @@ typedef struct {
 } Hotel;
 
 void inserirHotel (Hotel hotel);
+void listarHotel ();
+void atualizarHotel (Hotel novosDados);
+void deletarHotel ();
 
 /* Estruturas e funções referentes às categorias de acomodações. */
 typedef struct {

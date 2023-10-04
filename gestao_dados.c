@@ -28,7 +28,79 @@ void inserirHotel (Hotel hotel) {
     fclose(hotelBin);
 }
 
+/* Como só há um hotel, basta listá-lo. */
+void listarHotel () {
+    FILE *hotelBin;
+    hotelBin = fopen("hotel.bin", "rb");
+    
+    /* Verificação da abertura. */
+    if (hotelBin == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    rewind(hotelBin);
+    Hotel hotel;
+    while (fread(&hotel, sizeof(Hotel), 1, hotelBin) == 1) {
+        printf("Nome fantasia: %s\n", hotel.nomeFantasia);
+        printf("Razão Social: %s\n", hotel.razaoSocial);
+        printf("Insrição estadual: %s\n", hotel.inscricaoEstadual);
+        printf("CNPJ: %s\n", hotel.cnpj);
+        printf("Endereço: %s\n", hotel.endereco);
+        printf("Telefone: %s\n", hotel.telefone);
+        printf("E-mail: %s\n", hotel.email);
+        printf("Responsável: %s\n", hotel.responsavel);
+        printf("Telefone (responsável): %s\n", hotel.telefoneResponsavel);
+        printf("Check-in: %s\n", hotel.horarioCheckIn);
+        printf("Check-out: %s\n", hotel.horarioCheckOut);
+        printf("Margem de lucro: %f\n", hotel.margemLucro);
+        printf("\n");
+    }
+    
+    fclose(hotelBin);
+}
 
+void atualizarHotel (Hotel novosDados) {
+    FILE *hotelBin;
+    hotelBin = fopen("hotel.bin", "wb");
+    
+    /* Verificação da abertura. */
+    if (hotelBin == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    rewind(hotelBin);
+    fwrite(&novosDados, sizeof(Hotel), 1, hotelBin);
+    printf("Atualizado o hotel!");
+}
+
+/* Como o hotel é só um, se o deletarmos, teremos um arquivo vazio. */
+void deletarHotel () {
+    FILE *hotelBin;
+    hotelBin = fopen("hotel.bin", "rb");
+    
+    /* Verificação da abertura. */
+    if(hotelBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    FILE *hotelBin_tmp;
+    hotelBin_tmp = fopen("hotel_tmp.bin", "wb");
+    
+    /* Verificação da abertura. */
+    if(hotelBin_tmp == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(hotelBin);
+    fclose(hotelBin_tmp);
+    
+    remove("hotel.bin");
+    rename("hotel_tmp.bin", "hotel.bin");
+}
 
 /* CRUD dos hóspedes */
 void inserirHospede (Hospede hospede) {
@@ -99,6 +171,12 @@ int lerHospede (int codigo) {
 void listarHospedes() {
     FILE *hospedeBin;
     hospedeBin = fopen("hospede.bin", "rb");
+    
+    /* Verificação da abertura. */
+    if(hospedeBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
     
     rewind(hospedeBin);
     Hospede hospede;
@@ -831,6 +909,7 @@ void deletarFornecedor(int codigo) {
     rename("fornecedor_tmp.bin", "fornecedor.bin");
    
 }
+
 /* CRUD operadores do sistema */
 void inserirOperador(Operador operador) {
     FILE *operadorBin;
