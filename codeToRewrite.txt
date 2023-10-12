@@ -1,0 +1,85 @@
+void atualizarHospede (Hospede novosDados, int codigo) {
+    /* Atualizando o hóspede no arquivo binário. */
+    /* fseek(hospedeBin, codigo * sizeof(Hospede), SEEK_SET);
+    fwrite(hospede, sizeof(Hospede), 1, hospedeBin); */
+    
+    /* Como as funções lerHospede e deletarHospede possuem printf's dentro
+     * delas, o seguinte comando "bloqueará" o terminal para que não apareça
+     * nada quando essas funções forem chamadas (descarta-se o output). */
+    freopen("/dev/null", "w", stdout);
+    
+    if (lerHospede(codigo) != 0) {
+        deletarHospede(codigo);
+        
+        FILE *hospedeBin;
+        hospedeBin = fopen("hospede.bin", "ab");
+
+        /* Verificação da abertura. */
+        if(hospedeBin == NULL){
+            printf("Erro na abertura do arquivo.\n");
+            exit(1);
+        }
+        
+        /* O comando seguinte "desbloqueará" o terminal para que os printf's
+         * sejam exibidos novamente. */
+        freopen("/dev/tty", "w", stdout);
+        
+        fwrite(&novosDados, sizeof(Hospede), 1, hospedeBin);
+        printf("Atualizado o hóspede de código %d.", codigo);
+        
+        fclose(hospedeBin);
+    }
+    else {
+        printf("Hóspede de código %d não encontrado.", codigo);
+    }
+}
+
+void deletarHospede(/*Hospede *hospede,*/ int codigo) {
+    int dadoAchado = 0;
+    
+    FILE *hospedeBin;
+    hospedeBin = fopen("hospede.bin", "rb");
+    
+    /* Verificação da abertura. */
+    if(hospedeBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    FILE *hospedeBin_tmp;
+    hospedeBin_tmp = fopen("hospede_tmp.bin", "wb");
+    
+    /* Verificação da abertura. */
+    if(hospedeBin_tmp == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    rewind(hospedeBin);
+    Hospede hospede;
+    while (fread(&hospede, sizeof(Hospede), 1, hospedeBin) == 1) {
+        if (hospede.codigo == codigo) {
+            printf("Deleção concluída!");
+            dadoAchado = 1;
+        }
+        else {
+            fwrite(&hospede, sizeof(Hospede), 1, hospedeBin_tmp);
+        }
+    }
+    
+    if (dadoAchado == 0) {
+        printf("Nenhum hóspede foi encontrado com este código: %d.\n", codigo);
+    }
+    
+    fclose(hospedeBin);
+    fclose(hospedeBin_tmp);
+    
+    remove("hospede.bin");
+    rename("hospede_tmp.bin", "hospede.bin");
+    
+    /* Apaga o hóspede do arquivo binário. */
+    /*fseek(hospedeBin, codigo * sizeof(Hospede), SEEK_SET);
+    fwrite(NULL, sizeof(Hospede), 1, hospedeBin);
+    
+    fclose(hospedeBin);*/
+}

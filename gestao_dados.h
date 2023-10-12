@@ -18,11 +18,11 @@ typedef struct {
     char dataNascimento[11]; /*Data de nascimento contém as barras e ano completo*/
 } Hospede;
 
-void inserirHospede(Hospede hospede);
-/*char* */int lerHospede (/*Hospede *hospede,*/ int codigo);
+void inserirHospede(Hospede hospede, int opcao);
+/*char* */int lerHospede (/*Hospede *hospede,*/ int codigo, int opcao);
 void listarHospedes();
-void atualizarHospede (Hospede novosDados, int codigo);
-void deletarHospede(/*Hospede *hospede,*/ int codigo);
+//void atualizarHospede (Hospede novosDados, int codigo);
+//void deletarHospede(/*Hospede *hospede,*/ int codigo);
 
 /* Estruturas e funções referentes aos hotéis. */
 typedef struct {
@@ -40,7 +40,7 @@ typedef struct {
     float margemLucro; /* A margem de lucro já implica ser porcentagem. */
 } Hotel;
 
-void inserirHotel (Hotel hotel);
+void inserirHotel (Hotel hotel, int opcao);
 void listarHotel ();
 void atualizarHotel (Hotel novosDados);
 void deletarHotel ();

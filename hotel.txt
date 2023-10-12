@@ -1,0 +1,12 @@
+NF: Holly
+RS: Hotel
+IE: 1E45TY7
+CNPJ: 123456789
+Endereço: Avenida A
+Telefone: 37998780989
+E-mail: a@b.com
+Responsável: Armando
+Tel.Responsável: 37922560932
+Check-in: 15:30
+Check-out: 14:40
+Lucro: 5.000000
