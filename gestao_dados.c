@@ -501,33 +501,62 @@ void deletarHospede(int codigo, int opcao) {
 }
 
 /* CRUD das categorias de acomodações. */
-void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom) {
-    FILE *catAcomBin;
-    catAcomBin = fopen("catAcom.bin", "ab");
+void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom, int opcao) {
+    switch (opcao) {
+        case 1:
+            FILE *catAcomBin;
+            catAcomBin = fopen("catAcom.bin", "ab");
 
-    /* Verificação da abertura. */
-    if(catAcomBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
+            /* Verificação da abertura. */
+            if(catAcomBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
 
-    /* Inserindo no arquivo binário. */
-    if (!feof(catAcomBin)) {
-        if (lerCategoriaAcomodacao(catAcom.codigo) == 0) {
-            fwrite(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin);
-        }
-        else {
-            printf("Categoria de acomodação com este código já existente.");
-        }
+            /* Inserindo no arquivo binário. */
+            if (!feof(catAcomBin)) {
+                if (lerCategoriaAcomodacao(catAcom.codigo) == 0) {
+                    fwrite(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin);
+                }
+                else {
+                    printf("Categoria de acomodação com este código já existente.");
+                }
+
+            }
+            else {
+                printf("Arquivo cheio.\n");
+                exit(1);
+            }
+
+            /*Fechando o arquivo*/
+            fclose(catAcomBin);
+        break;
         
-    }
-    else {
-        printf("Arquivo cheio.\n");
-        exit(1);
-    }
+        case 2:
+            FILE *catAcomTxt;
+            catAcomTxt = fopen("catAcom.txt", "a");
+            
+            /* Verificação da abertura. */
+            if(catAcomTxt == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            /* Inserindo no arquivo de texto. */
+            if (!feof(catAcomTxt)) {
+                fprintf(catAcomTxt, "Código: %d\nDescrição: %s\nCategoria: %s\nDiaria: %f\nAdultos: %d\nCrianças: %d\n",
+                        catAcom.codigo, catAcom.descricao, catAcom.categoria,
+                        catAcom.valorDiaria, catAcom.qtdeAdultos, catAcom.qtdeCriancas);
+            }
+            else {
+                printf("Arquivo cheio.\n");
+                exit(1);
+            }
 
-    /*Fechando o arquivo*/
-    fclose(catAcomBin);
+
+            fclose(catAcomTxt);
+        break;
+    }
 }
 
 int lerCategoriaAcomodacao (int codigo) {
@@ -667,28 +696,55 @@ void deletarCategoriaAcomodacao (int codigo) {
 }
 
 /* CRUD das acomodações */
-void inserirAcomodacao (Acomodacao acomodacao) {
-    FILE *acomodacaoBin;
-    acomodacaoBin = fopen("acomodacao.bin", "ab");
+void inserirAcomodacao (Acomodacao acomodacao, int opcao) {
+    switch (opcao) {
+        case 1:
+            FILE *acomodacaoBin;
+            acomodacaoBin = fopen("acomodacao.bin", "ab");
 
-    /* Verificação da abertura. */
-    if(acomodacaoBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
+            /* Verificação da abertura. */
+            if(acomodacaoBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
 
-    /* Inserindo no arquivo binário. */
-    if (!feof(acomodacaoBin)) {
-        fwrite(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin);
-    }
-    else {
-        printf("Arquivo cheio.\n");
-        exit(1);
-    }
-    
+            /* Inserindo no arquivo binário. */
+            if (!feof(acomodacaoBin)) {
+                fwrite(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin);
+            }
+            else {
+                printf("Arquivo cheio.\n");
+                exit(1);
+            }
 
-    /* Fechando o arquivo. */
-    fclose(acomodacaoBin);
+            /* Fechando o arquivo. */
+            fclose(acomodacaoBin);
+        break;
+        
+        case 2:
+            FILE *acomodacaoTxt;
+            acomodacaoTxt = fopen("acomodacao.txt", "a");
+            
+            /* Verificação da abertura. */
+            if(acomodacaoTxt == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            /* Inserindo no arquivo de texto. */
+            if (!feof(acomodacaoTxt)) {
+                fprintf(acomodacaoTxt, "Código: %d\nDescrição: %s\nFacilidades: %s\nCategoria: %d\n",
+                        acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades,
+                        acomodacao.categoria);
+            }
+            else {
+                printf("Arquivo cheio.\n");
+                exit(1);
+            }
+
+            fclose(acomodacaoTxt);
+        break;
+    }
 }
 
 int lerAcomodacao (int codigo) {
@@ -824,28 +880,55 @@ void deletarAcomodacao (int codigo) {
 }
 
 /* CRUD dos produtos */
-void inserirProduto (Produto produto) {
-    FILE *produtoBin;
-    produtoBin = fopen("produto.bin", "ab");
+void inserirProduto (Produto produto, int opcao) {
+    switch (opcao) {
+        case 1:
+            FILE *produtoBin;
+            produtoBin = fopen("produto.bin", "ab");
 
-    /* Verificação da abertura. */
-    if(produtoBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
+            /* Verificação da abertura. */
+            if(produtoBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
 
-    /* Inserindo no arquivo binário. */
-    if (!feof(produtoBin)) {
-        fwrite(&produto, sizeof(Produto), 1, produtoBin);
-    }
-    else {
-        printf("Arquivo cheio.\n");
-        exit(1);
-    }
-   
+            /* Inserindo no arquivo binário. */
+            if (!feof(produtoBin)) {
+                fwrite(&produto, sizeof(Produto), 1, produtoBin);
+            }
+            else {
+                printf("Arquivo cheio.\n");
+                exit(1);
+            }
 
-    /*Fechando o arquivo*/
-    fclose(produtoBin);
+            /*Fechando o arquivo*/
+            fclose(produtoBin);
+        break;
+            
+        case 2:
+            FILE *produtoTxt;
+            produtoTxt = fopen("produto.txt", "a");
+            
+            /* Verificação da abertura. */
+            if(produtoTxt == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            /* Inserindo no arquivo de texto. */
+            if (!feof(produtoTxt)) {
+                fprintf(produtoTxt, "Código: %d\nDescrição: %s\nEstoque: %d\nEstoqueMinimo: %d\nPrecoCusto: %f\nPrecoVenda: %d\n",
+                        produto.codigo, produto.descricao, produto.estoque,
+                        produto.estoqueMin, produto.precoCusto, produto.precoVenda);
+            }
+            else {
+                printf("Arquivo cheio.\n");
+                exit(1);
+            }
+
+            fclose(produtoTxt);
+        break;
+    }
 }
 
 int lerProduto (int codigo) {
@@ -975,28 +1058,57 @@ void deletarProduto(int codigo) {
 }
 
 /* CRUD dos fornecedores */
-void inserirFornecedor (Fornecedor fornecedor) {
-    FILE *fornecedorBin;
-    fornecedorBin = fopen("fornecedor.bin", "ab");
+void inserirFornecedor (Fornecedor fornecedor, int opcao) {
+    switch (opcao) {
+        case 1:
+            FILE *fornecedorBin;
+            fornecedorBin = fopen("fornecedor.bin", "ab");
 
-    /* Verificação da abertura. */
-    if(fornecedorBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
+            /* Verificação da abertura. */
+            if(fornecedorBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
 
-    /* Inserindo no arquivo binário. */
-    if (!feof(fornecedorBin)) {
-        fwrite(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin);
-    }
-    else {
-        printf("Arquivo cheio.\n");
-        exit(1);
-    }
-   
+            /* Inserindo no arquivo binário. */
+            if (!feof(fornecedorBin)) {
+                fwrite(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin);
+            }
+            else {
+                printf("Arquivo cheio.\n");
+                exit(1);
+            }
 
-    /*Fechando o arquivo*/
-    fclose(fornecedorBin);
+            /*Fechando o arquivo*/
+            fclose(fornecedorBin);
+        break;
+            
+        case 2:
+            FILE *fornecedorTxt;
+            fornecedorTxt = fopen("fornecedor.txt", "a");
+            
+            /* Verificação da abertura. */
+            if(fornecedorTxt == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            /* Inserindo no arquivo de texto. */
+            if (!feof(fornecedorTxt)) {
+                fprintf(fornecedorTxt, "Código: %d\nNF: %s\nRS: %s\nIE: %s\nCNPJ: %s\nEndereço: %s\nTelefone: %s\nEmail: %s\n",
+                        fornecedor.codigo, fornecedor.nomeFantasia, fornecedor.razaoSocial,
+                        fornecedor.inscricaoEstadual, fornecedor.cnpj, fornecedor.endereco,
+                        fornecedor.telefone, fornecedor.email);
+            }
+            else {
+                printf("Arquivo cheio.\n");
+                exit(1);
+            }
+
+
+            fclose(fornecedorTxt);
+        break;
+    }
 }
 
 int lerFornecedor (int codigo) {
@@ -1130,27 +1242,54 @@ void deletarFornecedor(int codigo) {
 }
 
 /* CRUD operadores do sistema */
-void inserirOperador(Operador operador) {
-    FILE *operadorBin;
-    operadorBin = fopen("operador.bin", "ab");
+void inserirOperador(Operador operador, int opcao) {
+    switch (opcao) {
+        case 1:
+            FILE *operadorBin;
+            operadorBin = fopen("operador.bin", "ab");
 
-    /* Verificação da abertura. */
-    if (operadorBin == NULL) {
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
+            /* Verificação da abertura. */
+            if (operadorBin == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            /* Inserindo no arquivo binário. */
+            if (!feof(operadorBin)) {
+                fwrite(&operador, sizeof (Operador), 1, operadorBin);
+            } else {
+                printf("Arquivo cheio.\n");
+                exit(1);
+            }
+
+            /*Fechando o arquivo*/
+            fclose(operadorBin);
+        break;
+            
+        case 2:
+            FILE *operadorTxt;
+            operadorTxt = fopen("operador.txt", "a");
+            
+            /* Verificação da abertura. */
+            if(operadorTxt == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            /* Inserindo no arquivo de texto. */
+            if (!feof(operadorTxt)) {
+                fprintf(operadorTxt, "Código: %d\nNome: %s\nUsuário: %s\nSenha: %s\nPermissões: %d\n",
+                        operador.codigo, operador.nome, operador.usuario,
+                        operador.senha, operador.permissoes);
+            }
+            else {
+                printf("Arquivo cheio.\n");
+                exit(1);
+            }
+
+            fclose(operadorTxt);
+        break;
     }
-
-    /* Inserindo no arquivo binário. */
-    if (!feof(operadorBin)) {
-        fwrite(&operador, sizeof (Operador), 1, operadorBin);
-    } else {
-        printf("Arquivo cheio.\n");
-        exit(1);
-    }
-
-
-    /*Fechando o arquivo*/
-    fclose(operadorBin);
 }
 
 int lerOperador(int codigo) {
@@ -1172,7 +1311,7 @@ int lerOperador(int codigo) {
             printf("Nome: %s\n", operador.nome);
             printf("Usuário: %s\n", operador.usuario);
             printf("Senha: %s\n", operador.senha);
-            printf("Permissões: %s\n", operador.permissoes);
+            printf("Permissões: %d\n", operador.permissoes);
             printf("\n");
             encontrado = 1;
             return 1;
@@ -1195,7 +1334,7 @@ void listarOperadores() {
         printf("Nome: %s\n", operador.nome);
         printf("Usuário: %s\n", operador.usuario);
         printf("Senha: %s\n", operador.senha);
-        printf("Permissões: %s\n", operador.permissoes);
+        printf("Permissões: %d\n", operador.permissoes);
         printf("\n");
     }
 

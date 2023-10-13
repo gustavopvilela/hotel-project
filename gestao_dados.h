@@ -55,7 +55,7 @@ typedef struct {
     int qtdeCriancas;
 } CategoriaAcomodacao;
 
-void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom);
+void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom, int opcao);
 int lerCategoriaAcomodacao (int codigo);
 void listarCategoriaAcomodacao ();
 void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo);
@@ -69,7 +69,11 @@ typedef struct {
     int categoria; /* Chave estrangeira de CategoriaAcomodacao. */
 } Acomodacao;
 
-void inserirAcomodacao (Acomodacao acomodacao);
+void inserirAcomodacao (Acomodacao acomodacao, int opcao);
+int lerAcomodacao (int codigo);
+void listarAcomodacoes ();
+void atualizarAcomodacao (Acomodacao novosDados, int codigo);
+void deletarAcomodacao (int codigo);
 
 /* Estruturas e funções referentes aos produtos. */
 typedef struct {
@@ -81,7 +85,7 @@ typedef struct {
     float precoVenda;
 } Produto;
 
-void inserirProduto(Produto produto);
+void inserirProduto(Produto produto, int opcao);
 int lerProduto (int codigo);
 void listarProduto();
 void atualizarProduto (Produto novosDados, int codigo);
@@ -99,7 +103,7 @@ typedef struct {
     char email[100];
 } Fornecedor;
 
-void inserirFornecedor(Fornecedor fornecedor);
+void inserirFornecedor(Fornecedor fornecedor, int opcao);
 int lerFornecedor(int codigo);
 void listarFornecedor();
 void atualizarFornecedor(Fornecedor novosDados, int codigo);
@@ -111,10 +115,10 @@ typedef struct {
     char nome[200];
     char usuario[200];
     char senha[10];
-    char* permissoes;//quais modulos serao acessiveis pelo operador
+    int permissoes; /* Quais módulos serão acessíveis pelo operador. */
 } Operador;
 
-void inserirOperador(Operador operador);
+void inserirOperador(Operador operador, int opcao);
 int lerOperador(int codigo);
 void listarOperadores();
 void atualizarOperador(Operador novosDados, int codigo);
