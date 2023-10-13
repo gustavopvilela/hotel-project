@@ -66,77 +66,171 @@ void inserirHotel (Hotel hotel, int opcao) {
 }
 
 /* Como só há um hotel, basta listá-lo. */
-void listarHotel () {
-    FILE *hotelBin;
-    hotelBin = fopen("hotel.bin", "rb");
-    
-    /* Verificação da abertura. */
-    if (hotelBin == NULL) {
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
+void listarHotel (int opcao) {
+    switch (opcao) {
+        case 1:
+            FILE *hotelBin;
+            hotelBin = fopen("hotel.bin", "rb");
+
+            /* Verificação da abertura. */
+            if (hotelBin == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(hotelBin);
+            Hotel hotel;
+            while (fread(&hotel, sizeof(Hotel), 1, hotelBin) == 1) {
+                printf("Nome fantasia: %s\n", hotel.nomeFantasia);
+                printf("Razão Social: %s\n", hotel.razaoSocial);
+                printf("Inscrição estadual: %s\n", hotel.inscricaoEstadual);
+                printf("CNPJ: %s\n", hotel.cnpj);
+                printf("Endereço: %s\n", hotel.endereco);
+                printf("Telefone: %s\n", hotel.telefone);
+                printf("E-mail: %s\n", hotel.email);
+                printf("Responsável: %s\n", hotel.responsavel);
+                printf("Telefone (responsável): %s\n", hotel.telefoneResponsavel);
+                printf("Check-in: %s\n", hotel.horarioCheckIn);
+                printf("Check-out: %s\n", hotel.horarioCheckOut);
+                printf("Margem de lucro: %f\n", hotel.margemLucro);
+                printf("\n");
+            }
+
+            fclose(hotelBin);
+        break;
+            
+        case 2:
+            FILE *hotelTxt;
+            hotelTxt = fopen("hotel.txt", "a");
+
+            /* Verificação da abertura. */
+            if (hotelTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(hotelTxt);
+            while (fscanf(hotelTxt, "%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %f", hotel.nomeFantasia,
+                                  hotel.razaoSocial, hotel.inscricaoEstadual,
+                                  hotel.cnpj, hotel.endereco, hotel.telefone,
+                                  hotel.email, hotel.responsavel,
+                                  hotel.telefoneResponsavel, hotel.horarioCheckIn,
+                                  hotel.horarioCheckOut, hotel.margemLucro) == 12) {
+                printf("Nome fantasia: %s\n", hotel.nomeFantasia);
+                printf("Razão Social: %s\n", hotel.razaoSocial);
+                printf("Inscrição estadual: %s\n", hotel.inscricaoEstadual);
+                printf("CNPJ: %s\n", hotel.cnpj);
+                printf("Endereço: %s\n", hotel.endereco);
+                printf("Telefone: %s\n", hotel.telefone);
+                printf("E-mail: %s\n", hotel.email);
+                printf("Responsável: %s\n", hotel.responsavel);
+                printf("Telefone (responsável): %s\n", hotel.telefoneResponsavel);
+                printf("Check-in: %s\n", hotel.horarioCheckIn);
+                printf("Check-out: %s\n", hotel.horarioCheckOut);
+                printf("Margem de lucro: %f\n", hotel.margemLucro);
+                printf("\n");
+            }
+        break;
     }
-    
-    rewind(hotelBin);
-    Hotel hotel;
-    while (fread(&hotel, sizeof(Hotel), 1, hotelBin) == 1) {
-        printf("Nome fantasia: %s\n", hotel.nomeFantasia);
-        printf("Razão Social: %s\n", hotel.razaoSocial);
-        printf("Inscrição estadual: %s\n", hotel.inscricaoEstadual);
-        printf("CNPJ: %s\n", hotel.cnpj);
-        printf("Endereço: %s\n", hotel.endereco);
-        printf("Telefone: %s\n", hotel.telefone);
-        printf("E-mail: %s\n", hotel.email);
-        printf("Responsável: %s\n", hotel.responsavel);
-        printf("Telefone (responsável): %s\n", hotel.telefoneResponsavel);
-        printf("Check-in: %s\n", hotel.horarioCheckIn);
-        printf("Check-out: %s\n", hotel.horarioCheckOut);
-        printf("Margem de lucro: %f\n", hotel.margemLucro);
-        printf("\n");
-    }
-    
-    fclose(hotelBin);
 }
 
-void atualizarHotel (Hotel novosDados) {
-    FILE *hotelBin;
-    hotelBin = fopen("hotel.bin", "wb");
-    
-    /* Verificação da abertura. */
-    if (hotelBin == NULL) {
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
+void atualizarHotel (Hotel novosDados, int opcao) {
+    switch (opcao) {
+        case 1:
+            FILE *hotelBin;
+            hotelBin = fopen("hotel.bin", "wb");
+
+            /* Verificação da abertura. */
+            if (hotelBin == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(hotelBin);
+            fwrite(&novosDados, sizeof(Hotel), 1, hotelBin);
+            printf("Atualizado o hotel!");
+        break;
+            
+        case 2:
+            FILE *hotelTxt;
+            hotelTxt = fopen("hotel.txt", "w");
+
+            /* Verificação da abertura. */
+            if (hotelTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(hotelTxt);
+            fprintf(hotelTxt, "NF: %s\nRS: %s\nIE: %s\nCNPJ: %s\nEndereço: %s\n"
+                    "Telefone: %s\nE-mail: %s\nResponsável: %s\n"
+                    "Tel.Responsável: %s\nCheck-in: %s\n"
+                    "Check-out: %s\nLucro: %f\n", novosDados.nomeFantasia,
+                    novosDados.razaoSocial, novosDados.inscricaoEstadual,
+                    novosDados.cnpj, novosDados.endereco, novosDados.telefone,
+                    novosDados.email, novosDados.responsavel,
+                    novosDados.telefoneResponsavel, novosDados.horarioCheckIn,
+                    novosDados.horarioCheckOut, novosDados.margemLucro);
+            printf("Atualizado o hotel!");
+        break;
     }
-    
-    rewind(hotelBin);
-    fwrite(&novosDados, sizeof(Hotel), 1, hotelBin);
-    printf("Atualizado o hotel!");
 }
 
 /* Como o hotel é só um, se o deletarmos, teremos um arquivo vazio. */
-void deletarHotel () {
-    FILE *hotelBin;
-    hotelBin = fopen("hotel.bin", "rb");
-    
-    /* Verificação da abertura. */
-    if(hotelBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
+void deletarHotel (int opcao) {
+    switch (opcao) {
+        case 1:
+            FILE *hotelBin;
+            hotelBin = fopen("hotel.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(hotelBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *hotelBin_tmp;
+            hotelBin_tmp = fopen("hotel_tmp.bin", "wb");
+
+            /* Verificação da abertura. */
+            if(hotelBin_tmp == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            fclose(hotelBin);
+            fclose(hotelBin_tmp);
+
+            remove("hotel.bin");
+            rename("hotel_tmp.bin", "hotel.bin");
+        break;
+            
+        case 2:
+            FILE *hotelTxt;
+            hotelTxt = fopen("hotel.txt", "w");
+
+            /* Verificação da abertura. */
+            if (hotelTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            FILE *hotelTxt_tmp;
+            hotelTxt_tmp = fopen("hotel_tmp.txt", "w");
+
+            /* Verificação da abertura. */
+            if (hotelTxt_tmp == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            fclose(hotelTxt);
+            fclose(hotelTxt_tmp);
+
+            remove("hotel.txt");
+            rename("hotel_tmp.txt", "hotel.txt");
+        break;
     }
-    
-    FILE *hotelBin_tmp;
-    hotelBin_tmp = fopen("hotel_tmp.bin", "wb");
-    
-    /* Verificação da abertura. */
-    if(hotelBin_tmp == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-    
-    fclose(hotelBin);
-    fclose(hotelBin_tmp);
-    
-    remove("hotel.bin");
-    rename("hotel_tmp.bin", "hotel.bin");
 }
 
 /* CRUD dos hóspedes */
@@ -559,140 +653,284 @@ void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom, int opcao) {
     }
 }
 
-int lerCategoriaAcomodacao (int codigo) {
-    FILE *catAcomBin;
-    catAcomBin = fopen("catAcom.bin", "rb");
-
-    /* Verificação da abertura. */
-    if(catAcomBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-    
-    rewind(catAcomBin);
+int lerCategoriaAcomodacao (int codigo, int opcao) {
     CategoriaAcomodacao catAcom;
     int encontrado = 0;
-    while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
-        if (catAcom.codigo == codigo) {
-            printf("Código: %d\n", catAcom.codigo);
-            printf("Descrição: %s\n", catAcom.descricao);
-            printf("Categoria: %s\n", catAcom.categoria);
-            printf("Valor da diária: %f\n", catAcom.valorDiaria);
-            printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
-            printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
-            printf("\n");
-            encontrado = 1;
-            return 1;
-        }
-    }
-    if (!encontrado) {
-        printf("Categoria de acomodação com código %d não encontrado.\n", codigo);
-        return 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *catAcomBin;
+            catAcomBin = fopen("catAcom.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(catAcomBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(catAcomBin);
+
+            while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
+                if (catAcom.codigo == codigo) {
+                    printf("Código: %d\n", catAcom.codigo);
+                    printf("Descrição: %s\n", catAcom.descricao);
+                    printf("Categoria: %s\n", catAcom.categoria);
+                    printf("Valor da diária: %f\n", catAcom.valorDiaria);
+                    printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
+                    printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
+                    printf("\n");
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Categoria de acomodação com código %d não encontrado.\n", codigo);
+            }
+
+            /*Fechando o arquivo*/
+            fclose(catAcomBin);
+            
+            return encontrado;
+        break;
+            
+        case 2:
+            FILE *catAcomTxt;
+            catAcomTxt = fopen("catAcom.txt", "r");
+
+            /* Verificação da abertura. */
+            if (catAcomTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(catAcomTxt);
+            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %f\n%*s %d\n%*s %d",
+                          &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
+                if (catAcom.codigo == codigo) {
+                    printf("Código: %d\n", catAcom.codigo);
+                    printf("Descrição: %s\n", catAcom.descricao);
+                    printf("Categoria: %s\n", catAcom.categoria);
+                    printf("Valor da diária: %f\n", catAcom.valorDiaria);
+                    printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
+                    printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
+                    printf("\n");
+                    
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Categoria de acomodação com código %d não encontrado.\n", codigo);
+            }
+            
+            fclose(catAcomTxt);
+            
+            return encontrado;
+        break;
     }
     
-    /*Fechando o arquivo*/
-    fclose(catAcomBin);
+    
 }
 
-void listarCategoriaAcomodacao () {
-    FILE *catAcomBin;
-    catAcomBin = fopen("catAcom.bin", "rb");
-
-    /* Verificação da abertura. */
-    if(catAcomBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-    
-    rewind(catAcomBin);
+void listarCategoriaAcomodacao (int opcao) {
     CategoriaAcomodacao catAcom;
-    while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
-        printf("Código: %d\n", catAcom.codigo);
-        printf("Descrição: %s\n", catAcom.descricao);
-        printf("Categoria: %s\n", catAcom.categoria);
-        printf("Valor da diária: %f\n", catAcom.valorDiaria);
-        printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
-        printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
-        printf("\n");
-    }
     
-    fclose(catAcomBin);
+    switch (opcao) {
+        case 1:
+            FILE *catAcomBin;
+            catAcomBin = fopen("catAcom.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(catAcomBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(catAcomBin);
+            while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
+                printf("Código: %d\n", catAcom.codigo);
+                printf("Descrição: %s\n", catAcom.descricao);
+                printf("Categoria: %s\n", catAcom.categoria);
+                printf("Valor da diária: %f\n", catAcom.valorDiaria);
+                printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
+                printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
+                printf("\n");
+            }
+
+            fclose(catAcomBin);
+        break;
+            
+        case 2:
+            FILE *catAcomTxt;
+            catAcomTxt = fopen("catAcom.txt", "r");
+
+            /* Verificação da abertura. */
+            if (catAcomTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(catAcomTxt);
+            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %f\n%*s %d\n%*s %d",
+                          &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
+                printf("Código: %d\n", catAcom.codigo);
+                printf("Descrição: %s\n", catAcom.descricao);
+                printf("Categoria: %s\n", catAcom.categoria);
+                printf("Valor da diária: %f\n", catAcom.valorDiaria);
+                printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
+                printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
+                printf("\n");
+            }
+            
+            fclose(catAcomTxt);
+        break;
+    }
 }
 
-void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo) {
-    /* Como as funções lerCategoriaAcomodacao e deletarCategoriaAcomodacao possuem printf's dentro
-     * delas, o seguinte comando "bloqueará" o terminal para que não apareça
-     * nada quando essas funções forem chamadas (descarta-se o output). */
-    freopen("/dev/null", "w", stdout);
-    
-    if (lerCategoriaAcomodacao(codigo) != 0) {
-        deletarCategoriaAcomodacao(codigo);
-        
-        FILE *catAcomBin;
-        catAcomBin = fopen("catAcom.bin", "ab");
+void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo, int opcao) {
+    switch (opcao) {
+        case 1:
+            /* Como as funções lerCategoriaAcomodacao e deletarCategoriaAcomodacao possuem printf's dentro
+             * delas, o seguinte comando "bloqueará" o terminal para que não apareça
+             * nada quando essas funções forem chamadas (descarta-se o output). */
+            freopen("/dev/null", "w", stdout);
 
-        /* Verificação da abertura. */
-        if(catAcomBin == NULL){
-            printf("Erro na abertura do arquivo.\n");
-            exit(1);
-        }
-        
-        /* O comando seguinte "desbloqueará" o terminal para que os printf's
-         * sejam exibidos novamente. */
-        freopen("/dev/tty", "w", stdout);
-        
-        fwrite(&novosDados, sizeof(CategoriaAcomodacao), 1, catAcomBin);
-        printf("Atualizado a categoria de acomodação de código %d.", codigo);
-        
-        fclose(catAcomBin);
-    }
-    else {
-        printf("Categoria de acomodacao de código %d não encontrado.", codigo);
+            if (lerCategoriaAcomodacao(codigo, opcao) != 0) {
+               deletarCategoriaAcomodacao(codigo, opcao);
+
+               FILE *catAcomBin;
+               catAcomBin = fopen("catAcom.bin", "ab");
+
+               /* Verificação da abertura. */
+               if(catAcomBin == NULL){
+                   printf("Erro na abertura do arquivo.\n");
+                   exit(1);
+               }
+
+               /* O comando seguinte "desbloqueará" o terminal para que os printf's
+                * sejam exibidos novamente. */
+               freopen("/dev/tty", "w", stdout);
+
+               fwrite(&novosDados, sizeof(CategoriaAcomodacao), 1, catAcomBin);
+               printf("Atualizado a categoria de acomodação de código %d.", codigo);
+
+               fclose(catAcomBin);
+            }
+            else {
+                printf("Categoria de acomodacao de código %d não encontrado.", codigo);
+            }
+        break;
+            
+        case 2:
+            /* Bloqueando o terminal. */
+            freopen("/dev/null", "w", stdout);
+            
+            if (lerCategoriaAcomodacao(codigo, opcao) != 0) {
+                /* Deletando os dados antigos. */
+                deletarCategoriaAcomodacao(codigo, opcao);
+                
+                /* Atualizando o hóspede. */
+                inserirCategoriaAcomodacao(novosDados, opcao);
+                
+                /* Desbloqueando o terminal. */
+                freopen("/dev/tty", "w", stdout);
+                
+                printf("Atualizada a categoria de acomodação de código %d.", codigo);
+            }
+            else {
+                printf("Categoria de acomodação de código %d não encontrado.", codigo);
+            }
+        break;
     }
 }
 
-void deletarCategoriaAcomodacao (int codigo) {
+void deletarCategoriaAcomodacao (int codigo, int opcao) {
     int dadoAchado = 0;
-    
-    FILE *catAcomBin;
-    catAcomBin = fopen("catAcom.bin", "rb");
-    
-    /* Verificação da abertura. */
-    if(catAcomBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-    
-    FILE *catAcomBin_tmp;
-    catAcomBin_tmp = fopen("catAcom_tmp.bin", "wb");
-    
-    /* Verificação da abertura. */
-    if(catAcomBin_tmp == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-    
-    rewind(catAcomBin);
     CategoriaAcomodacao catAcom;
-    while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
-        if (catAcom.codigo == codigo) {
-            printf("Deleção concluída!");
-            dadoAchado = 1;
-        }
-        else {
-            fwrite(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin_tmp);
-        }
+    
+    switch (opcao) {
+        case 1:
+            FILE *catAcomBin;
+            catAcomBin = fopen("catAcom.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(catAcomBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *catAcomBin_tmp;
+            catAcomBin_tmp = fopen("catAcom_tmp.bin", "wb");
+
+            /* Verificação da abertura. */
+            if(catAcomBin_tmp == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(catAcomBin);
+            while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
+                if (catAcom.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                }
+                else {
+                    fwrite(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin_tmp);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhuma categoria de acomodação foi encontrada com este código: %d.\n", codigo);
+            }
+
+            fclose(catAcomBin);
+            fclose(catAcomBin_tmp);
+
+            remove("catAcom.bin");
+            rename("catAcom_tmp.bin", "catAcom.bin");
+        break;
+            
+        case 2:
+            FILE *catAcomTxt;
+            catAcomTxt = fopen("catAcom.txt", "r");
+
+            /* Verificação da abertura. */
+            if (catAcomTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *catAcomTxt_tmp;
+            catAcomTxt_tmp = fopen("catAcom_tmp.txt", "w");
+
+            /* Verificação da abertura. */
+            if (catAcomTxt_tmp == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(catAcomTxt);
+            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %f\n%*s %d\n%*s %d",
+                          &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
+                if (catAcom.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                } else {
+                    fprintf(catAcomTxt, "Código: %d\nDescrição: %s\nCategoria: %s\nDiaria: %f\nAdultos: %d\nCrianças: %d\n",
+                        catAcom.codigo, catAcom.descricao, catAcom.categoria,
+                        catAcom.valorDiaria, catAcom.qtdeAdultos, catAcom.qtdeCriancas);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhuma categoria de acomodação foi encontrada com este código: %d.\n", codigo);
+            }
+
+            fclose(catAcomTxt);
+            fclose(catAcomTxt_tmp);
+
+            remove("catAcom.txt");
+            rename("catAcom_tmp.txt", "catAcom.txt");
+        break;
     }
-    
-    if (dadoAchado == 0) {
-        printf("Nenhuma categoria de acomodação foi encontrada com este código: %d.\n", codigo);
-    }
-    
-    fclose(catAcomBin);
-    fclose(catAcomBin_tmp);
-    
-    remove("catAcom.bin");
-    rename("catAcom_tmp.bin", "catAcom.bin");
 }
 
 /* CRUD das acomodações */
@@ -747,136 +985,274 @@ void inserirAcomodacao (Acomodacao acomodacao, int opcao) {
     }
 }
 
-int lerAcomodacao (int codigo) {
-    FILE *acomodacaoBin;
-    acomodacaoBin = fopen("acomodacao.bin", "ab");
-
-    /* Verificação da abertura. */
-    if(acomodacaoBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-    
-    rewind(acomodacaoBin);
+int lerAcomodacao (int codigo, int opcao) {
     Acomodacao acomodacao;
     int encontrado = 0;
-    while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
-        if (acomodacao.codigo == codigo) {
-            printf("Código: %d\n", acomodacao.codigo);
-            printf("Descrição: %s\n", acomodacao.descricao);
-            printf("Categoria: %d\n", acomodacao.categoria);
-            printf("Facilidades: %s\n", acomodacao.facilidades);
-            printf("\n");
-            encontrado = 1;
-            return 1;
-        }
-    }
-    if (!encontrado) {
-        printf("Acomodação com código %d não encontrado.\n", codigo);
-        return 0;
-    }
     
-    /*Fechando o arquivo*/
-    fclose(acomodacaoBin);
+    switch (opcao) {
+        case 1:
+            FILE *acomodacaoBin;
+            acomodacaoBin = fopen("acomodacao.bin", "ab");
+
+            /* Verificação da abertura. */
+            if(acomodacaoBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(acomodacaoBin);
+
+            while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
+                if (acomodacao.codigo == codigo) {
+                    printf("Código: %d\n", acomodacao.codigo);
+                    printf("Descrição: %s\n", acomodacao.descricao);
+                    printf("Categoria: %d\n", acomodacao.categoria);
+                    printf("Facilidades: %s\n", acomodacao.facilidades);
+                    printf("\n");
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Acomodação com código %d não encontrado.\n", codigo);
+            }
+
+            /*Fechando o arquivo*/
+            fclose(acomodacaoBin);
+            
+            return encontrado;
+        break;
+            
+        case 2:
+            FILE *acomodacaoTxt;
+            acomodacaoTxt = fopen("acomodacao.txt", "r");
+
+            /* Verificação da abertura. */
+            if (acomodacaoTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(acomodacaoTxt);
+            while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+                          &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
+                if (acomodacao.codigo == codigo) {
+                    printf("Código: %d\n", acomodacao.codigo);
+                    printf("Descrição: %s\n", acomodacao.descricao);
+                    printf("Facilidades: %s\n", acomodacao.facilidades);
+                    printf("Categoria: %d\n", acomodacao.categoria);
+                    printf("\n");
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Acomodação com código %d não encontrado.\n", codigo);
+            }
+            
+            fclose(acomodacaoTxt);
+            
+            return encontrado;
+        break;
+    }
 }
 
-void listarAcomodacoes () {
-    FILE *acomodacaoBin;
-    acomodacaoBin = fopen("acomodacao.bin", "ab");
-
-    /* Verificação da abertura. */
-    if(acomodacaoBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-    
-    rewind(acomodacaoBin);
+void listarAcomodacoes (int opcao) {
     Acomodacao acomodacao;
-    while (fread(&acomodacao, sizeof(CategoriaAcomodacao), 1, acomodacaoBin) == 1) {
-        printf("Código: %d\n", acomodacao.codigo);
-        printf("Descrição: %s\n", acomodacao.descricao);
-        printf("Categoria: %d\n", acomodacao.categoria);
-        printf("Facilidades: %s\n", acomodacao.facilidades);
-        printf("\n");
-    }
     
-    fclose(acomodacaoBin);
+    switch (opcao) {
+        case 1:
+            FILE *acomodacaoBin;
+            acomodacaoBin = fopen("acomodacao.bin", "ab");
+
+            /* Verificação da abertura. */
+            if(acomodacaoBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(acomodacaoBin);
+
+            while (fread(&acomodacao, sizeof(CategoriaAcomodacao), 1, acomodacaoBin) == 1) {
+                printf("Código: %d\n", acomodacao.codigo);
+                printf("Descrição: %s\n", acomodacao.descricao);
+                printf("Facilidades: %s\n", acomodacao.facilidades);
+                printf("Categoria: %d\n", acomodacao.categoria);
+                printf("\n");
+            }
+
+            fclose(acomodacaoBin);
+        break;
+            
+        case 2:
+            FILE *acomodacaoTxt;
+            acomodacaoTxt = fopen("acomodacao.txt", "r");
+
+            /* Verificação da abertura. */
+            if (acomodacaoTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(acomodacaoTxt);
+            while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+                          &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
+                printf("Código: %d\n", acomodacao.codigo);
+                printf("Descrição: %s\n", acomodacao.descricao);
+                printf("Facilidades: %s\n", acomodacao.facilidades);
+                printf("Categoria: %d\n", acomodacao.categoria);
+                printf("\n");
+            }
+            
+            fclose(acomodacaoTxt);
+        break;
+    }
 }
 
-void atualizarAcomodacao (Acomodacao novosDados, int codigo) {
-    /* Como as funções lerAcomodacao e deletarAcomodacao possuem printf's dentro
-     * delas, o seguinte comando "bloqueará" o terminal para que não apareça
-     * nada quando essas funções forem chamadas (descarta-se o output). */
-    freopen("/dev/null", "w", stdout);
-    
-    if (lerAcomodacao(codigo) != 0) {
-        deletarAcomodacao(codigo);
-        
-        FILE *acomodacaoBin;
-        acomodacaoBin = fopen("acomodacao.bin", "ab");
+void atualizarAcomodacao (Acomodacao novosDados, int codigo, int opcao) {
+    switch (opcao) {
+        case 1:
+            /* Como as funções lerAcomodacao e deletarAcomodacao possuem printf's dentro
+             * delas, o seguinte comando "bloqueará" o terminal para que não apareça
+             * nada quando essas funções forem chamadas (descarta-se o output). */
+            freopen("/dev/null", "w", stdout);
 
-        /* Verificação da abertura. */
-        if(acomodacaoBin == NULL){
-            printf("Erro na abertura do arquivo.\n");
-            exit(1);
-        }
-        
-        /* O comando seguinte "desbloqueará" o terminal para que os printf's
-         * sejam exibidos novamente. */
-        freopen("/dev/tty", "w", stdout);
-        
-        fwrite(&novosDados, sizeof(Acomodacao), 1, acomodacaoBin);
-        printf("Atualizada a acomodação de código %d.", codigo);
-        
-        fclose(acomodacaoBin);
-    }
-    else {
-        printf("Acomodação de código %d não encontrado.", codigo);
+            if (lerAcomodacao(codigo, opcao) != 0) {
+                deletarAcomodacao(codigo, opcao);
+
+                FILE *acomodacaoBin;
+                acomodacaoBin = fopen("acomodacao.bin", "ab");
+
+                /* Verificação da abertura. */
+                if(acomodacaoBin == NULL){
+                    printf("Erro na abertura do arquivo.\n");
+                    exit(1);
+                }
+
+                /* O comando seguinte "desbloqueará" o terminal para que os printf's
+                 * sejam exibidos novamente. */
+                freopen("/dev/tty", "w", stdout);
+
+                fwrite(&novosDados, sizeof(Acomodacao), 1, acomodacaoBin);
+                printf("Atualizada a acomodação de código %d.", codigo);
+
+                fclose(acomodacaoBin);
+            }
+            else {
+                printf("Acomodação de código %d não encontrado.", codigo);
+            }
+        break;
+            
+        case 2:
+            /* Bloqueando o terminal. */
+            freopen("/dev/null", "w", stdout);
+            
+            if (lerAcomodacao(codigo, opcao) != 0) {
+                /* Deletando os dados antigos. */
+                deletarAcomodacao(codigo, opcao);
+                
+                /* Atualizando o hóspede. */
+                inserirAcomodacao(novosDados, opcao);
+                
+                /* Desbloqueando o terminal. */
+                freopen("/dev/tty", "w", stdout);
+                
+                printf("Atualizada a acomodação de código %d.", codigo);
+            }
+            else {
+                printf("Acomodação de código %d não encontrado.", codigo);
+            }
+        break;
     }
 }
 
-void deletarAcomodacao (int codigo) {
+void deletarAcomodacao (int codigo, int opcao) {
     int dadoAchado = 0;
-    
-    FILE *acomodacaoBin;
-    acomodacaoBin = fopen("acomodacao.bin", "ab");
-
-    /* Verificação da abertura. */
-    if(acomodacaoBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-    
-    FILE *acomodacaoBin_tmp;
-    acomodacaoBin_tmp = fopen("acomodacao_tmp.bin", "wb");
-    
-    /* Verificação da abertura. */
-    if(acomodacaoBin_tmp == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-    
-    rewind(acomodacaoBin);
     Acomodacao acomodacao;
-    while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
-        if (acomodacao.codigo == codigo) {
-            printf("Deleção concluída!");
-            dadoAchado = 1;
-        }
-        else {
-            fwrite(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin_tmp);
-        }
+    
+    switch (opcao) {
+        case 1:
+            FILE *acomodacaoBin;
+            acomodacaoBin = fopen("acomodacao.bin", "ab");
+
+            /* Verificação da abertura. */
+            if(acomodacaoBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *acomodacaoBin_tmp;
+            acomodacaoBin_tmp = fopen("acomodacao_tmp.bin", "wb");
+
+            /* Verificação da abertura. */
+            if(acomodacaoBin_tmp == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(acomodacaoBin);
+            while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
+                if (acomodacao.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                }
+                else {
+                    fwrite(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin_tmp);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhuma categoria de acomodação foi encontrada com este código: %d.\n", codigo);
+            }
+
+            fclose(acomodacaoBin);
+            fclose(acomodacaoBin_tmp);
+
+            remove("acmodacao.bin");
+            rename("acomodacao_tmp.bin", "acomodacao.bin");
+        break;
+            
+        case 2:
+            FILE *acomodacaoTxt;
+            acomodacaoTxt = fopen("acomodacao.txt", "r");
+
+            /* Verificação da abertura. */
+            if (acomodacaoTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *acomodacaoTxt_tmp;
+            acomodacaoTxt_tmp = fopen("acomodacao_tmp.txt", "w");
+
+            /* Verificação da abertura. */
+            if (acomodacaoTxt_tmp == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(acomodacaoTxt);
+            while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+                          &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
+                if (acomodacao.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                } else {
+                    fprintf(acomodacaoTxt, "Código: %d\nDescrição: %s\nFacilidades: %s\nCategoria: %d\n",
+                            acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades,
+                            acomodacao.categoria);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhuma acomodação foi encontrada com este código: %d.\n", codigo);
+            }
+
+            fclose(acomodacaoTxt);
+            fclose(acomodacaoTxt_tmp);
+
+            remove("acomodacao.txt");
+            rename("acomodacao_tmp.txt", "acomodacao.txt");
+        break;
     }
-    
-    if (dadoAchado == 0) {
-        printf("Nenhuma categoria de acomodação foi encontrada com este código: %d.\n", codigo);
-    }
-    
-    fclose(acomodacaoBin);
-    fclose(acomodacaoBin_tmp);
-    
-    remove("acmodacao.bin");
-    rename("acomodacao_tmp.bin", "acomodacao.bin");
 }
 
 /* CRUD dos produtos */
@@ -931,129 +1307,281 @@ void inserirProduto (Produto produto, int opcao) {
     }
 }
 
-int lerProduto (int codigo) {
-    FILE *produtoBin;
-    produtoBin = fopen("produto.bin", "rb");
-   
-    /* Verificação da abertura. */
-    if(produtoBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-   
-   
-    rewind(produtoBin);
+int lerProduto (int codigo, int opcao) {
     Produto produto;
     int encontrado = 0;
-    while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
-        if (produto.codigo == codigo) {
-            printf("Código: %d\n", produto.codigo);
-            printf("Descrição: %s\n", produto.descricao);
-            printf("Estoque: %d\n", produto.estoque);
-            printf("Estoque mínimo: %d\n", produto.estoqueMin);
-            printf("Preço de custo: %.2f\n", produto.precoCusto);
-            printf("Preço de venda: %.2f\n", produto.precoVenda);
-            printf("\n");
-            encontrado = 1;
-            return 1;
-        }
-    }
-    if (!encontrado) {
-        printf("Produto com código %d não encontrado.\n", codigo);
-        return 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *produtoBin;
+            produtoBin = fopen("produto.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(produtoBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+
+            rewind(produtoBin);
+
+            while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
+                if (produto.codigo == codigo) {
+                    printf("Código: %d\n", produto.codigo);
+                    printf("Descrição: %s\n", produto.descricao);
+                    printf("Estoque: %d\n", produto.estoque);
+                    printf("Estoque mínimo: %d\n", produto.estoqueMin);
+                    printf("Preço de custo: %.2f\n", produto.precoCusto);
+                    printf("Preço de venda: %.2f\n", produto.precoVenda);
+                    printf("\n");
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Produto com código %d não encontrado.\n", codigo);
+            }
+            
+            fclose(produtoBin);
+            
+            return encontrado;
+        break;
+            
+        case 2:
+            FILE *produtoTxt;
+            produtoTxt = fopen("produto.txt", "r");
+
+            /* Verificação da abertura. */
+            if (produtoTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(produtoTxt);
+            while (fscanf(produtoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d\n%*s %f\n%*s %f",
+                          &produto.codigo, produto.descricao, &produto.estoque,
+                          &produto.estoqueMin, &produto.precoCusto, &produto.precoVenda) == 6) {
+                if (produto.codigo == codigo) {
+                    printf("Código: %d\n", produto.codigo);
+                    printf("Descrição: %s\n", produto.descricao);
+                    printf("Estoque: %d\n", produto.estoque);
+                    printf("Estoque mínimo: %d\n", produto.estoqueMin);
+                    printf("Preço de custo: %.2f\n", produto.precoCusto);
+                    printf("Preço de venda: %.2f\n", produto.precoVenda);
+                    printf("\n");
+                    
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Produto com código %d não encontrado.\n", codigo);
+            }
+            
+            fclose(produtoTxt);
+            
+            return encontrado;
+        break;
     }
 }
 
-void listarProdutos() {
-    FILE *produtoBin;
-    produtoBin = fopen("produto.bin", "rb");
-   
-    rewind(produtoBin);
+void listarProdutos(int opcao) {
     Produto produto;
-    while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
-        printf("Código: %d\n", produto.codigo);
-        printf("Descrição: %s\n", produto.descricao);
-        printf("Estoque: %d\n", produto.estoque);
-        printf("Estoque mínimo: %d\n", produto.estoqueMin);
-        printf("Preço de custo: %.2f\n", produto.precoCusto);
-        printf("Preço de venda: %.2f\n", produto.precoVenda);
-        printf("\n");
+    
+    switch (opcao) {
+        case 1:
+            FILE *produtoBin;
+            produtoBin = fopen("produto.bin", "rb");
+
+            rewind(produtoBin);
+
+            while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
+                printf("Código: %d\n", produto.codigo);
+                printf("Descrição: %s\n", produto.descricao);
+                printf("Estoque: %d\n", produto.estoque);
+                printf("Estoque mínimo: %d\n", produto.estoqueMin);
+                printf("Preço de custo: %.2f\n", produto.precoCusto);
+                printf("Preço de venda: %.2f\n", produto.precoVenda);
+                printf("\n");
+            }
+
+            fclose(produtoBin);
+        break;
+            
+        case 2:
+            FILE *produtoTxt;
+            produtoTxt = fopen("produto.txt", "r");
+
+            /* Verificação da abertura. */
+            if (produtoTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(produtoTxt);
+            while (fscanf(produtoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d\n%*s %f\n%*s %f",
+                          &produto.codigo, produto.descricao, &produto.estoque,
+                          &produto.estoqueMin, &produto.precoCusto, &produto.precoVenda) == 6) {
+                printf("Código: %d\n", produto.codigo);
+                printf("Descrição: %s\n", produto.descricao);
+                printf("Estoque: %d\n", produto.estoque);
+                printf("Estoque mínimo: %d\n", produto.estoqueMin);
+                printf("Preço de custo: %.2f\n", produto.precoCusto);
+                printf("Preço de venda: %.2f\n", produto.precoVenda);
+                printf("\n");
+            }
+            
+            fclose(produtoTxt);
+        break;
     }
-   
-    fclose(produtoBin);
 }
 
-void atualizarProduto (Produto novosDados, int codigo) {
-    freopen("/dev/null", "w", stdout);
+void atualizarProduto (Produto novosDados, int codigo, int opcao) {
+    switch (opcao) {
+        case 1:
+            freopen("/dev/null", "w", stdout);
    
-    if (lerProduto(codigo) != 0) {
-        deletarProduto(codigo);
-       
-        FILE *produtoBin;
-        produtoBin = fopen("produto.bin", "ab");
+            if (lerProduto(codigo, opcao) != 0) {
+                deletarProduto(codigo, opcao);
 
-        /* Verificação da abertura. */
-        if(produtoBin == NULL){
-            printf("Erro na abertura do arquivo.\n");
-            exit(1);
-        }
-       
-        /* O comando seguinte "desbloqueará" o terminal para que os printf's
-         * sejam exibidos novamente. */
-        freopen("/dev/tty", "w", stdout);
-       
-        fwrite(&novosDados, sizeof(Produto), 1, produtoBin);
-        printf("Atualizado o produto de código %d.", codigo);
-       
-        fclose(produtoBin);
+                FILE *produtoBin;
+                produtoBin = fopen("produto.bin", "ab");
+
+                /* Verificação da abertura. */
+                if(produtoBin == NULL){
+                    printf("Erro na abertura do arquivo.\n");
+                    exit(1);
+                }
+
+                /* O comando seguinte "desbloqueará" o terminal para que os printf's
+                 * sejam exibidos novamente. */
+                freopen("/dev/tty", "w", stdout);
+
+                fwrite(&novosDados, sizeof(Produto), 1, produtoBin);
+                printf("Atualizado o produto de código %d.", codigo);
+
+                fclose(produtoBin);
+            }
+            else {
+                printf("Produto de código %d não encontrado.", codigo);
+            }
+        break;
+            
+        case 2:
+             /* Bloqueando o terminal. */
+            freopen("/dev/null", "w", stdout);
+            
+            if (lerProduto(codigo, opcao) != 0) {
+                /* Deletando os dados antigos. */
+                deletarProduto(codigo, opcao);
+                
+                /* Atualizando o hóspede. */
+                inserirProduto(novosDados, opcao);
+                
+                /* Desbloqueando o terminal. */
+                freopen("/dev/tty", "w", stdout);
+                
+                printf("Atualizada a produto de código %d.", codigo);
+            }
+            else {
+                printf("Produto de código %d não encontrado.", codigo);
+            }
+        break;
     }
-    else {
-        printf("Produto de código %d não encontrado.", codigo);
-    }
+    
+    
 }
 
-void deletarProduto(int codigo) {
+void deletarProduto(int codigo, int opcao) {
     int dadoAchado = 0;
-   
-    FILE *produtoBin;
-    produtoBin = fopen("produto.bin", "rb");
-   
-    /* Verificação da abertura. */
-    if(produtoBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-   
-    FILE *produtoBin_tmp;
-    produtoBin_tmp = fopen("produto_tmp.bin", "wb");
-   
-    /* Verificação da abertura. */
-    if(produtoBin_tmp == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-   
-    rewind(produtoBin);
     Produto produto;
-    while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
-        if (produto.codigo == codigo) {
-            printf("Deleção concluída!");
-            dadoAchado = 1;
-        }
-        else {
-            fwrite(&produto, sizeof(Produto), 1, produtoBin_tmp);
-        }
+    
+    switch (opcao) {
+        case 1:
+            FILE *produtoBin;
+            produtoBin = fopen("produto.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(produtoBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *produtoBin_tmp;
+            produtoBin_tmp = fopen("produto_tmp.bin", "wb");
+
+            /* Verificação da abertura. */
+            if(produtoBin_tmp == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(produtoBin);
+            while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
+                if (produto.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                }
+                else {
+                    fwrite(&produto, sizeof(Produto), 1, produtoBin_tmp);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhum produto foi encontrado com este código: %d.\n", codigo);
+            }
+
+            fclose(produtoBin);
+            fclose(produtoBin_tmp);
+
+            remove("produto.bin");
+            rename("produto_tmp.bin", "produto.bin");
+        break;
+            
+        case 2:
+            FILE *produtoTxt;
+            produtoTxt = fopen("produto.txt", "r");
+
+            /* Verificação da abertura. */
+            if (produtoTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *produtoTxt_tmp;
+            produtoTxt_tmp = fopen("produto_tmp.txt", "w");
+
+            /* Verificação da abertura. */
+            if (produtoTxt_tmp == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(produtoTxt);
+            while (fscanf(produtoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d\n%*s %f\n%*s %f",
+                          &produto.codigo, produto.descricao, &produto.estoque,
+                          &produto.estoqueMin, &produto.precoCusto, &produto.precoVenda) == 6) {
+                if (produto.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                } else {
+                    fprintf(produtoTxt, "Código: %d\nDescrição: %s\nEstoque: %d\nEstoqueMinimo: %d\nPrecoCusto: %f\nPrecoVenda: %d\n",
+                        produto.codigo, produto.descricao, produto.estoque,
+                        produto.estoqueMin, produto.precoCusto, produto.precoVenda);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhum produto foi encontrado com este código: %d.\n", codigo);
+            }
+
+            fclose(produtoTxt);
+            fclose(produtoTxt_tmp);
+
+            remove("produto.txt");
+            rename("produto_tmp.txt", "produto.txt");
+        break;
     }
    
-    if (dadoAchado == 0) {
-        printf("Nenhum produto foi encontrado com este código: %d.\n", codigo);
-    }
-   
-    fclose(produtoBin);
-    fclose(produtoBin_tmp);
-   
-    remove("produto.bin");
-    rename("produto_tmp.bin", "produto.bin");
+    
    
 }
 
@@ -1111,134 +1639,289 @@ void inserirFornecedor (Fornecedor fornecedor, int opcao) {
     }
 }
 
-int lerFornecedor (int codigo) {
-    FILE *fornecedorBin;
-    fornecedorBin = fopen("fornecedor.bin", "rb");
-   
-    /* Verificação da abertura. */
-    if(fornecedorBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-   
-   
-    rewind(fornecedorBin);
+int lerFornecedor (int codigo, int opcao) {
     Fornecedor fornecedor;
     int encontrado = 0;
-    while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
-        if (fornecedor.codigo == codigo) {
-            printf("Código: %d\n", fornecedor.codigo);
-            printf("Nome Fantasia: %s\n", fornecedor.nomeFantasia);
-            printf("Razão Social: %s\n", fornecedor.razaoSocial);
-            printf("Inscrição Estadual: %s\n", fornecedor.inscricaoEstadual);
-            printf("CNPJ: %s\n", fornecedor.cnpj);
-            printf("Endereço: %s\n", fornecedor.endereco);
-            printf("Telefone: %s\n", fornecedor.telefone);
-            printf("E-mail: %s\n", fornecedor.email);
-            printf("\n");
-            encontrado = 1;
-            return 1;
-        }
-    }
-    if (!encontrado) {
-        printf("Fornecedor com código %d não encontrado.\n", codigo);
-        return 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *fornecedorBin;
+            fornecedorBin = fopen("fornecedor.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(fornecedorBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+
+            rewind(fornecedorBin);
+
+            while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
+                if (fornecedor.codigo == codigo) {
+                    printf("Código: %d\n", fornecedor.codigo);
+                    printf("Nome Fantasia: %s\n", fornecedor.nomeFantasia);
+                    printf("Razão Social: %s\n", fornecedor.razaoSocial);
+                    printf("Inscrição Estadual: %s\n", fornecedor.inscricaoEstadual);
+                    printf("CNPJ: %s\n", fornecedor.cnpj);
+                    printf("Endereço: %s\n", fornecedor.endereco);
+                    printf("Telefone: %s\n", fornecedor.telefone);
+                    printf("E-mail: %s\n", fornecedor.email);
+                    printf("\n");
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Fornecedor com código %d não encontrado.\n", codigo);
+            }
+            
+            fclose(fornecedorBin);
+            
+            return encontrado;
+        break;
+            
+        case 2:
+            FILE *fornecedorTxt;
+            fornecedorTxt = fopen("fornecedor.txt", "r");
+
+            /* Verificação da abertura. */
+            if (fornecedorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(fornecedorTxt);
+            while (fscanf(fornecedorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",
+                          &fornecedor.codigo, fornecedor.nomeFantasia, fornecedor.razaoSocial,
+                          fornecedor.inscricaoEstadual, fornecedor.cnpj, fornecedor.endereco,
+                          fornecedor.telefone, fornecedor.email) == 8) {
+                if (fornecedor.codigo == codigo) {
+                    printf("Código: %d\n", fornecedor.codigo);
+                    printf("Nome Fantasia: %s\n", fornecedor.nomeFantasia);
+                    printf("Razão Social: %s\n", fornecedor.razaoSocial);
+                    printf("Inscrição Estadual: %s\n", fornecedor.inscricaoEstadual);
+                    printf("CNPJ: %s\n", fornecedor.cnpj);
+                    printf("Endereço: %s\n", fornecedor.endereco);
+                    printf("Telefone: %s\n", fornecedor.telefone);
+                    printf("E-mail: %s\n", fornecedor.email);
+                    printf("\n");
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Fornecedor com código %d não encontrado.\n", codigo);
+            }
+            
+            fclose(fornecedorTxt);
+            
+            return encontrado;
+        break;
     }
 }
 
-void listarFornecedors() {
-    FILE *fornecedorBin;
-    fornecedorBin = fopen("fornecedor.bin", "rb");
-   
-    rewind(fornecedorBin);
+void listarFornecedores(int opcao) {
     Fornecedor fornecedor;
-    while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
-        printf("Código: %d\n", fornecedor.codigo);
-            printf("Nome Fantasia: %s\n", fornecedor.nomeFantasia);
-            printf("Razão Social: %s\n", fornecedor.razaoSocial);
-            printf("Inscrição Estadual: %s\n", fornecedor.inscricaoEstadual);
-            printf("CNPJ: %s\n", fornecedor.cnpj);
-            printf("Endereço: %s\n", fornecedor.endereco);
-            printf("Telefone: %s\n", fornecedor.telefone);
-            printf("E-mail: %s\n", fornecedor.email);
-        printf("\n");
+    
+    switch (opcao) {
+        case 1:
+            FILE *fornecedorBin;
+            fornecedorBin = fopen("fornecedor.bin", "rb");
+
+            rewind(fornecedorBin);
+
+            while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
+                printf("Código: %d\n", fornecedor.codigo);
+                printf("Nome Fantasia: %s\n", fornecedor.nomeFantasia);
+                printf("Razão Social: %s\n", fornecedor.razaoSocial);
+                printf("Inscrição Estadual: %s\n", fornecedor.inscricaoEstadual);
+                printf("CNPJ: %s\n", fornecedor.cnpj);
+                printf("Endereço: %s\n", fornecedor.endereco);
+                printf("Telefone: %s\n", fornecedor.telefone);
+                printf("E-mail: %s\n", fornecedor.email);
+                printf("\n");
+            }
+
+            fclose(fornecedorBin);
+        break;
+            
+        case 2:
+            FILE *fornecedorTxt;
+            fornecedorTxt = fopen("fornecedor.txt", "r");
+
+            /* Verificação da abertura. */
+            if (fornecedorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(fornecedorTxt);
+            while (fscanf(fornecedorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",
+                          &fornecedor.codigo, fornecedor.nomeFantasia, fornecedor.razaoSocial,
+                          fornecedor.inscricaoEstadual, fornecedor.cnpj, fornecedor.endereco,
+                          fornecedor.telefone, fornecedor.email) == 8) {
+                printf("Código: %d\n", fornecedor.codigo);
+                printf("Nome Fantasia: %s\n", fornecedor.nomeFantasia);
+                printf("Razão Social: %s\n", fornecedor.razaoSocial);
+                printf("Inscrição Estadual: %s\n", fornecedor.inscricaoEstadual);
+                printf("CNPJ: %s\n", fornecedor.cnpj);
+                printf("Endereço: %s\n", fornecedor.endereco);
+                printf("Telefone: %s\n", fornecedor.telefone);
+                printf("E-mail: %s\n", fornecedor.email);
+                printf("\n");
+            }
+            
+            fclose(fornecedorTxt);
+        break;
     }
-   
-    fclose(fornecedorBin);
 }
 
-void atualizarFornecedor (Fornecedor novosDados, int codigo) {
-    freopen("/dev/null", "w", stdout);
+void atualizarFornecedor (Fornecedor novosDados, int codigo, int opcao) {
+    switch (opcao) {
+        case 1:
+            freopen("/dev/null", "w", stdout);
    
-    if (lerFornecedor(codigo) != 0) {
-        deletarFornecedor(codigo);
-       
-        FILE *fornecedorBin;
-        fornecedorBin = fopen("fornecedor.bin", "ab");
+            if (lerFornecedor(codigo, opcao) != 0) {
+                deletarFornecedor(codigo, opcao);
 
-        /* Verificação da abertura. */
-        if(fornecedorBin == NULL){
-            printf("Erro na abertura do arquivo.\n");
-            exit(1);
-        }
-       
-        /* O comando seguinte "desbloqueará" o terminal para que os printf's
-         * sejam exibidos novamente. */
-        freopen("/dev/tty", "w", stdout);
-       
-        fwrite(&novosDados, sizeof(Fornecedor), 1, fornecedorBin);
-        printf("Atualizado o fornecedor de código %d.", codigo);
-       
-        fclose(fornecedorBin);
-    }
-    else {
-        printf("Fornecedor de código %d não encontrado.", codigo);
+                FILE *fornecedorBin;
+                fornecedorBin = fopen("fornecedor.bin", "ab");
+
+                /* Verificação da abertura. */
+                if(fornecedorBin == NULL){
+                    printf("Erro na abertura do arquivo.\n");
+                    exit(1);
+                }
+
+                /* O comando seguinte "desbloqueará" o terminal para que os printf's
+                 * sejam exibidos novamente. */
+                freopen("/dev/tty", "w", stdout);
+
+                fwrite(&novosDados, sizeof(Fornecedor), 1, fornecedorBin);
+                printf("Atualizado o fornecedor de código %d.", codigo);
+
+                fclose(fornecedorBin);
+            }
+            else {
+                printf("Fornecedor de código %d não encontrado.", codigo);
+            }
+        break;
+            
+        case 2:
+             /* Bloqueando o terminal. */
+            freopen("/dev/null", "w", stdout);
+            
+            if (lerFornecedor(codigo, opcao) != 0) {
+                /* Deletando os dados antigos. */
+                deletarFornecedor(codigo, opcao);
+                
+                /* Atualizando o fornecedor. */
+                inserirFornecedor(novosDados, opcao);
+                
+                /* Desbloqueando o terminal. */
+                freopen("/dev/tty", "w", stdout);
+                
+                printf("Atualizada o fornecedor de código %d.", codigo);
+            }
+            else {
+                printf("Fornecedor de código %d não encontrado.", codigo);
+            }
+        break;
     }
 }
 
-void deletarFornecedor(int codigo) {
+void deletarFornecedor(int codigo, int opcao) {
     int dadoAchado = 0;
-   
-    FILE *fornecedorBin;
-    fornecedorBin = fopen("fornecedor.bin", "rb");
-   
-    /* Verificação da abertura. */
-    if(fornecedorBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-   
-    FILE *fornecedorBin_tmp;
-    fornecedorBin_tmp = fopen("fornecedor_tmp.bin", "wb");
-   
-    /* Verificação da abertura. */
-    if(fornecedorBin_tmp == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-   
-    rewind(fornecedorBin);
     Fornecedor fornecedor;
-    while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
-        if (fornecedor.codigo == codigo) {
-            printf("Deleção concluída!");
-            dadoAchado = 1;
-        }
-        else {
-            fwrite(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin_tmp);
-        }
+    
+    switch (opcao) {
+        case 1:
+            FILE *fornecedorBin;
+            fornecedorBin = fopen("fornecedor.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(fornecedorBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *fornecedorBin_tmp;
+            fornecedorBin_tmp = fopen("fornecedor_tmp.bin", "wb");
+
+            /* Verificação da abertura. */
+            if(fornecedorBin_tmp == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(fornecedorBin);
+
+            while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
+                if (fornecedor.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                }
+                else {
+                    fwrite(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin_tmp);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhum fornecedor foi encontrado com este código: %d.\n", codigo);
+            }
+
+            fclose(fornecedorBin);
+            fclose(fornecedorBin_tmp);
+
+            remove("fornecedor.bin");
+            rename("fornecedor_tmp.bin", "fornecedor.bin");
+        break;
+            
+        case 2:
+            FILE *fornecedorTxt;
+            fornecedorTxt = fopen("fornecedor.txt", "r");
+
+            /* Verificação da abertura. */
+            if (fornecedorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *fornecedorTxt_tmp;
+            fornecedorTxt_tmp = fopen("fornecedor_tmp.txt", "w");
+
+            /* Verificação da abertura. */
+            if (fornecedorTxt_tmp == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(fornecedorTxt);
+            while (fscanf(fornecedorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",
+                          &fornecedor.codigo, fornecedor.nomeFantasia, fornecedor.razaoSocial,
+                          fornecedor.inscricaoEstadual, fornecedor.cnpj, fornecedor.endereco,
+                          fornecedor.telefone, fornecedor.email) == 8) {
+                if (fornecedor.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                } else {
+                    fprintf(fornecedorTxt, "Código: %d\nNF: %s\nRS: %s\nIE: %s\nCNPJ: %s\nEndereço: %s\nTelefone: %s\nEmail: %s\n",
+                            fornecedor.codigo, fornecedor.nomeFantasia, fornecedor.razaoSocial,
+                            fornecedor.inscricaoEstadual, fornecedor.cnpj, fornecedor.endereco,
+                            fornecedor.telefone, fornecedor.email);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhum fornecedor foi encontrado com este código: %d.\n", codigo);
+            }
+
+            fclose(fornecedorTxt);
+            fclose(fornecedorTxt_tmp);
+
+            remove("fornecedor.txt");
+            rename("fornecedor_tmp.txt", "fornecedor.txt");
+        break;
     }
-   
-    if (dadoAchado == 0) {
-        printf("Nenhum fornecedor foi encontrado com este código: %d.\n", codigo);
-    }
-   
-    fclose(fornecedorBin);
-    fclose(fornecedorBin_tmp);
-   
-    remove("fornecedor.bin");
-    rename("fornecedor_tmp.bin", "fornecedor.bin");
-   
 }
 
 /* CRUD operadores do sistema */
@@ -1292,129 +1975,276 @@ void inserirOperador(Operador operador, int opcao) {
     }
 }
 
-int lerOperador(int codigo) {
-    FILE *operadorBin;
-    operadorBin = fopen("operador.bin", "rb");
-
-    /* Verificação da abertura. */
-    if (operadorBin == NULL) {
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-
-    rewind(operadorBin);
+int lerOperador(int codigo, int opcao) {
     Operador operador;
     int encontrado = 0;
-    while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
-        if (operador.codigo == codigo) {
-            printf("Código: %d\n", operador.codigo);
-            printf("Nome: %s\n", operador.nome);
-            printf("Usuário: %s\n", operador.usuario);
-            printf("Senha: %s\n", operador.senha);
-            printf("Permissões: %d\n", operador.permissoes);
-            printf("\n");
-            encontrado = 1;
-            return 1;
-        }
-    }
-    if (!encontrado) {
-        printf("Operador com código %d não encontrado.\n", codigo);
-        return 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *operadorBin;
+            operadorBin = fopen("operador.bin", "rb");
+
+            /* Verificação da abertura. */
+            if (operadorBin == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(operadorBin);
+
+            while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
+                if (operador.codigo == codigo) {
+                    printf("Código: %d\n", operador.codigo);
+                    printf("Nome: %s\n", operador.nome);
+                    printf("Usuário: %s\n", operador.usuario);
+                    printf("Senha: %s\n", operador.senha);
+                    printf("Permissões: %d\n", operador.permissoes);
+                    printf("\n");
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Operador com código %d não encontrado.\n", codigo);
+            }
+            
+            fclose(operadorBin);
+            
+            return encontrado;
+        break;
+            
+        case 2:
+            FILE *operadorTxt;
+            operadorTxt = fopen("operador.txt", "r");
+
+            /* Verificação da abertura. */
+            if (operadorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(operadorTxt);
+            while (fscanf(operadorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+                          &operador.codigo, operador.nome, operador.usuario,
+                          operador.senha, operador.permissoes) == 5) {
+                if (operador.codigo == codigo) {
+                    printf("Código: %d\n", operador.codigo);
+                    printf("Nome: %s\n", operador.nome);
+                    printf("Usuário: %s\n", operador.usuario);
+                    printf("Senha: %s\n", operador.senha);
+                    printf("Permissões: %d\n", operador.permissoes);
+                    printf("\n");
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Operador com código %d não encontrado.\n", codigo);
+            }
+            
+            fclose(operadorTxt);
+            
+            return encontrado;
+        break;
     }
 }
 
-void listarOperadores() {
-    FILE *operadorBin;
-    operadorBin = fopen("operador.bin", "rb");
-
-    rewind(operadorBin);
+void listarOperadores(int opcao) {
     Operador operador;
-    while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
-        printf("Código: %d\n", operador.codigo);
-        printf("Nome: %s\n", operador.nome);
-        printf("Usuário: %s\n", operador.usuario);
-        printf("Senha: %s\n", operador.senha);
-        printf("Permissões: %d\n", operador.permissoes);
-        printf("\n");
-    }
+    
+    switch (opcao) {
+        case 1:
+            FILE *operadorBin;
+            operadorBin = fopen("operador.bin", "rb");
 
-    fclose(operadorBin);
+            rewind(operadorBin);
+
+            while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
+                printf("Código: %d\n", operador.codigo);
+                printf("Nome: %s\n", operador.nome);
+                printf("Usuário: %s\n", operador.usuario);
+                printf("Senha: %s\n", operador.senha);
+                printf("Permissões: %d\n", operador.permissoes);
+                printf("\n");
+            }
+
+            fclose(operadorBin);
+        break;
+            
+        case 2:
+            FILE *operadorTxt;
+            operadorTxt = fopen("operador.txt", "r");
+
+            /* Verificação da abertura. */
+            if (operadorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(operadorTxt);
+            while (fscanf(operadorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+                          &operador.codigo, operador.nome, operador.usuario,
+                          operador.senha, operador.permissoes) == 5) {
+                printf("Código: %d\n", operador.codigo);
+                printf("Nome: %s\n", operador.nome);
+                printf("Usuário: %s\n", operador.usuario);
+                printf("Senha: %s\n", operador.senha);
+                printf("Permissões: %d\n", operador.permissoes);
+                printf("\n");
+            }
+            
+            fclose(operadorTxt);
+        break;
+    }
 }
 
-void atualizarOperador(Operador novosDados, int codigo) {
+void atualizarOperador(Operador novosDados, int codigo, int opcao) {
+    switch (opcao) {
+        case 1:
+            /* Como as funções lerOperador e deletarOperador possuem printf's dentro
+             * delas, o seguinte comando "bloqueará" o terminal para que não apareça
+             * nada quando essas funções forem chamadas (descarta-se o output). */
+            freopen("/dev/null", "w", stdout);
 
-    /* Como as funções lerOperador e deletarOperador possuem printf's dentro
-     * delas, o seguinte comando "bloqueará" o terminal para que não apareça
-     * nada quando essas funções forem chamadas (descarta-se o output). */
-    freopen("/dev/null", "w", stdout);
+            if (lerOperador(codigo, opcao) != 0) {
+                deletarOperador(codigo, opcao);
 
-    if (lerOperador(codigo) != 0) {
-        deletarOperador(codigo);
+                FILE *operadorBin;
+                operadorBin = fopen("operador.bin", "ab");
 
-        FILE *operadorBin;
-        operadorBin = fopen("operador.bin", "ab");
+                /* Verificação da abertura. */
+                if (operadorBin == NULL) {
+                    printf("Erro na abertura do arquivo.\n");
+                    exit(1);
+                }
 
-        /* Verificação da abertura. */
-        if (operadorBin == NULL) {
-            printf("Erro na abertura do arquivo.\n");
-            exit(1);
-        }
+                /* O comando seguinte "desbloqueará" o terminal para que os printf's
+                 * sejam exibidos novamente. */
+                freopen("/dev/tty", "w", stdout);
 
-        /* O comando seguinte "desbloqueará" o terminal para que os printf's
-         * sejam exibidos novamente. */
-        freopen("/dev/tty", "w", stdout);
+                fwrite(&novosDados, sizeof (Operador), 1, operadorBin);
+                printf("Atualizado o operador de código %d.", codigo);
 
-        fwrite(&novosDados, sizeof (Operador), 1, operadorBin);
-        printf("Atualizado o operador de código %d.", codigo);
+                fclose(operadorBin);
+            } else {
+                printf("operador de código %d não encontrado.", codigo);
 
-        fclose(operadorBin);
-    } else {
-        printf("operador de código %d não encontrado.", codigo);
-
+            }
+        break;
+            
+        case 2:
+             /* Bloqueando o terminal. */
+            freopen("/dev/null", "w", stdout);
+            
+            if (lerOperador(codigo, opcao) != 0) {
+                /* Deletando os dados antigos. */
+                deletarOperador(codigo, opcao);
+                
+                /* Atualizando o hóspede. */
+                inserirOperador(novosDados, opcao);
+                
+                /* Desbloqueando o terminal. */
+                freopen("/dev/tty", "w", stdout);
+                
+                printf("Atualizado o operador de código %d.", codigo);
+            }
+            else {
+                printf("Operador de código %d não encontrado.", codigo);
+            }
+        break;
     }
+    
 }
 
-void deletarOperador(int codigo) {
+void deletarOperador(int codigo, int opcao) {
     int dadoAchado = 0;
-
-    FILE *operadorBin;
-    operadorBin = fopen("operador.bin", "rb");
-
-    /* Verificação da abertura. */
-    if (operadorBin == NULL) {
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-
-    FILE *operadorBin_tmp;
-    operadorBin_tmp = fopen("operador_tmp.bin", "wb");
-
-    /* Verificação da abertura. */
-    if (operadorBin_tmp == NULL) {
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-
-    rewind(operadorBin);
     Operador operador;
-    while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
-        if (operador.codigo == codigo) {
-            printf("Deleção concluída!");
-            dadoAchado = 1;
-        } else {
-            fwrite(&operador, sizeof (Operador), 1, operadorBin_tmp);
-        }
+    
+    switch (opcao) {
+        case 1:
+            FILE *operadorBin;
+            operadorBin = fopen("operador.bin", "rb");
+
+            /* Verificação da abertura. */
+            if (operadorBin == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *operadorBin_tmp;
+            operadorBin_tmp = fopen("operador_tmp.bin", "wb");
+
+            /* Verificação da abertura. */
+            if (operadorBin_tmp == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(operadorBin);
+            while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
+                if (operador.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                } else {
+                    fwrite(&operador, sizeof (Operador), 1, operadorBin_tmp);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhum operador foi encontrado com este código: %d.\n", codigo);
+            }
+
+            fclose(operadorBin);
+            fclose(operadorBin_tmp);
+
+            remove("operador.bin");
+            rename("operador_tmp.bin", "operador.bin");
+        break;
+            
+        case 2:
+            FILE *operadorTxt;
+            operadorTxt = fopen("operador.txt", "r");
+
+            /* Verificação da abertura. */
+            if (operadorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *operadorTxt_tmp;
+            operadorTxt_tmp = fopen("operador_tmp.txt", "w");
+
+            /* Verificação da abertura. */
+            if (operadorTxt_tmp == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(operadorTxt);
+            while (fscanf(operadorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+                          &operador.codigo, operador.nome, operador.usuario,
+                          operador.senha, operador.permissoes) == 5) {
+                if (operador.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                } else {
+                    fprintf(operadorTxt, "Código: %d\nNome: %s\nUsuário: %s\nSenha: %s\nPermissões: %d\n",
+                            operador.codigo, operador.nome, operador.usuario,
+                            operador.senha, operador.permissoes);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhum operador foi encontrado com este código: %d.\n", codigo);
+            }
+
+            fclose(operadorTxt);
+            fclose(operadorTxt_tmp);
+
+            remove("operador.txt");
+            rename("operador_tmp.txt", "operador.txt");
+        break;
     }
 
-    if (dadoAchado == 0) {
-        printf("Nenhum operador foi encontrado com este código: %d.\n", codigo);
-    }
-
-    fclose(operadorBin);
-    fclose(operadorBin_tmp);
-
-    remove("operador.bin");
-    rename("operador_tmp.bin", "operador.bin");
+    
 }
 
 int validarCPF(char* cpf) {
