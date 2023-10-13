@@ -19,10 +19,10 @@ typedef struct {
 } Hospede;
 
 void inserirHospede(Hospede hospede, int opcao);
-/*char* */int lerHospede (/*Hospede *hospede,*/ int codigo, int opcao);
-void listarHospedes();
-//void atualizarHospede (Hospede novosDados, int codigo);
-//void deletarHospede(/*Hospede *hospede,*/ int codigo);
+int lerHospede (int codigo, int opcao);
+void listarHospedes(int opcao);
+void atualizarHospede (Hospede novosDados, int codigo, int opcao);
+void deletarHospede(int codigo, int opcao);
 
 /* Estruturas e funções referentes aos hotéis. */
 typedef struct {

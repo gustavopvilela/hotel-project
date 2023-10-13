@@ -248,6 +248,7 @@ int lerHospede (int codigo, int opcao) {
             rewind(hospedeTxt);
             
             /* %*s significa que a string lida será ignorada. */
+            /* Iguala-se a 9 pois o fscanf deve fazer 9 "comparações" com sucesso para a leitura ser certa. */
             while (fscanf(hospedeTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",
                           &hospede.codigo, hospede.nome, hospede.dataNascimento, hospede.endereco, hospede.cpf, hospede.telefone, hospede.email,
                           hospede.sexo, hospede.estadoCivil) == 9) {
@@ -272,37 +273,232 @@ int lerHospede (int codigo, int opcao) {
             if (!encontrado) {
                 printf("Hóspede com código %d não encontrado.\n", codigo);
             }
+            
+            return encontrado;
         break;
     }
 }
 
-void listarHospedes() {
-    FILE *hospedeBin;
-    hospedeBin = fopen("hospede.bin", "rb");
-    
-    /* Verificação da abertura. */
-    if(hospedeBin == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-    
-    rewind(hospedeBin);
+void listarHospedes(int opcao) {
     Hospede hospede;
-    while (fread(&hospede, sizeof(Hospede), 1, hospedeBin) == 1) {
-        printf("Código: %d\n", hospede.codigo);
-        printf("Nome: %s\n", hospede.nome);
-        printf("Endereço: %s\n", hospede.endereco);
-        printf("CPF: %s\n", hospede.cpf);
-        printf("Telefone: %s\n", hospede.telefone);
-        printf("E-mail: %s\n", hospede.email);
-        printf("Sexo: %s\n", hospede.sexo);
-        printf("Estado civil: %s\n", hospede.estadoCivil);
-        printf("\n");
-    }
     
-    fclose(hospedeBin);
+    switch (opcao) {
+        case 1:
+            FILE *hospedeBin;
+            hospedeBin = fopen("hospede.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(hospedeBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(hospedeBin);
+            while (fread(&hospede, sizeof(Hospede), 1, hospedeBin) == 1) {
+                printf("Código: %d\n", hospede.codigo);
+                printf("Nome: %s\n", hospede.nome);
+                printf("Endereço: %s\n", hospede.endereco);
+                printf("CPF: %s\n", hospede.cpf);
+                printf("Telefone: %s\n", hospede.telefone);
+                printf("E-mail: %s\n", hospede.email);
+                printf("Sexo: %s\n", hospede.sexo);
+                printf("Estado civil: %s\n", hospede.estadoCivil);
+                printf("\n");
+            }
+
+            fclose(hospedeBin);
+        break;
+        
+        case 2:
+            FILE *hospedeTxt;
+            hospedeTxt = fopen("hospede.txt", "r");
+
+            /* Verificação da abertura. */
+            if (hospedeTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(hospedeTxt);
+            while (fscanf(hospedeTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",
+                          &hospede.codigo, hospede.nome, hospede.dataNascimento, hospede.endereco, hospede.cpf, hospede.telefone, hospede.email,
+                          hospede.sexo, hospede.estadoCivil) == 9) {
+                printf("Código: %d\n", hospede.codigo);
+                printf("Nome: %s\n", hospede.nome);
+                printf("Endereço: %s\n", hospede.endereco);
+                printf("CPF: %s\n", hospede.cpf);
+                printf("Telefone: %s\n", hospede.telefone);
+                printf("E-mail: %s\n", hospede.email);
+                printf("Sexo: %s\n", hospede.sexo);
+                printf("Estado civil: %s\n", hospede.estadoCivil);
+                printf("Data de nascimento: %s\n", hospede.dataNascimento);
+                printf("\n");
+            }
+        break;
+    }
 }
 
+void atualizarHospede (Hospede novosDados, int codigo, int opcao) {
+    switch (opcao) {
+        case 1:
+            /* Como as funções lerHospede e deletarHospede possuem printf's dentro
+            * delas, o seguinte comando "bloqueará" o terminal para que não apareça
+            * nada quando essas funções forem chamadas (descarta-se o output). */
+           freopen("/dev/null", "w", stdout);
+
+           /* O parâmetro "opcao" serve para chamar as outras funções,
+            * uma vez que entrará "no mesmo tipo de arquivo" a outra função. */
+           if (lerHospede(codigo, opcao) != 0) {
+               deletarHospede(codigo, opcao);
+
+               FILE *hospedeBin;
+               hospedeBin = fopen("hospede.bin", "ab");
+
+               /* Verificação da abertura. */
+               if(hospedeBin == NULL){
+                   printf("Erro na abertura do arquivo.\n");
+                   exit(1);
+               }
+
+               /* O comando seguinte "desbloqueará" o terminal para que os printf's
+                * sejam exibidos novamente. */
+               freopen("/dev/tty", "w", stdout);
+
+               fwrite(&novosDados, sizeof(Hospede), 1, hospedeBin);
+               printf("Atualizado o hóspede de código %d.", codigo);
+
+               fclose(hospedeBin);
+           }
+           else {
+               printf("Hóspede de código %d não encontrado.", codigo);
+           }
+        break;
+        
+        case 2:
+            /* Bloqueando o terminal. */
+            freopen("/dev/null", "w", stdout);
+            
+            if (lerHospede(codigo, opcao) != 0) {
+                deletarHospede(codigo, opcao);
+                
+                FILE *hospedeTxt;
+                hospedeTxt = fopen("hospede.txt", "a");
+
+                /* Verificação da abertura. */
+                if(hospedeTxt == NULL){
+                    printf("Erro na abertura do arquivo.\n");
+                    exit(1);
+                }
+                
+                /* Desbloqueando o terminal. */
+                freopen("/dev/tty", "w", stdout);
+                
+                /* Atualizando o hóspede. */
+                fprintf(hospedeTxt, "Código: %d\nNome: %s\nNascimento: %s\n"
+                        "Endereço: %s\nCPF: %s\nTelefone: %s\nE-mail: %s\n"
+                        "Sexo: %s\nEC: %s\n",
+                        novosDados.codigo, novosDados.nome, novosDados.dataNascimento,
+                        novosDados.endereco, novosDados.cpf, novosDados.telefone,
+                        novosDados.email, novosDados.sexo, novosDados.estadoCivil);
+                
+                printf("Atualizado o hóspede de código %d.", codigo);
+                
+                fclose(hospedeTxt);
+            }
+            else {
+                printf("Hóspede de código %d não encontrado.", codigo);
+            }
+        break;
+    }
+}
+
+void deletarHospede(int codigo, int opcao) {
+    int dadoAchado = 0;
+    Hospede hospede;
+    
+    switch (opcao) {
+        case 1:
+            FILE *hospedeBin;
+            hospedeBin = fopen("hospede.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(hospedeBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *hospedeBin_tmp;
+            hospedeBin_tmp = fopen("hospede_tmp.bin", "wb");
+
+            /* Verificação da abertura. */
+            if(hospedeBin_tmp == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(hospedeBin);
+            while (fread(&hospede, sizeof(Hospede), 1, hospedeBin) == 1) {
+                if (hospede.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                }
+                else {
+                    fwrite(&hospede, sizeof(Hospede), 1, hospedeBin_tmp);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhum hóspede foi encontrado com este código: %d.\n", codigo);
+            }
+
+            fclose(hospedeBin);
+            fclose(hospedeBin_tmp);
+
+            remove("hospede.bin");
+            rename("hospede_tmp.bin", "hospede.bin");
+        break;
+        
+        case 2:
+            FILE *hospedeTxt;
+            hospedeTxt = fopen("hospede.txt", "r");
+
+            /* Verificação da abertura. */
+            if (hospedeTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            FILE *hospedeTxt_tmp;
+            hospedeTxt_tmp = fopen("hospede_tmp.txt", "w");
+
+            /* Verificação da abertura. */
+            if (hospedeTxt_tmp == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(hospedeTxt);
+            while (fscanf(hospedeTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]", &hospede.codigo, hospede.nome, hospede.dataNascimento, hospede.endereco, hospede.cpf, hospede.telefone, hospede.email, hospede.sexo, hospede.estadoCivil) == 9) {
+                if (hospede.codigo == codigo) {
+                    printf("Deleção concluída!");
+                    dadoAchado = 1;
+                } else {
+                    fprintf(hospedeTxt_tmp, "Código: %d\nNome: %s\nNascimento: %s\nEndereço: %s\nCPF: %s\nTelefone: %s\nE-mail: %s\nSexo: %s\nEC: %s\n", hospede.codigo, hospede.nome, hospede.dataNascimento, hospede.endereco, hospede.cpf, hospede.telefone, hospede.email, hospede.sexo, hospede.estadoCivil);
+                }
+            }
+
+            if (dadoAchado == 0) {
+                printf("Nenhum hóspede foi encontrado com este código: %d.\n", codigo);
+            }
+
+            fclose(hospedeTxt);
+            fclose(hospedeTxt_tmp);
+
+            remove("hospede.txt");
+            rename("hospede_tmp.txt", "hospede.txt");
+        break;
+    }
+}
 
 /* CRUD das categorias de acomodações. */
 void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom) {
