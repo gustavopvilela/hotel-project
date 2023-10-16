@@ -289,6 +289,20 @@ void inserirHospede (Hospede hospede, int opcao) {
     }
 }
 
+void inserirHospedeMemoria(Hospede dados, Hospede **hospedeArray, int *contador) {
+    *hospedeArray = (Hospede *)realloc(*hospedeArray, (*contador + 1) * sizeof(Hospede));
+
+    if (*hospedeArray == NULL) {
+        // Trate o erro de alocação, se necessário
+        return;
+    }
+
+    // Preencha os dados do novo hóspede
+    (*hospedeArray)[*contador] = dados;
+    (*contador)++;
+}
+
+
 int lerHospede (int codigo, int opcao) {
     Hospede hospede;
     int encontrado = 0;
@@ -372,6 +386,20 @@ int lerHospede (int codigo, int opcao) {
         break;
     }
 }
+
+int lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo) {
+    for (int i = 0; i < tamanho; i++) {
+        if (listaHospedes[i].codigo == codigo) {
+            printf("Código: %d\n", listaHospedes[i].codigo);
+            printf("Nome: %s\n", listaHospedes[i].nome);
+            // ... (outros campos)
+            printf("\n");
+            return 1; // Encontrou o hóspede
+        }
+    }
+    return 0; // Não encontrou o hóspede
+}
+
 
 void listarHospedes(int opcao) {
     Hospede hospede;
@@ -609,7 +637,7 @@ void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom, int opcao) {
 
             /* Inserindo no arquivo binário. */
             if (!feof(catAcomBin)) {
-                if (lerCategoriaAcomodacao(catAcom.codigo) == 0) {
+                if (lerCategoriaAcomodacao(catAcom.codigo, opcao) == 0) {
                     fwrite(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin);
                 }
                 else {
@@ -638,7 +666,7 @@ void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom, int opcao) {
             
             /* Inserindo no arquivo de texto. */
             if (!feof(catAcomTxt)) {
-                fprintf(catAcomTxt, "Código: %d\nDescrição: %s\nCategoria: %s\nDiaria: %f\nAdultos: %d\nCrianças: %d\n",
+                fprintf(catAcomTxt, "Código: %d\nDescrição: %s\nCategoria: %d\nDiaria: %f\nAdultos: %d\nCrianças: %d\n",
                         catAcom.codigo, catAcom.descricao, catAcom.categoria,
                         catAcom.valorDiaria, catAcom.qtdeAdultos, catAcom.qtdeCriancas);
             }
@@ -674,7 +702,7 @@ int lerCategoriaAcomodacao (int codigo, int opcao) {
                 if (catAcom.codigo == codigo) {
                     printf("Código: %d\n", catAcom.codigo);
                     printf("Descrição: %s\n", catAcom.descricao);
-                    printf("Categoria: %s\n", catAcom.categoria);
+                    printf("Categoria: %d\n", catAcom.categoria);
                     printf("Valor da diária: %f\n", catAcom.valorDiaria);
                     printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
                     printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
@@ -703,12 +731,12 @@ int lerCategoriaAcomodacao (int codigo, int opcao) {
             }
             
             rewind(catAcomTxt);
-            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %f\n%*s %d\n%*s %d",
+            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %f\n%*s %d\n%*s %d",
                           &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
                 if (catAcom.codigo == codigo) {
                     printf("Código: %d\n", catAcom.codigo);
                     printf("Descrição: %s\n", catAcom.descricao);
-                    printf("Categoria: %s\n", catAcom.categoria);
+                    printf("Categoria: %d\n", catAcom.categoria);
                     printf("Valor da diária: %f\n", catAcom.valorDiaria);
                     printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
                     printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
@@ -748,7 +776,7 @@ void listarCategoriaAcomodacao (int opcao) {
             while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
                 printf("Código: %d\n", catAcom.codigo);
                 printf("Descrição: %s\n", catAcom.descricao);
-                printf("Categoria: %s\n", catAcom.categoria);
+                printf("Categoria: %d\n", catAcom.categoria);
                 printf("Valor da diária: %f\n", catAcom.valorDiaria);
                 printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
                 printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
@@ -769,11 +797,11 @@ void listarCategoriaAcomodacao (int opcao) {
             }
             
             rewind(catAcomTxt);
-            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %f\n%*s %d\n%*s %d",
+            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %f\n%*s %d\n%*s %d",
                           &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
                 printf("Código: %d\n", catAcom.codigo);
                 printf("Descrição: %s\n", catAcom.descricao);
-                printf("Categoria: %s\n", catAcom.categoria);
+                printf("Categoria: %d\n", catAcom.categoria);
                 printf("Valor da diária: %f\n", catAcom.valorDiaria);
                 printf("Quantidade de adultos: %d\n", catAcom.qtdeAdultos);
                 printf("Quantidade de crianças: %d\n", catAcom.qtdeCriancas);
@@ -908,13 +936,13 @@ void deletarCategoriaAcomodacao (int codigo, int opcao) {
             }
             
             rewind(catAcomTxt);
-            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %f\n%*s %d\n%*s %d",
+            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %f\n%*s %d\n%*s %d",
                           &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
                 if (catAcom.codigo == codigo) {
                     printf("Deleção concluída!");
                     dadoAchado = 1;
                 } else {
-                    fprintf(catAcomTxt, "Código: %d\nDescrição: %s\nCategoria: %s\nDiaria: %f\nAdultos: %d\nCrianças: %d\n",
+                    fprintf(catAcomTxt, "Código: %d\nDescrição: %s\nCategoria: %d\nDiaria: %f\nAdultos: %d\nCrianças: %d\n",
                         catAcom.codigo, catAcom.descricao, catAcom.categoria,
                         catAcom.valorDiaria, catAcom.qtdeAdultos, catAcom.qtdeCriancas);
                 }
@@ -971,7 +999,7 @@ void inserirAcomodacao (Acomodacao acomodacao, int opcao) {
             
             /* Inserindo no arquivo de texto. */
             if (!feof(acomodacaoTxt)) {
-                fprintf(acomodacaoTxt, "Código: %d\nDescrição: %s\nFacilidades: %s\nCategoria: %d\n",
+                fprintf(acomodacaoTxt, "Código: %d\nDescrição: %s\nFacilidades: %d\nCategoria: %d\n",
                         acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades,
                         acomodacao.categoria);
             }
@@ -1007,7 +1035,7 @@ int lerAcomodacao (int codigo, int opcao) {
                     printf("Código: %d\n", acomodacao.codigo);
                     printf("Descrição: %s\n", acomodacao.descricao);
                     printf("Categoria: %d\n", acomodacao.categoria);
-                    printf("Facilidades: %s\n", acomodacao.facilidades);
+                    printf("Facilidades: %d\n", acomodacao.facilidades);
                     printf("\n");
                     encontrado = 1;
                 }
@@ -1033,12 +1061,12 @@ int lerAcomodacao (int codigo, int opcao) {
             }
             
             rewind(acomodacaoTxt);
-            while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+            while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
                           &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
                 if (acomodacao.codigo == codigo) {
                     printf("Código: %d\n", acomodacao.codigo);
                     printf("Descrição: %s\n", acomodacao.descricao);
-                    printf("Facilidades: %s\n", acomodacao.facilidades);
+                    printf("Facilidades: %d\n", acomodacao.facilidades);
                     printf("Categoria: %d\n", acomodacao.categoria);
                     printf("\n");
                     encontrado = 1;
@@ -1061,7 +1089,7 @@ void listarAcomodacoes (int opcao) {
     switch (opcao) {
         case 1:
             FILE *acomodacaoBin;
-            acomodacaoBin = fopen("acomodacao.bin", "ab");
+            acomodacaoBin = fopen("acomodacao.bin", "rb");
 
             /* Verificação da abertura. */
             if(acomodacaoBin == NULL){
@@ -1071,10 +1099,10 @@ void listarAcomodacoes (int opcao) {
 
             rewind(acomodacaoBin);
 
-            while (fread(&acomodacao, sizeof(CategoriaAcomodacao), 1, acomodacaoBin) == 1) {
+            while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
                 printf("Código: %d\n", acomodacao.codigo);
                 printf("Descrição: %s\n", acomodacao.descricao);
-                printf("Facilidades: %s\n", acomodacao.facilidades);
+                printf("Facilidades: %d\n", acomodacao.facilidades);
                 printf("Categoria: %d\n", acomodacao.categoria);
                 printf("\n");
             }
@@ -1093,11 +1121,11 @@ void listarAcomodacoes (int opcao) {
             }
             
             rewind(acomodacaoTxt);
-            while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+            while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
                           &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
                 printf("Código: %d\n", acomodacao.codigo);
                 printf("Descrição: %s\n", acomodacao.descricao);
-                printf("Facilidades: %s\n", acomodacao.facilidades);
+                printf("Facilidades: %d\n", acomodacao.facilidades);
                 printf("Categoria: %d\n", acomodacao.categoria);
                 printf("\n");
             }
@@ -1230,13 +1258,13 @@ void deletarAcomodacao (int codigo, int opcao) {
             }
             
             rewind(acomodacaoTxt);
-            while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+            while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
                           &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
                 if (acomodacao.codigo == codigo) {
                     printf("Deleção concluída!");
                     dadoAchado = 1;
                 } else {
-                    fprintf(acomodacaoTxt, "Código: %d\nDescrição: %s\nFacilidades: %s\nCategoria: %d\n",
+                    fprintf(acomodacaoTxt, "Código: %d\nDescrição: %s\nFacilidades: %d\nCategoria: %d\n",
                             acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades,
                             acomodacao.categoria);
                 }

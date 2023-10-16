@@ -19,7 +19,9 @@ typedef struct {
 } Hospede;
 
 void inserirHospede(Hospede hospede, int opcao);
+void inserirHospedeMemoria(Hospede dados, Hospede **hospedeArray, int *contador);
 int lerHospede (int codigo, int opcao);
+int lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo);
 void listarHospedes(int opcao);
 void atualizarHospede (Hospede novosDados, int codigo, int opcao);
 void deletarHospede(int codigo, int opcao);
@@ -49,7 +51,7 @@ void deletarHotel ();
 typedef struct {
     int codigo;
     char descricao[300];
-    char categoria[100];
+    int categoria;
     float valorDiaria;
     int qtdeAdultos;
     int qtdeCriancas;
@@ -58,21 +60,21 @@ typedef struct {
 void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom, int opcao);
 int lerCategoriaAcomodacao (int codigo, int opcao);
 void listarCategoriaAcomodacao (int opcao);
-void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo);
+void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo, int opcao);
 void deletarCategoriaAcomodacao (int codigo, int opcao);
 
 /* Estruturas e funções referentes às acomodações. */
 typedef struct {
     int codigo;
     char descricao[300];
-    char* facilidades;
+    int facilidades;
     int categoria; /* Chave estrangeira de CategoriaAcomodacao. */
 } Acomodacao;
 
 void inserirAcomodacao (Acomodacao acomodacao, int opcao);
 int lerAcomodacao (int codigo, int opcao);
 void listarAcomodacoes (int opcao);
-void atualizarAcomodacao (Acomodacao novosDados, int codigo);
+void atualizarAcomodacao (Acomodacao novosDados, int codigo, int opcao);
 void deletarAcomodacao (int codigo, int opcao);
 
 /* Estruturas e funções referentes aos produtos. */
@@ -88,7 +90,7 @@ typedef struct {
 void inserirProduto(Produto produto, int opcao);
 int lerProduto (int codigo, int opcao);
 void listarProduto(int opcao);
-void atualizarProduto (Produto novosDados, int codigo);
+void atualizarProduto (Produto novosDados, int codigo, int opcao);
 void deletarProduto(int codigo, int opcao);
 
 /* Estruturas e funções referentes aos fornecedores */
@@ -106,7 +108,7 @@ typedef struct {
 void inserirFornecedor(Fornecedor fornecedor, int opcao);
 int lerFornecedor(int codigo, int opcao);
 void listarFornecedores(int opcao);
-void atualizarFornecedor(Fornecedor novosDados, int codigo);
+void atualizarFornecedor(Fornecedor novosDados, int codigo, int opcao);
 void deletarFornecedor(int codigo, int opcao);
 
 /* Estruturas e funções referentes aos operadores do sistema. */
@@ -121,7 +123,7 @@ typedef struct {
 void inserirOperador(Operador operador, int opcao);
 int lerOperador(int codigo, int opcao);
 void listarOperadores(int opcao);
-void atualizarOperador(Operador novosDados, int codigo);
+void atualizarOperador(Operador novosDados, int codigo, int opcao);
 void deletarOperador(int codigo, int opcao);
 
 int validarCPF (char* cpf);
