@@ -293,11 +293,11 @@ void inserirHospedeMemoria(Hospede dados, Hospede **hospedeArray, int *contador)
     *hospedeArray = (Hospede *)realloc(*hospedeArray, (*contador + 1) * sizeof(Hospede));
 
     if (*hospedeArray == NULL) {
-        // Trate o erro de alocação, se necessário
-        return;
+        printf("Memória insuficiente!");
+        exit(1);
     }
 
-    // Preencha os dados do novo hóspede
+    /* Preenchendo os dados do novo hóspede */
     (*hospedeArray)[*contador] = dados;
     (*contador)++;
 }
@@ -392,7 +392,13 @@ int lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo) {
         if (listaHospedes[i].codigo == codigo) {
             printf("Código: %d\n", listaHospedes[i].codigo);
             printf("Nome: %s\n", listaHospedes[i].nome);
-            // ... (outros campos)
+            printf("Endereço: %s\n", listaHospedes[i].endereco);
+            printf("CPF: %s\n", listaHospedes[i].cpf);
+            printf("Telefone: %s\n", listaHospedes[i].telefone);
+            printf("E-mail: %s\n", listaHospedes[i].email);
+            printf("Sexo: %s\n", listaHospedes[i].sexo);
+            printf("Estado civil: %s\n", listaHospedes[i].estadoCivil);
+            printf("Data de nascimento: %s\n", listaHospedes[i].dataNascimento);
             printf("\n");
             return 1; // Encontrou o hóspede
         }
