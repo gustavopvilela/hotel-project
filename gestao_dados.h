@@ -23,8 +23,11 @@ void inserirHospedeMemoria(Hospede dados, Hospede **hospedeArray, int *contador)
 int lerHospede (int codigo, int opcao);
 int lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo);
 void listarHospedes(int opcao);
+void listarHospedesMemoria (Hospede *listaHospedes, int tamanho);
 void atualizarHospede (Hospede novosDados, int codigo, int opcao);
+void atualizarHospedeMemoria (Hospede *listaHospedes, Hospede novosDados, int codigo, int tamanho);
 void deletarHospede(int codigo, int opcao);
+void deletarHospedeMemoria (Hospede **listaHospedes, int *tamanho, int codigo);
 
 /* Estruturas e funções referentes aos hotéis. */
 typedef struct {

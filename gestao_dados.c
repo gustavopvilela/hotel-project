@@ -290,14 +290,25 @@ void inserirHospede (Hospede hospede, int opcao) {
 }
 
 void inserirHospedeMemoria(Hospede dados, Hospede **hospedeArray, int *contador) {
+    /* Aqui, devemos realocar a memória para que o ponteiro comporte mais um
+     * hóspede. O comando primeiro pega que ponteiro se quer mudar e, depois,
+     * o tamanho a mais, que no caso é a quantidade total de hóspede mais um
+     * (que é o novo que vamos armazenar), multiplicado pelo tamanho da struct
+     * do hóspede. Como estamos utilizando apenas um asterisco, significa que
+     * estamos acessando o endereço de memória de hospedeArray, e não a
+     * informação que nele contém, pois, dessa forma, usaríamos os dois asteriscos. */
     *hospedeArray = (Hospede *)realloc(*hospedeArray, (*contador + 1) * sizeof(Hospede));
 
+    /* Caso o ponteiro retorne NULL, significa que já não há mais espaço. */
     if (*hospedeArray == NULL) {
         printf("Memória insuficiente!");
         exit(1);
     }
 
-    /* Preenchendo os dados do novo hóspede */
+    /* Se aqui executar, significa que há espaço na memória, e colocamos os
+     * dados na posição que o contador está e, depois, aumentamos em uma
+     * unidade o contador. Isso permite que leiamos as informações
+     * posteriormente sem o ocorrimento de erros. */
     (*hospedeArray)[*contador] = dados;
     (*contador)++;
 }
@@ -466,6 +477,21 @@ void listarHospedes(int opcao) {
     }
 }
 
+void listarHospedesMemoria (Hospede *listaHospedes, int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        printf("Código: %d\n", listaHospedes[i].codigo);
+        printf("Nome: %s\n", listaHospedes[i].nome);
+        printf("Endereço: %s\n", listaHospedes[i].endereco);
+        printf("CPF: %s\n", listaHospedes[i].cpf);
+        printf("Telefone: %s\n", listaHospedes[i].telefone);
+        printf("E-mail: %s\n", listaHospedes[i].email);
+        printf("Sexo: %s\n", listaHospedes[i].sexo);
+        printf("Estado civil: %s\n", listaHospedes[i].estadoCivil);
+        printf("Data de nascimento: %s\n", listaHospedes[i].dataNascimento);
+        printf("\n");
+    }
+}
+
 void atualizarHospede (Hospede novosDados, int codigo, int opcao) {
     switch (opcao) {
         case 1:
@@ -537,6 +563,22 @@ void atualizarHospede (Hospede novosDados, int codigo, int opcao) {
                 printf("Hóspede de código %d não encontrado.", codigo);
             }
         break;
+    }
+}
+
+void atualizarHospedeMemoria (Hospede *listaHospedes, Hospede novosDados, int codigo, int tamanho) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaHospedes[i].codigo == codigo) {
+            listaHospedes[i] = novosDados;
+            encontrado = 1;
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Hóspede não encontrado!");
     }
 }
 
@@ -625,6 +667,37 @@ void deletarHospede(int codigo, int opcao) {
             remove("hospede.txt");
             rename("hospede_tmp.txt", "hospede.txt");
         break;
+    }
+}
+
+void deletarHospedeMemoria (Hospede **listaHospedes, int *tamanho, int codigo) {
+    int encontrado = 0;
+    
+    /* Primeiro, deve-se achar o hóspede que se quer deletar. */
+    for (int i = 0; i < *tamanho; i++) {
+        /* Agora que foi achado, cada hóspede abaixo dele será movido uma
+         * posição para cima, e a última posição do vetor será liberada da
+         * memória. */
+        if ((*listaHospedes)[i].codigo == codigo) {
+            for (int j = i; j < (*tamanho) - 1; j++) {
+                (*listaHospedes)[j] = (*listaHospedes)[j+1];
+            }
+            
+            encontrado = 1;
+            
+            (*tamanho)--;
+            *listaHospedes = (Hospede *)realloc(*listaHospedes, (*tamanho) * sizeof(Hospede));
+            
+            if (*listaHospedes == NULL) {
+                printf("Erro na alocação da memória.");
+            }
+            
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Hóspdede não encontrado.");
     }
 }
 
