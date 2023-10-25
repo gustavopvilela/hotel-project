@@ -670,7 +670,7 @@ void deletarHospede(int codigo, int opcao) {
     }
 }
 
-void deletarHospedeMemoria (Hospede **listaHospedes, int *tamanho, int codigo) {
+void deletarHospedeMemoria (Hospede *listaHospedes, int *tamanho, int codigo) {
     int encontrado = 0;
     
     /* Primeiro, deve-se achar o hóspede que se quer deletar. */
@@ -678,17 +678,20 @@ void deletarHospedeMemoria (Hospede **listaHospedes, int *tamanho, int codigo) {
         /* Agora que foi achado, cada hóspede abaixo dele será movido uma
          * posição para cima, e a última posição do vetor será liberada da
          * memória. */
-        if ((*listaHospedes)[i].codigo == codigo) {
+        if (listaHospedes[i].codigo == codigo) {
+            /* Utilizamos tamanho - 1 pois depois da última posição não há mais
+             * dados para serem "puxados" para cima, uma vez que esta última
+             * posição será alocada na que seria a penúltima.*/
             for (int j = i; j < (*tamanho) - 1; j++) {
-                (*listaHospedes)[j] = (*listaHospedes)[j+1];
+                (listaHospedes)[j] = (listaHospedes)[j+1];
             }
             
             encontrado = 1;
             
             (*tamanho)--;
-            *listaHospedes = (Hospede *)realloc(*listaHospedes, (*tamanho) * sizeof(Hospede));
+            listaHospedes = (Hospede *)realloc(listaHospedes, (*tamanho) * sizeof(Hospede));
             
-            if (*listaHospedes == NULL) {
+            if (listaHospedes == NULL) {
                 printf("Erro na alocação da memória.");
             }
             
@@ -697,7 +700,7 @@ void deletarHospedeMemoria (Hospede **listaHospedes, int *tamanho, int codigo) {
     }
     
     if (encontrado == 0) {
-        printf("Hóspdede não encontrado.");
+        printf("Deleção não concluída. Hóspdede não encontrado.");
     }
 }
 

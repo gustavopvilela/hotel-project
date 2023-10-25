@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
 
     Hospede hospede;
 
-    // Preencha os dados do primeiro hóspede
+    
     hospede.codigo = 1;
     strcpy(hospede.cpf, "12345678901");
     strcpy(hospede.dataNascimento, "25/12/2008");
@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
 
     inserirHospedeMemoria(hospede, &hospedeArray, &contador);
 
-    // Preencha os dados do segundo hóspede
+   
     hospede.codigo = 2;
     strcpy(hospede.cpf, "12345678901");
     strcpy(hospede.dataNascimento, "25/12/2008");
@@ -100,19 +100,19 @@ int main(int argc, char** argv) {
     inserirHospedeMemoria(hospede, &hospedeArray, &contador);
     
     printf("\n\nACHANDO O HÓSPEDE DE CÓDIGO 1");
-    // Agora você pode procurar um hóspede pelo código
+    
     int codigoProcurado = 1;
     int resultado = lerHospedeMemoria(hospedeArray, contador, codigoProcurado);
 
-    //printf("\n\nATUALIZANDO O HÓSPEDE\n\n");
-    //atualizarHospedeMemoria(hospedeArray, hospede, 1, contador);
+    printf("\n\nATUALIZANDO O HÓSPEDE\n\n");
+    atualizarHospedeMemoria(hospedeArray, hospede, 1, contador);
     
-    printf("\n\nDELETANDO O HÓSPEDE DE CÓDIGO 1");
+    //printf("\n\nDELETANDO O HÓSPEDE DE CÓDIGO 1");
     
-    deletarHospedeMemoria(&hospedeArray, &contador, 1);
+    //deletarHospedeMemoria(hospedeArray, &contador, 1);
     
     
-    printf("\n\nLISTA DEPOIS DA DELEÇÃO");
+    printf("\n\nLISTA ATUALIZADA");
     listarHospedesMemoria(hospedeArray, contador);
 
     
