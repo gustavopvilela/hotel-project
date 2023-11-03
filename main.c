@@ -114,6 +114,8 @@ int main(int argc, char** argv) {
     
     printf("\n\nLISTA ATUALIZADA");
     listarHospedesMemoria(hospedeArray, contador);
+    
+    free(hospedeArray);
 
     
     return (EXIT_SUCCESS);

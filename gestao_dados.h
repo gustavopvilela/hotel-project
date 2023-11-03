@@ -19,9 +19,9 @@ typedef struct {
 } Hospede;
 
 void inserirHospede(Hospede hospede, int opcao);
-void inserirHospedeMemoria(Hospede dados, Hospede **hospedeArray, int *contador);
+void inserirHospedeMemoria(Hospede dados, Hospede **listaHospedes, int *contador);
 int lerHospede (int codigo, int opcao);
-int lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo);
+void lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo);
 void listarHospedes(int opcao);
 void listarHospedesMemoria (Hospede *listaHospedes, int tamanho);
 void atualizarHospede (Hospede novosDados, int codigo, int opcao);
@@ -46,9 +46,14 @@ typedef struct {
 } Hotel;
 
 void inserirHotel (Hotel hotel, int opcao);
-void listarHotel ();
+void inserirHotelMemoria(Hotel dados, Hotel **listaHotel, int *contador);
+void listarHotel (int opcao);
+void listarHotelMemoria (Hotel *listaHotel, int tamanho);
 void atualizarHotel (Hotel novosDados, int opcao);
-void deletarHotel ();
+void atualizarHotelMemoria (Hotel *listaHotel, Hotel novosDados, int tamanho);
+void deletarHotel (int opcao);
+void deletarHotelMemoria (Hotel *listaHotel, int *tamanho);
+
 
 /* Estruturas e funções referentes às categorias de acomodações. */
 typedef struct {
@@ -61,10 +66,15 @@ typedef struct {
 } CategoriaAcomodacao;
 
 void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom, int opcao);
+void inserirCategoriaAcomodacaoMemoria(CategoriaAcomodacao dados, CategoriaAcomodacao **listaCatAcom, int *contador);
 int lerCategoriaAcomodacao (int codigo, int opcao);
+void lerCategoriaAcomodacaoMemoria(CategoriaAcomodacao *listaCatAcom, int tamanho, int codigo);
 void listarCategoriaAcomodacao (int opcao);
+void listarCategoriaAcomodacaoMemoria (CategoriaAcomodacao *listaCatAcom, int tamanho);
 void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo, int opcao);
+void atualizarCategoriaAcomodacaoMemoria (CategoriaAcomodacao *listaCatAcom, CategoriaAcomodacao novosDados, int codigo, int tamanho);
 void deletarCategoriaAcomodacao (int codigo, int opcao);
+void deletarCategoriaAcomodacaoMemoria (CategoriaAcomodacao *listaCatAcom, int *tamanho, int codigo);
 
 /* Estruturas e funções referentes às acomodações. */
 typedef struct {
@@ -75,10 +85,15 @@ typedef struct {
 } Acomodacao;
 
 void inserirAcomodacao (Acomodacao acomodacao, int opcao);
+void inserirAcomodacaoMemoria(Acomodacao dados, Acomodacao **listaAcom, int *contador);
 int lerAcomodacao (int codigo, int opcao);
+void lerAcomodacaoMemoria(Acomodacao *listaAcom, int tamanho, int codigo);
 void listarAcomodacoes (int opcao);
+void listarAcomodacaoMemoria(Acomodacao *listaAcom, int tamanho);
 void atualizarAcomodacao (Acomodacao novosDados, int codigo, int opcao);
+void atualizarAcomodacaoMemoria (Acomodacao *listaAcom, Acomodacao novosDados, int codigo, int tamanho);
 void deletarAcomodacao (int codigo, int opcao);
+void deletarAcomodacaoMemoria (Acomodacao *listaAcom, int *tamanho, int codigo);
 
 /* Estruturas e funções referentes aos produtos. */
 typedef struct {
@@ -91,10 +106,15 @@ typedef struct {
 } Produto;
 
 void inserirProduto(Produto produto, int opcao);
+void inserirProdutoMemoria(Produto dados, Produto **listaProdutos, int *contador);
 int lerProduto (int codigo, int opcao);
+void lerProdutoMemoria(Produto *listaProdutos, int tamanho, int codigo);
 void listarProduto(int opcao);
+void listarProdutosMemoria(Produto *listaProdutos, int tamanho);
 void atualizarProduto (Produto novosDados, int codigo, int opcao);
+void atualizarProdutoMemoria (Produto *listaProdutos, Produto novosDados, int codigo, int tamanho);
 void deletarProduto(int codigo, int opcao);
+void deletarProdutoMemoria (Produto *listaProdutos, int *tamanho, int codigo);
 
 /* Estruturas e funções referentes aos fornecedores */
 typedef struct {
@@ -109,9 +129,14 @@ typedef struct {
 } Fornecedor;
 
 void inserirFornecedor(Fornecedor fornecedor, int opcao);
+void inserirFornecedorMemoria(Fornecedor dados, Fornecedor **listaFornecedores, int *contador);
 int lerFornecedor(int codigo, int opcao);
+void lerFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho, int codigo);
 void listarFornecedores(int opcao);
+void listarFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho);
 void atualizarFornecedor(Fornecedor novosDados, int codigo, int opcao);
+void atualizarFornecedorMemoria (Fornecedor *listaFornecedores, Fornecedor novosDados, int codigo, int tamanho);
+void deletarFornecedorMemoria (Fornecedor *listaFornecedores, int *tamanho, int codigo);
 void deletarFornecedor(int codigo, int opcao);
 
 /* Estruturas e funções referentes aos operadores do sistema. */
@@ -124,10 +149,15 @@ typedef struct {
 } Operador;
 
 void inserirOperador(Operador operador, int opcao);
+void inserirOperadorMemoria(Operador dados, Operador **listaOperadores, int *contador);
 int lerOperador(int codigo, int opcao);
+void lerOperadorMemoria(Operador *listaOperadores, int tamanho, int codigo);
 void listarOperadores(int opcao);
+void listarOperadoresMemoria(Operador *listaOperadores, int tamanho);
 void atualizarOperador(Operador novosDados, int codigo, int opcao);
+void atualizarOperadorMemoria (Operador *listaOperadores, Operador novosDados, int codigo, int tamanho);
 void deletarOperador(int codigo, int opcao);
+void deletarOperadorMemoria (Operador *listaOperadores, int *tamanho, int codigo);
 
 int validarCPF (char* cpf);
 

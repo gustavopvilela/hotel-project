@@ -4,7 +4,6 @@
 #include <ctype.h>
 #include "gestao_dados.h"
 
-
 /* CRUD do hotel */
 void inserirHotel (Hotel hotel, int opcao) {
     switch (opcao) {
@@ -63,6 +62,19 @@ void inserirHotel (Hotel hotel, int opcao) {
         case 3:
         break;
     }
+}
+
+void inserirHotelMemoria(Hotel dados, Hotel **listaHotel, int *contador) {
+    *listaHotel = (Hotel *)realloc(*listaHotel, (*contador + 1) * sizeof(Hotel));
+
+    /* Caso o ponteiro retorne NULL, significa que já não há mais espaço. */
+    if (*listaHotel == NULL) {
+        printf("Memória insuficiente!");
+        exit(1);
+    }
+
+    (*listaHotel)[*contador] = dados;
+    (*contador)++;
 }
 
 /* Como só há um hotel, basta listá-lo. */
@@ -134,6 +146,24 @@ void listarHotel (int opcao) {
     }
 }
 
+void listarHotelMemoria (Hotel *listaHotel, int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        printf("Nome fantasia: %s\n", listaHotel[i].nomeFantasia);
+        printf("Razão Social: %s\n", listaHotel[i].razaoSocial);
+        printf("Inscrição estadual: %s\n", listaHotel[i].inscricaoEstadual);
+        printf("CNPJ: %s\n", listaHotel[i].cnpj);
+        printf("Endereço: %s\n", listaHotel[i].endereco);
+        printf("Telefone: %s\n", listaHotel[i].telefone);
+        printf("E-mail: %s\n", listaHotel[i].email);
+        printf("Responsável: %s\n", listaHotel[i].responsavel);
+        printf("Telefone (responsável): %s\n", listaHotel[i].telefoneResponsavel);
+        printf("Check-in: %s\n", listaHotel[i].horarioCheckIn);
+        printf("Check-out: %s\n", listaHotel[i].horarioCheckOut);
+        printf("Margem de lucro: %f\n", listaHotel[i].margemLucro);
+        printf("\n");
+    }
+}
+
 void atualizarHotel (Hotel novosDados, int opcao) {
     switch (opcao) {
         case 1:
@@ -174,6 +204,15 @@ void atualizarHotel (Hotel novosDados, int opcao) {
             printf("Atualizado o hotel!");
         break;
     }
+}
+
+void atualizarHotelMemoria (Hotel *listaHotel, Hotel novosDados, int tamanho) {
+    /* Como só há um hotel a ser cadastrado no sistema, basta substituir os
+     * dados antes existentes. */
+    
+    listaHotel[tamanho - 1] = novosDados;
+    
+    printf("Hotel atualizado!");
 }
 
 /* Como o hotel é só um, se o deletarmos, teremos um arquivo vazio. */
@@ -233,6 +272,18 @@ void deletarHotel (int opcao) {
     }
 }
 
+void deletarHotelMemoria (Hotel *listaHotel, int *tamanho) {
+    /* Como só há um hotel no sistema, basta realocar a memória diminuindo
+     * 1 no tamanho do array. */
+    
+    (*tamanho)--;
+    listaHotel = (Hotel *)realloc(listaHotel, (*tamanho) * sizeof(Hotel));
+
+    if (listaHotel == NULL) {
+        printf("Erro na alocação da memória.");
+    }
+}
+
 /* CRUD dos hóspedes */
 void inserirHospede (Hospede hospede, int opcao) {
     switch (opcao) {
@@ -289,7 +340,7 @@ void inserirHospede (Hospede hospede, int opcao) {
     }
 }
 
-void inserirHospedeMemoria(Hospede dados, Hospede **hospedeArray, int *contador) {
+void inserirHospedeMemoria(Hospede dados, Hospede **listaHospedes, int *contador) {
     /* Aqui, devemos realocar a memória para que o ponteiro comporte mais um
      * hóspede. O comando primeiro pega que ponteiro se quer mudar e, depois,
      * o tamanho a mais, que no caso é a quantidade total de hóspede mais um
@@ -297,10 +348,10 @@ void inserirHospedeMemoria(Hospede dados, Hospede **hospedeArray, int *contador)
      * do hóspede. Como estamos utilizando apenas um asterisco, significa que
      * estamos acessando o endereço de memória de hospedeArray, e não a
      * informação que nele contém, pois, dessa forma, usaríamos os dois asteriscos. */
-    *hospedeArray = (Hospede *)realloc(*hospedeArray, (*contador + 1) * sizeof(Hospede));
+    *listaHospedes = (Hospede *)realloc(*listaHospedes, (*contador + 1) * sizeof(Hospede));
 
     /* Caso o ponteiro retorne NULL, significa que já não há mais espaço. */
-    if (*hospedeArray == NULL) {
+    if (*listaHospedes == NULL) {
         printf("Memória insuficiente!");
         exit(1);
     }
@@ -309,10 +360,9 @@ void inserirHospedeMemoria(Hospede dados, Hospede **hospedeArray, int *contador)
      * dados na posição que o contador está e, depois, aumentamos em uma
      * unidade o contador. Isso permite que leiamos as informações
      * posteriormente sem o ocorrimento de erros. */
-    (*hospedeArray)[*contador] = dados;
+    (*listaHospedes)[*contador] = dados;
     (*contador)++;
 }
-
 
 int lerHospede (int codigo, int opcao) {
     Hospede hospede;
@@ -398,7 +448,7 @@ int lerHospede (int codigo, int opcao) {
     }
 }
 
-int lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo) {
+void lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo) {
     for (int i = 0; i < tamanho; i++) {
         if (listaHospedes[i].codigo == codigo) {
             printf("Código: %d\n", listaHospedes[i].codigo);
@@ -411,12 +461,9 @@ int lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo) {
             printf("Estado civil: %s\n", listaHospedes[i].estadoCivil);
             printf("Data de nascimento: %s\n", listaHospedes[i].dataNascimento);
             printf("\n");
-            return 1; // Encontrou o hóspede
         }
     }
-    return 0; // Não encontrou o hóspede
 }
-
 
 void listarHospedes(int opcao) {
     Hospede hospede;
@@ -700,7 +747,7 @@ void deletarHospedeMemoria (Hospede *listaHospedes, int *tamanho, int codigo) {
     }
     
     if (encontrado == 0) {
-        printf("Deleção não concluída. Hóspdede não encontrado.");
+        printf("Deleção não concluída. Hóspede não encontrado.");
     }
 }
 
@@ -761,6 +808,19 @@ void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom, int opcao) {
             fclose(catAcomTxt);
         break;
     }
+}
+
+void inserirCategoriaAcomodacaoMemoria(CategoriaAcomodacao dados, CategoriaAcomodacao **listaCatAcom, int *contador) {
+    *listaCatAcom = (CategoriaAcomodacao *)realloc(*listaCatAcom, (*contador + 1) * sizeof(CategoriaAcomodacao));
+
+    /* Caso o ponteiro retorne NULL, significa que já não há mais espaço. */
+    if (*listaCatAcom == NULL) {
+        printf("Memória insuficiente!");
+        exit(1);
+    }
+
+    (*listaCatAcom)[*contador] = dados;
+    (*contador)++;
 }
 
 int lerCategoriaAcomodacao (int codigo, int opcao) {
@@ -840,6 +900,20 @@ int lerCategoriaAcomodacao (int codigo, int opcao) {
     
 }
 
+void lerCategoriaAcomodacaoMemoria(CategoriaAcomodacao *listaCatAcom, int tamanho, int codigo) {
+    for (int i = 0; i < tamanho; i++) {
+        if (listaCatAcom[i].codigo == codigo) {
+            printf("Código: %d\n", listaCatAcom[i].codigo);
+            printf("Descrição: %s\n", listaCatAcom[i].descricao);
+            printf("Categoria: %d\n", listaCatAcom[i].categoria);
+            printf("Valor da diária: %f\n", listaCatAcom[i].valorDiaria);
+            printf("Quantidade de adultos: %d\n", listaCatAcom[i].qtdeAdultos);
+            printf("Quantidade de crianças: %d\n", listaCatAcom[i].qtdeCriancas);
+            printf("\n");
+        }
+    }
+}
+
 void listarCategoriaAcomodacao (int opcao) {
     CategoriaAcomodacao catAcom;
     
@@ -892,6 +966,18 @@ void listarCategoriaAcomodacao (int opcao) {
             
             fclose(catAcomTxt);
         break;
+    }
+}
+
+void listarCategoriaAcomodacaoMemoria (CategoriaAcomodacao *listaCatAcom, int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        printf("Código: %d\n", listaCatAcom[i].codigo);
+        printf("Descrição: %s\n", listaCatAcom[i].descricao);
+        printf("Categoria: %d\n", listaCatAcom[i].categoria);
+        printf("Valor da diária: %f\n", listaCatAcom[i].valorDiaria);
+        printf("Quantidade de adultos: %d\n", listaCatAcom[i].qtdeAdultos);
+        printf("Quantidade de crianças: %d\n", listaCatAcom[i].qtdeCriancas);
+        printf("\n");
     }
 }
 
@@ -949,6 +1035,22 @@ void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo, i
                 printf("Categoria de acomodação de código %d não encontrado.", codigo);
             }
         break;
+    }
+}
+
+void atualizarCategoriaAcomodacaoMemoria (CategoriaAcomodacao *listaCatAcom, CategoriaAcomodacao novosDados, int codigo, int tamanho) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaCatAcom[i].codigo == codigo) {
+            listaCatAcom[i] = novosDados;
+            encontrado = 1;
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Categoria de acomodação não encontrada!");
     }
 }
 
@@ -1043,6 +1145,33 @@ void deletarCategoriaAcomodacao (int codigo, int opcao) {
     }
 }
 
+void deletarCategoriaAcomodacaoMemoria (CategoriaAcomodacao *listaCatAcom, int *tamanho, int codigo) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < *tamanho; i++) {
+        if (listaCatAcom[i].codigo == codigo) {
+            for (int j = i; j < (*tamanho) - 1; j++) {
+                (listaCatAcom)[j] = (listaCatAcom)[j+1];
+            }
+            
+            encontrado = 1;
+            
+            (*tamanho)--;
+            listaCatAcom = (CategoriaAcomodacao *)realloc(listaCatAcom, (*tamanho) * sizeof(CategoriaAcomodacao));
+            
+            if (listaCatAcom == NULL) {
+                printf("Erro na alocação da memória.");
+            }
+            
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Deleção não concluída. Categoria de acomodação não encontrada não encontrada.");
+    }
+}
+
 /* CRUD das acomodações */
 void inserirAcomodacao (Acomodacao acomodacao, int opcao) {
     switch (opcao) {
@@ -1093,6 +1222,19 @@ void inserirAcomodacao (Acomodacao acomodacao, int opcao) {
             fclose(acomodacaoTxt);
         break;
     }
+}
+
+void inserirAcomodacaoMemoria(Acomodacao dados, Acomodacao **listaAcom, int *contador) {
+    *listaAcom = (Acomodacao *)realloc(*listaAcom, (*contador + 1) * sizeof(Acomodacao));
+
+    /* Caso o ponteiro retorne NULL, significa que já não há mais espaço. */
+    if (*listaAcom == NULL) {
+        printf("Memória insuficiente!");
+        exit(1);
+    }
+
+    (*listaAcom)[*contador] = dados;
+    (*contador)++;
 }
 
 int lerAcomodacao (int codigo, int opcao) {
@@ -1165,6 +1307,18 @@ int lerAcomodacao (int codigo, int opcao) {
     }
 }
 
+void lerAcomodacaoMemoria(Acomodacao *listaAcom, int tamanho, int codigo) {
+    for (int i = 0; i < tamanho; i++) {
+        if (listaAcom[i].codigo == codigo) {
+            printf("Código: %d\n", listaAcom[i].codigo);
+            printf("Descrição: %s\n", listaAcom[i].descricao);
+            printf("Categoria: %d\n", listaAcom[i].categoria);
+            printf("Facilidades: %d\n", listaAcom[i].facilidades);
+            printf("\n");
+        }
+    }
+}
+
 void listarAcomodacoes (int opcao) {
     Acomodacao acomodacao;
     
@@ -1214,6 +1368,16 @@ void listarAcomodacoes (int opcao) {
             
             fclose(acomodacaoTxt);
         break;
+    }
+}
+
+void listarAcomodacaoMemoria(Acomodacao *listaAcom, int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        printf("Código: %d\n", listaAcom[i].codigo);
+        printf("Descrição: %s\n", listaAcom[i].descricao);
+        printf("Categoria: %d\n", listaAcom[i].categoria);
+        printf("Facilidades: %d\n", listaAcom[i].facilidades);
+        printf("\n");
     }
 }
 
@@ -1271,6 +1435,22 @@ void atualizarAcomodacao (Acomodacao novosDados, int codigo, int opcao) {
                 printf("Acomodação de código %d não encontrado.", codigo);
             }
         break;
+    }
+}
+
+void atualizarAcomodacaoMemoria (Acomodacao *listaAcom, Acomodacao novosDados, int codigo, int tamanho) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaAcom[i].codigo == codigo) {
+            listaAcom[i] = novosDados;
+            encontrado = 1;
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Acomodação não encontrada!");
     }
 }
 
@@ -1365,6 +1545,33 @@ void deletarAcomodacao (int codigo, int opcao) {
     }
 }
 
+void deletarAcomodacaoMemoria (Acomodacao *listaAcom, int *tamanho, int codigo) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < *tamanho; i++) {
+        if (listaAcom[i].codigo == codigo) {
+            for (int j = i; j < (*tamanho) - 1; j++) {
+                (listaAcom)[j] = (listaAcom)[j+1];
+            }
+            
+            encontrado = 1;
+            
+            (*tamanho)--;
+            listaAcom = (Acomodacao *)realloc(listaAcom, (*tamanho) * sizeof(Acomodacao));
+            
+            if (listaAcom == NULL) {
+                printf("Erro na alocação da memória.");
+            }
+            
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Deleção não concluída. Acomodação não encontrada.");
+    }
+}
+
 /* CRUD dos produtos */
 void inserirProduto (Produto produto, int opcao) {
     switch (opcao) {
@@ -1415,6 +1622,19 @@ void inserirProduto (Produto produto, int opcao) {
             fclose(produtoTxt);
         break;
     }
+}
+
+void inserirProdutoMemoria(Produto dados, Produto **listaProdutos, int *contador) {
+    *listaProdutos = (Produto *)realloc(*listaProdutos, (*contador + 1) * sizeof(Produto));
+
+    /* Caso o ponteiro retorne NULL, significa que já não há mais espaço. */
+    if (*listaProdutos == NULL) {
+        printf("Memória insuficiente!");
+        exit(1);
+    }
+
+    (*listaProdutos)[*contador] = dados;
+    (*contador)++;
 }
 
 int lerProduto (int codigo, int opcao) {
@@ -1493,6 +1713,20 @@ int lerProduto (int codigo, int opcao) {
     }
 }
 
+void lerProdutoMemoria(Produto *listaProdutos, int tamanho, int codigo) {
+    for (int i = 0; i < tamanho; i++) {
+        if (listaProdutos[i].codigo == codigo) {
+            printf("Código: %d\n", listaProdutos[i].codigo);
+            printf("Descrição: %s\n", listaProdutos[i].descricao);
+            printf("Estoque: %d\n", listaProdutos[i].estoque);
+            printf("Estoque mínimo: %d\n", listaProdutos[i].estoqueMin);
+            printf("Preço de custo: %.2f\n", listaProdutos[i].precoCusto);
+            printf("Preço de venda: %.2f\n", listaProdutos[i].precoVenda);
+            printf("\n");
+        }
+    }
+}
+
 void listarProdutos(int opcao) {
     Produto produto;
     
@@ -1541,6 +1775,18 @@ void listarProdutos(int opcao) {
             
             fclose(produtoTxt);
         break;
+    }
+}
+
+void listarProdutosMemoria(Produto *listaProdutos, int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        printf("Código: %d\n", listaProdutos[i].codigo);
+        printf("Descrição: %s\n", listaProdutos[i].descricao);
+        printf("Estoque: %d\n", listaProdutos[i].estoque);
+        printf("Estoque mínimo: %d\n", listaProdutos[i].estoqueMin);
+        printf("Preço de custo: %.2f\n", listaProdutos[i].precoCusto);
+        printf("Preço de venda: %.2f\n", listaProdutos[i].precoVenda);
+        printf("\n");
     }
 }
 
@@ -1598,6 +1844,22 @@ void atualizarProduto (Produto novosDados, int codigo, int opcao) {
     }
     
     
+}
+
+void atualizarProdutoMemoria (Produto *listaProdutos, Produto novosDados, int codigo, int tamanho) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaProdutos[i].codigo == codigo) {
+            listaProdutos[i] = novosDados;
+            encontrado = 1;
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Produto não encontrado!");
+    }
 }
 
 void deletarProduto(int codigo, int opcao) {
@@ -1695,6 +1957,33 @@ void deletarProduto(int codigo, int opcao) {
    
 }
 
+void deletarProdutoMemoria (Produto *listaProdutos, int *tamanho, int codigo) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < *tamanho; i++) {
+        if (listaProdutos[i].codigo == codigo) {
+            for (int j = i; j < (*tamanho) - 1; j++) {
+                (listaProdutos)[j] = (listaProdutos)[j+1];
+            }
+            
+            encontrado = 1;
+            
+            (*tamanho)--;
+            listaProdutos = (Produto *)realloc(listaProdutos, (*tamanho) * sizeof(Produto));
+            
+            if (listaProdutos == NULL) {
+                printf("Erro na alocação da memória.");
+            }
+            
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Deleção não concluída. Produto não encontrado.");
+    }
+}
+
 /* CRUD dos fornecedores */
 void inserirFornecedor (Fornecedor fornecedor, int opcao) {
     switch (opcao) {
@@ -1747,6 +2036,19 @@ void inserirFornecedor (Fornecedor fornecedor, int opcao) {
             fclose(fornecedorTxt);
         break;
     }
+}
+
+void inserirFornecedorMemoria(Fornecedor dados, Fornecedor **listaFornecedores, int *contador) {
+    *listaFornecedores = (Fornecedor *)realloc(*listaFornecedores, (*contador + 1) * sizeof(Fornecedor));
+
+    /* Caso o ponteiro retorne NULL, significa que já não há mais espaço. */
+    if (*listaFornecedores == NULL) {
+        printf("Memória insuficiente!");
+        exit(1);
+    }
+
+    (*listaFornecedores)[*contador] = dados;
+    (*contador)++;
 }
 
 int lerFornecedor (int codigo, int opcao) {
@@ -1829,6 +2131,22 @@ int lerFornecedor (int codigo, int opcao) {
     }
 }
 
+void lerFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho, int codigo) {
+    for (int i = 0; i < tamanho; i++) {
+        if (listaFornecedores[i].codigo == codigo) {
+            printf("Código: %d\n", listaFornecedores[i].codigo);
+            printf("Nome Fantasia: %s\n", listaFornecedores[i].nomeFantasia);
+            printf("Razão Social: %s\n", listaFornecedores[i].razaoSocial);
+            printf("Inscrição Estadual: %s\n", listaFornecedores[i].inscricaoEstadual);
+            printf("CNPJ: %s\n", listaFornecedores[i].cnpj);
+            printf("Endereço: %s\n", listaFornecedores[i].endereco);
+            printf("Telefone: %s\n", listaFornecedores[i].telefone);
+            printf("E-mail: %s\n", listaFornecedores[i].email);
+            printf("\n");
+        }
+    }
+}
+
 void listarFornecedores(int opcao) {
     Fornecedor fornecedor;
     
@@ -1885,6 +2203,20 @@ void listarFornecedores(int opcao) {
     }
 }
 
+void listarFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        printf("Código: %d\n", listaFornecedores[i].codigo);
+        printf("Nome Fantasia: %s\n", listaFornecedores[i].nomeFantasia);
+        printf("Razão Social: %s\n", listaFornecedores[i].razaoSocial);
+        printf("Inscrição Estadual: %s\n", listaFornecedores[i].inscricaoEstadual);
+        printf("CNPJ: %s\n", listaFornecedores[i].cnpj);
+        printf("Endereço: %s\n", listaFornecedores[i].endereco);
+        printf("Telefone: %s\n", listaFornecedores[i].telefone);
+        printf("E-mail: %s\n", listaFornecedores[i].email);
+        printf("\n");
+    }
+}
+
 void atualizarFornecedor (Fornecedor novosDados, int codigo, int opcao) {
     switch (opcao) {
         case 1:
@@ -1936,6 +2268,22 @@ void atualizarFornecedor (Fornecedor novosDados, int codigo, int opcao) {
                 printf("Fornecedor de código %d não encontrado.", codigo);
             }
         break;
+    }
+}
+
+void atualizarFornecedorMemoria (Fornecedor *listaFornecedores, Fornecedor novosDados, int codigo, int tamanho) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaFornecedores[i].codigo == codigo) {
+            listaFornecedores[i] = novosDados;
+            encontrado = 1;
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Fornecedor não encontrado!");
     }
 }
 
@@ -2034,6 +2382,33 @@ void deletarFornecedor(int codigo, int opcao) {
     }
 }
 
+void deletarFornecedorMemoria (Fornecedor *listaFornecedores, int *tamanho, int codigo) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < *tamanho; i++) {
+        if (listaFornecedores[i].codigo == codigo) {
+            for (int j = i; j < (*tamanho) - 1; j++) {
+                (listaFornecedores)[j] = (listaFornecedores)[j+1];
+            }
+            
+            encontrado = 1;
+            
+            (*tamanho)--;
+            listaFornecedores = (Fornecedor *)realloc(listaFornecedores, (*tamanho) * sizeof(Fornecedor));
+            
+            if (listaFornecedores == NULL) {
+                printf("Erro na alocação da memória.");
+            }
+            
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Deleção não concluída. Fornecedor não encontrado.");
+    }
+}
+
 /* CRUD operadores do sistema */
 void inserirOperador(Operador operador, int opcao) {
     switch (opcao) {
@@ -2083,6 +2458,19 @@ void inserirOperador(Operador operador, int opcao) {
             fclose(operadorTxt);
         break;
     }
+}
+
+void inserirOperadorMemoria(Operador dados, Operador **listaOperadores, int *contador) {
+    *listaOperadores = (Operador *)realloc(*listaOperadores, (*contador + 1) * sizeof(Operador));
+
+    /* Caso o ponteiro retorne NULL, significa que já não há mais espaço. */
+    if (*listaOperadores == NULL) {
+        printf("Memória insuficiente!");
+        exit(1);
+    }
+
+    (*listaOperadores)[*contador] = dados;
+    (*contador)++;
 }
 
 int lerOperador(int codigo, int opcao) {
@@ -2157,6 +2545,19 @@ int lerOperador(int codigo, int opcao) {
     }
 }
 
+void lerOperadorMemoria(Operador *listaOperadores, int tamanho, int codigo) {
+    for (int i = 0; i < tamanho; i++) {
+        if (listaOperadores[i].codigo == codigo) {
+            printf("Código: %d\n", listaOperadores[i].codigo);
+            printf("Nome: %s\n", listaOperadores[i].nome);
+            printf("Usuário: %s\n", listaOperadores[i].usuario);
+            printf("Senha: %s\n", listaOperadores[i].senha);
+            printf("Permissões: %d\n", listaOperadores[i].permissoes);
+            printf("\n");
+        }
+    }
+}
+
 void listarOperadores(int opcao) {
     Operador operador;
     
@@ -2203,6 +2604,17 @@ void listarOperadores(int opcao) {
             
             fclose(operadorTxt);
         break;
+    }
+}
+
+void listarOperadoresMemoria(Operador *listaOperadores, int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        printf("Código: %d\n", listaOperadores[i].codigo);
+        printf("Nome: %s\n", listaOperadores[i].nome);
+        printf("Usuário: %s\n", listaOperadores[i].usuario);
+        printf("Senha: %s\n", listaOperadores[i].senha);
+        printf("Permissões: %d\n", listaOperadores[i].permissoes);
+        printf("\n");
     }
 }
 
@@ -2262,6 +2674,22 @@ void atualizarOperador(Operador novosDados, int codigo, int opcao) {
         break;
     }
     
+}
+
+void atualizarOperadorMemoria (Operador *listaOperadores, Operador novosDados, int codigo, int tamanho) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaOperadores[i].codigo == codigo) {
+            listaOperadores[i] = novosDados;
+            encontrado = 1;
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Operador não encontrado!");
+    }
 }
 
 void deletarOperador(int codigo, int opcao) {
@@ -2355,6 +2783,33 @@ void deletarOperador(int codigo, int opcao) {
     }
 
     
+}
+
+void deletarOperadorMemoria (Operador *listaOperadores, int *tamanho, int codigo) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < *tamanho; i++) {
+        if (listaOperadores[i].codigo == codigo) {
+            for (int j = i; j < (*tamanho) - 1; j++) {
+                (listaOperadores)[j] = (listaOperadores)[j+1];
+            }
+            
+            encontrado = 1;
+            
+            (*tamanho)--;
+            listaOperadores = (Operador *)realloc(listaOperadores, (*tamanho) * sizeof(Operador));
+            
+            if (listaOperadores == NULL) {
+                printf("Erro na alocação da memória.");
+            }
+            
+            break;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Deleção não concluída. Operador não encontrado.");
+    }
 }
 
 int validarCPF(char* cpf) {
