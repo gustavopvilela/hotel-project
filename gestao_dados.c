@@ -4,6 +4,17 @@
 #include <ctype.h>
 #include "gestao_dados.h"
 
+void inicializarArquivos () {
+    FILE *operadorBin;
+    operadorBin = fopen(OPERADOR_BIN, "ab");
+
+    /* Verificação da abertura. */
+    if (operadorBin == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+}
+
 /* CRUD do hotel */
 void inserirHotel (Hotel hotel, int opcao) {
     switch (opcao) {
@@ -2418,7 +2429,7 @@ void inserirOperador(Operador operador, int opcao) {
 
             /* Verificação da abertura. */
             if (operadorBin == NULL) {
-                printf("Erro na abertura do arquivo.\n");
+                printf("Erro na abertura do arquivo.");
                 exit(1);
             }
 
@@ -2541,6 +2552,58 @@ int lerOperador(int codigo, int opcao) {
             fclose(operadorTxt);
             
             return encontrado;
+        break;
+    }
+}
+
+Operador retornarOperador (int codigo, int opcao) {
+    Operador operador;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *operadorBin;
+            operadorBin = fopen("operador.bin", "rb");
+
+            /* Verificação da abertura. */
+            if (operadorBin == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(operadorBin);
+
+            while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
+                if (operador.codigo == codigo) {
+                    return operador;
+                    encontrado = 1;
+                }
+            }
+            
+            fclose(operadorBin);
+        break;
+            
+        case 2:
+            FILE *operadorTxt;
+            operadorTxt = fopen("operador.txt", "r");
+
+            /* Verificação da abertura. */
+            if (operadorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(operadorTxt);
+            while (fscanf(operadorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+                          &operador.codigo, operador.nome, operador.usuario,
+                          operador.senha, operador.permissoes) == 5) {
+                if (operador.codigo == codigo) {
+                    return operador;
+                    encontrado = 1;
+                }
+            }
+            
+            fclose(operadorTxt);
         break;
     }
 }

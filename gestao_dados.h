@@ -1,10 +1,17 @@
 #ifndef GESTAO_DADOS_H
 #define GESTAO_DADOS_H
 
+#define OPERADOR_BIN "operador.bin"
+#define OPERADOR_BIN_TMP "operador_tmp.bin"
+#define OPERADOR_TXT "operador.txt"
+#define OPERADOR_TXT_TMP "operador_tmp.txt"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+void inicializarArquivos ();
+    
 /* Estruturas e funções referentes aos hóspedes. */
 typedef struct {
     int codigo;
@@ -152,6 +159,7 @@ void inserirOperador(Operador operador, int opcao);
 void inserirOperadorMemoria(Operador dados, Operador **listaOperadores, int *contador);
 int lerOperador(int codigo, int opcao);
 void lerOperadorMemoria(Operador *listaOperadores, int tamanho, int codigo);
+Operador retornarOperador (int codigo, int opcao);
 void listarOperadores(int opcao);
 void listarOperadoresMemoria(Operador *listaOperadores, int tamanho);
 void atualizarOperador(Operador novosDados, int codigo, int opcao);
