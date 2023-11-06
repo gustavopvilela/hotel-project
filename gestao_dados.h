@@ -62,7 +62,8 @@ void deletarCategoriaAcomodacao (int codigo);
 typedef struct {
     int codigo;
     char descricao[300];
-    char* facilidades;
+    int facilidades;
+    int ocupado;
     int categoria; /* Chave estrangeira de CategoriaAcomodacao. */
 } Acomodacao;
 

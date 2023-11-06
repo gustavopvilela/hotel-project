@@ -398,7 +398,7 @@ void inserirAcomodacao (Acomodacao acomodacao) {
 
 int lerAcomodacao (int codigo) {
     FILE *acomodacaoBin;
-    acomodacaoBin = fopen("acomodacao.bin", "ab");
+    acomodacaoBin = fopen("acomodacao.bin", "rb");
 
     /* Verificação da abertura. */
     if(acomodacaoBin == NULL){
@@ -414,7 +414,8 @@ int lerAcomodacao (int codigo) {
             printf("Código: %d\n", acomodacao.codigo);
             printf("Descrição: %s\n", acomodacao.descricao);
             printf("Categoria: %d\n", acomodacao.categoria);
-            printf("Facilidades: %s\n", acomodacao.facilidades);
+            printf("Facilidades: %d\n", acomodacao.facilidades);
+            printf("Quantidade de reservas: %d\n", acomodacao.ocupado);
             printf("\n");
             encontrado = 1;
             return 1;
@@ -431,7 +432,7 @@ int lerAcomodacao (int codigo) {
 
 void listarAcomodacoes () {
     FILE *acomodacaoBin;
-    acomodacaoBin = fopen("acomodacao.bin", "ab");
+    acomodacaoBin = fopen("acomodacao.bin", "rb");
 
     /* Verificação da abertura. */
     if(acomodacaoBin == NULL){
@@ -441,15 +442,16 @@ void listarAcomodacoes () {
     
     rewind(acomodacaoBin);
     Acomodacao acomodacao;
-    while (fread(&acomodacao, sizeof(CategoriaAcomodacao), 1, acomodacaoBin) == 1) {
+    while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
         printf("Código: %d\n", acomodacao.codigo);
         printf("Descrição: %s\n", acomodacao.descricao);
         printf("Categoria: %d\n", acomodacao.categoria);
-        printf("Facilidades: %s\n", acomodacao.facilidades);
+        printf("Quantidade de reservas: %d\n", acomodacao.ocupado);
+        printf("Facilidades: %d\n", acomodacao.facilidades);
         printf("\n");
     }
     
-    fclose(acomodacao);
+    fclose(acomodacaoBin);
 }
 
 void atualizarAcomodacao (Acomodacao novosDados, int codigo) {
@@ -685,7 +687,7 @@ void inserirFornecedor (Fornecedor fornecedor) {
     fornecedorBin = fopen("fornecedor.bin", "ab");
 
     /* Verificação da abertura. */
-    if( == NULL){
+    if(fornecedorBin == NULL){
         printf("Erro na abertura do arquivo.\n");
         exit(1);
     }

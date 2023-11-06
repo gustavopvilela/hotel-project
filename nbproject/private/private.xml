@@ -7,8 +7,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/GustavoC/hotel-project/gestao_dados.c</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/GustavoC/hotel-project/gestao_dados.h</file>
+            <file>file:/C:/Users/Patrick/Documents/NetBeansProjects/hotel-project/gestao_dados.h</file>
+            <file>file:/C:/Users/Patrick/Documents/NetBeansProjects/hotel-project/gestao_dados.c</file>
+            <file>file:/C:/Users/Patrick/Documents/NetBeansProjects/hotel-project/reserva.c</file>
+            <file>file:/C:/Users/Patrick/Documents/NetBeansProjects/hotel-project/main.c</file>
+            <file>file:/C:/Users/Patrick/Documents/NetBeansProjects/hotel-project/reserva.h</file>
         </group>
     </open-files>
 </project-private>
