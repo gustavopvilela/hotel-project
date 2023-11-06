@@ -1,0 +1,5 @@
+Codigo: 1
+Nome: Gustavo Vilela
+Usuario: gustavo
+Senha: 123
+Permissoes: 100

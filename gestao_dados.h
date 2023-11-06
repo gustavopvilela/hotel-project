@@ -17,7 +17,7 @@ typedef struct {
     int codigo;
     char nome[100];
     char endereco[300];
-    char cpf[12]; /* O CPF contém os pontos e traços. */
+    char cpf[12]; /* O CPF não contém os pontos e traços. */
     char telefone[12];  /* O telefone não comporta os parênteses do DDD. */
     char email[100];
     char sexo[10];
@@ -27,8 +27,12 @@ typedef struct {
 
 void inserirHospede(Hospede hospede, int opcao);
 void inserirHospedeMemoria(Hospede dados, Hospede **listaHospedes, int *contador);
-int lerHospede (int codigo, int opcao);
+void lerHospede (int codigo, int opcao);
 void lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo);
+int hospedeExiste (int codigo, int opcao);
+int hospedeExisteMemoria (Hospede *listaHospedes, int tamanho, int codigo);
+void lerHospedeCPF (char* cpf, int opcao);
+void lerHospedeCPFMemoria(Hospede *listaHospedes, int tamanho, char* cpf);
 void listarHospedes(int opcao);
 void listarHospedesMemoria (Hospede *listaHospedes, int tamanho);
 void atualizarHospede (Hospede novosDados, int codigo, int opcao);
@@ -157,9 +161,12 @@ typedef struct {
 
 void inserirOperador(Operador operador, int opcao);
 void inserirOperadorMemoria(Operador dados, Operador **listaOperadores, int *contador);
-int lerOperador(int codigo, int opcao);
+void lerOperador(int codigo, int opcao);
 void lerOperadorMemoria(Operador *listaOperadores, int tamanho, int codigo);
 Operador retornarOperador (int codigo, int opcao);
+Operador retornarOperadorMemoria(Operador *listaOperadores, int tamanho, int codigo);
+int operadorExiste (int codigo, int opcao);
+int operadorExisteMemoria (Operador *listaOperadores, int tamanho, int codigo);
 void listarOperadores(int opcao);
 void listarOperadoresMemoria(Operador *listaOperadores, int tamanho);
 void atualizarOperador(Operador novosDados, int codigo, int opcao);

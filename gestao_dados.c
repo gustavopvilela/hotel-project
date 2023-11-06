@@ -4,7 +4,147 @@
 #include <ctype.h>
 #include "gestao_dados.h"
 
+/* Ao criar uma funçãod e inicialização dos arquivos, evita-se erros de inexistência. */
 void inicializarArquivos () {
+    /* Hotel */
+    FILE *hotelBin;
+    hotelBin = fopen("hotel.bin", "ab");
+
+    /* Verificação da abertura. */
+    if (hotelBin == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(hotelBin);
+    
+    FILE *hotelTxt;
+    hotelTxt = fopen("hotel.txt", "a");
+
+    /* Verificação da abertura. */
+    if (hotelTxt == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(hotelTxt);
+    
+    /* Hóspede */
+    FILE *hospedeBin;
+    hospedeBin = fopen("hospede.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(hospedeBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(hospedeBin);
+    
+    FILE *hospedeTxt;
+    hospedeTxt = fopen("hospede.txt", "a");
+
+    /* Verificação da abertura. */
+    if(hospedeTxt == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(hospedeTxt);
+    
+    /* Categoria de acomodação */
+    FILE *catAcomBin;
+    catAcomBin = fopen("catAcom.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(catAcomBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(catAcomBin);
+    
+    FILE *catAcomTxt;
+    catAcomTxt = fopen("catAcom.txt", "a");
+
+    /* Verificação da abertura. */
+    if(catAcomTxt == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(catAcomTxt);
+    
+    /* Acomodação */
+    FILE *acomodacaoBin;
+    acomodacaoBin = fopen("acomodacao.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(acomodacaoBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(acomodacaoBin);
+    
+    FILE *acomodacaoTxt;
+    acomodacaoTxt = fopen("acomodacao.txt", "a");
+
+    /* Verificação da abertura. */
+    if(acomodacaoTxt == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(acomodacaoTxt);
+    
+    /* Produto */
+    FILE *produtoBin;
+    produtoBin = fopen("produto.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(produtoBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(produtoBin);
+    
+    FILE *produtoTxt;
+    produtoTxt = fopen("produto.txt", "a");
+
+    /* Verificação da abertura. */
+    if(produtoTxt == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(produtoTxt);
+    
+    /* Fornecedor */
+    FILE *fornecedorBin;
+    fornecedorBin = fopen("fornecedor.bin", "ab");
+
+    /* Verificação da abertura. */
+    if(fornecedorBin == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(fornecedorBin);
+    
+    FILE *fornecedorTxt;
+    fornecedorTxt = fopen("fornecedor.txt", "a");
+
+    /* Verificação da abertura. */
+    if(fornecedorTxt == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(fornecedorTxt);
+    
+    /* Operador */
     FILE *operadorBin;
     operadorBin = fopen(OPERADOR_BIN, "ab");
 
@@ -13,6 +153,19 @@ void inicializarArquivos () {
         printf("Erro na abertura do arquivo.\n");
         exit(1);
     }
+    
+    fclose(operadorBin);
+    
+    FILE *operadorTxt;
+    operadorTxt = fopen(OPERADOR_TXT, "a");
+
+    /* Verificação da abertura. */
+    if (operadorTxt == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(operadorTxt);
 }
 
 /* CRUD do hotel */
@@ -310,7 +463,12 @@ void inserirHospede (Hospede hospede, int opcao) {
 
             /* Inserindo no arquivo binário. */
             if (!feof(hospedeBin)) {
-                fwrite(&hospede, sizeof(Hospede), 1, hospedeBin);
+                if (hospedeExiste(hospede.codigo, opcao) == 0) {
+                    fwrite(&hospede, sizeof(Hospede), 1, hospedeBin);
+                }
+                else {
+                    printf("Hóspede já existente!");
+                }
             }
             else {
                 printf("Arquivo cheio.\n");
@@ -333,12 +491,14 @@ void inserirHospede (Hospede hospede, int opcao) {
             
             /* Inserindo no arquivo de texto. */
             if (!feof(hospedeTxt)) {
-                fprintf(hospedeTxt, "Código: %d\nNome: %s\nNascimento: %s\n"
+                if (hospedeExiste(hospede.codigo, opcao) == 0) {
+                    fprintf(hospedeTxt, "Código: %d\nNome: %s\nNascimento: %s\n"
                         "Endereço: %s\nCPF: %s\nTelefone: %s\nE-mail: %s\n"
                         "Sexo: %s\nEC: %s\n",
                         hospede.codigo, hospede.nome, hospede.dataNascimento,
                         hospede.endereco, hospede.cpf, hospede.telefone,
                         hospede.email, hospede.sexo, hospede.estadoCivil);
+                }
             }
             else {
                 printf("Arquivo cheio.\n");
@@ -352,30 +512,32 @@ void inserirHospede (Hospede hospede, int opcao) {
 }
 
 void inserirHospedeMemoria(Hospede dados, Hospede **listaHospedes, int *contador) {
-    /* Aqui, devemos realocar a memória para que o ponteiro comporte mais um
-     * hóspede. O comando primeiro pega que ponteiro se quer mudar e, depois,
-     * o tamanho a mais, que no caso é a quantidade total de hóspede mais um
-     * (que é o novo que vamos armazenar), multiplicado pelo tamanho da struct
-     * do hóspede. Como estamos utilizando apenas um asterisco, significa que
-     * estamos acessando o endereço de memória de hospedeArray, e não a
-     * informação que nele contém, pois, dessa forma, usaríamos os dois asteriscos. */
-    *listaHospedes = (Hospede *)realloc(*listaHospedes, (*contador + 1) * sizeof(Hospede));
+    if (hospedeExisteMemoria(*listaHospedes, contador, dados.codigo) == 0) {
+        /* Aqui, devemos realocar a memória para que o ponteiro comporte mais um
+        * hóspede. O comando primeiro pega que ponteiro se quer mudar e, depois,
+        * o tamanho a mais, que no caso é a quantidade total de hóspede mais um
+        * (que é o novo que vamos armazenar), multiplicado pelo tamanho da struct
+        * do hóspede. Como estamos utilizando apenas um asterisco, significa que
+        * estamos acessando o endereço de memória de hospedeArray, e não a
+        * informação que nele contém, pois, dessa forma, usaríamos os dois asteriscos. */
+       *listaHospedes = (Hospede *)realloc(*listaHospedes, (*contador + 1) * sizeof(Hospede));
 
-    /* Caso o ponteiro retorne NULL, significa que já não há mais espaço. */
-    if (*listaHospedes == NULL) {
-        printf("Memória insuficiente!");
-        exit(1);
+       /* Caso o ponteiro retorne NULL, significa que já não há mais espaço. */
+       if (*listaHospedes == NULL) {
+           printf("Memória insuficiente!");
+           exit(1);
+       }
+
+       /* Se aqui executar, significa que há espaço na memória, e colocamos os
+        * dados na posição que o contador está e, depois, aumentamos em uma
+        * unidade o contador. Isso permite que leiamos as informações
+        * posteriormente sem o ocorrimento de erros. */
+       (*listaHospedes)[*contador] = dados;
+       (*contador)++;
     }
-
-    /* Se aqui executar, significa que há espaço na memória, e colocamos os
-     * dados na posição que o contador está e, depois, aumentamos em uma
-     * unidade o contador. Isso permite que leiamos as informações
-     * posteriormente sem o ocorrimento de erros. */
-    (*listaHospedes)[*contador] = dados;
-    (*contador)++;
 }
 
-int lerHospede (int codigo, int opcao) {
+void lerHospede (int codigo, int opcao) {
     Hospede hospede;
     int encontrado = 0;
     
@@ -404,12 +566,10 @@ int lerHospede (int codigo, int opcao) {
                     printf("Data de nascimento: %s\n", hospede.dataNascimento);
                     printf("\n");
                     encontrado = 1;
-                    return 1;
                 }
             }
             if (!encontrado) {
                 printf("Hóspede com código %d não encontrado.\n", codigo);
-                return 0;
             }
             
             fclose(hospedeBin);
@@ -453,10 +613,75 @@ int lerHospede (int codigo, int opcao) {
             if (!encontrado) {
                 printf("Hóspede com código %d não encontrado.\n", codigo);
             }
+        break;
+    }
+}
+
+int hospedeExiste (int codigo, int opcao) {
+    Hospede hospede;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *hospedeBin;
+            hospedeBin = fopen("hospede.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(hospedeBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(hospedeBin);
+            while (fread(&hospede, sizeof(Hospede), 1, hospedeBin) == 1) {
+                if (hospede.codigo == codigo) {
+                    encontrado = 1;
+                }
+            }
+            
+            fclose(hospedeBin);
+            
+            return encontrado;
+        break;
+        
+        case 2:
+            FILE *hospedeTxt;
+            hospedeTxt = fopen("hospede.txt", "r");
+            
+            /* Verificação da abertura. */
+            if(hospedeTxt == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(hospedeTxt);
+            
+            /* %*s significa que a string lida será ignorada. */
+            /* Iguala-se a 9 pois o fscanf deve fazer 9 "comparações" com sucesso para a leitura ser certa. */
+            while (fscanf(hospedeTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",
+                          &hospede.codigo, hospede.nome, hospede.dataNascimento, hospede.endereco, hospede.cpf, hospede.telefone, hospede.email,
+                          hospede.sexo, hospede.estadoCivil) == 9) {
+                if (hospede.codigo == codigo) {
+                    encontrado = 1;
+                    break;
+                }
+            }
+
+            fclose(hospedeTxt);
             
             return encontrado;
         break;
     }
+}
+
+int hospedeExisteMemoria (Hospede *listaHospedes, int tamanho, int codigo) {
+    for (int i = 0; i < tamanho; i++) {
+        if (listaHospedes[i].codigo == codigo) {
+            return 1;
+        }
+    }
+    
+    return 0;
 }
 
 void lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo) {
@@ -473,6 +698,65 @@ void lerHospedeMemoria(Hospede *listaHospedes, int tamanho, int codigo) {
             printf("Data de nascimento: %s\n", listaHospedes[i].dataNascimento);
             printf("\n");
         }
+    }
+}
+
+void lerHospedeCPFMemoria(Hospede *listaHospedes, int tamanho, char *cpf) {
+    for (int i = 0; i < tamanho; i++) {
+        if (strcmp(listaHospedes[i].cpf, cpf) == 0) {
+            printf("Código: %d\n", listaHospedes[i].codigo);
+            printf("Nome: %s\n", listaHospedes[i].nome);
+            printf("Endereço: %s\n", listaHospedes[i].endereco);
+            printf("CPF: %s\n", listaHospedes[i].cpf);
+            printf("Telefone: %s\n", listaHospedes[i].telefone);
+            printf("E-mail: %s\n", listaHospedes[i].email);
+            printf("Sexo: %s\n", listaHospedes[i].sexo);
+            printf("Estado civil: %s\n", listaHospedes[i].estadoCivil);
+            printf("Data de nascimento: %s\n", listaHospedes[i].dataNascimento);
+            printf("\n");
+        }
+    }
+}
+
+void lerHospedeCPF (char* cpf, int opcao) {
+    Hospede hospede;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *hospedeBin;
+            hospedeBin = fopen("hospede.bin", "rb");
+
+            /* Verificação da abertura. */
+            if(hospedeBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(hospedeBin);
+            while (fread(&hospede, sizeof(Hospede), 1, hospedeBin) == 1) {
+                if (strcmp(hospede.cpf, cpf)) {
+                    printf("Código: %d\n", hospede.codigo);
+                    printf("Nome: %s\n", hospede.nome);
+                    printf("Endereço: %s\n", hospede.endereco);
+                    printf("CPF: %s\n", hospede.cpf);
+                    printf("Telefone: %s\n", hospede.telefone);
+                    printf("E-mail: %s\n", hospede.email);
+                    printf("Sexo: %s\n", hospede.sexo);
+                    printf("Estado civil: %s\n", hospede.estadoCivil);
+                    printf("Data de nascimento: %s\n", hospede.dataNascimento);
+                    printf("\n");
+                    encontrado = 1;
+                }
+            }
+            if (!encontrado) {
+                printf("Hóspede com CPF %s não encontrado.\n", cpf);
+            }
+            
+            fclose(hospedeBin);
+        break;
+        case 2:
+            break;
     }
 }
 
@@ -560,7 +844,7 @@ void atualizarHospede (Hospede novosDados, int codigo, int opcao) {
 
            /* O parâmetro "opcao" serve para chamar as outras funções,
             * uma vez que entrará "no mesmo tipo de arquivo" a outra função. */
-           if (lerHospede(codigo, opcao) != 0) {
+           if (hospedeExiste(codigo, opcao) != 0) {
                deletarHospede(codigo, opcao);
 
                FILE *hospedeBin;
@@ -590,7 +874,7 @@ void atualizarHospede (Hospede novosDados, int codigo, int opcao) {
             /* Bloqueando o terminal. */
             freopen("/dev/null", "w", stdout);
             
-            if (lerHospede(codigo, opcao) != 0) {
+            if (hospedeExiste(codigo, opcao) != 0) {
                 deletarHospede(codigo, opcao);
                 
                 FILE *hospedeTxt;
@@ -2457,7 +2741,7 @@ void inserirOperador(Operador operador, int opcao) {
             
             /* Inserindo no arquivo de texto. */
             if (!feof(operadorTxt)) {
-                fprintf(operadorTxt, "Código: %d\nNome: %s\nUsuário: %s\nSenha: %s\nPermissões: %d\n",
+                fprintf(operadorTxt, "Codigo: %d\nNome: %s\nUsuario: %s\nSenha: %s\nPermissoes: %d\n",
                         operador.codigo, operador.nome, operador.usuario,
                         operador.senha, operador.permissoes);
             }
@@ -2482,9 +2766,11 @@ void inserirOperadorMemoria(Operador dados, Operador **listaOperadores, int *con
 
     (*listaOperadores)[*contador] = dados;
     (*contador)++;
+    
+    printf("\nOperador inserido com sucesso!\n");
 }
 
-int lerOperador(int codigo, int opcao) {
+void lerOperador(int codigo, int opcao) {
     Operador operador;
     int encontrado = 0;
     
@@ -2509,7 +2795,6 @@ int lerOperador(int codigo, int opcao) {
                     printf("Senha: %s\n", operador.senha);
                     printf("Permissões: %d\n", operador.permissoes);
                     printf("\n");
-                    encontrado = 1;
                 }
             }
             if (!encontrado) {
@@ -2517,8 +2802,6 @@ int lerOperador(int codigo, int opcao) {
             }
             
             fclose(operadorBin);
-            
-            return encontrado;
         break;
             
         case 2:
@@ -2534,7 +2817,7 @@ int lerOperador(int codigo, int opcao) {
             rewind(operadorTxt);
             while (fscanf(operadorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
                           &operador.codigo, operador.nome, operador.usuario,
-                          operador.senha, operador.permissoes) == 5) {
+                          operador.senha, &operador.permissoes) == 5) {
                 if (operador.codigo == codigo) {
                     printf("Código: %d\n", operador.codigo);
                     printf("Nome: %s\n", operador.nome);
@@ -2542,7 +2825,6 @@ int lerOperador(int codigo, int opcao) {
                     printf("Senha: %s\n", operador.senha);
                     printf("Permissões: %d\n", operador.permissoes);
                     printf("\n");
-                    encontrado = 1;
                 }
             }
             if (!encontrado) {
@@ -2550,15 +2832,12 @@ int lerOperador(int codigo, int opcao) {
             }
             
             fclose(operadorTxt);
-            
-            return encontrado;
         break;
     }
 }
 
 Operador retornarOperador (int codigo, int opcao) {
     Operador operador;
-    int encontrado = 0;
     
     switch (opcao) {
         case 1:
@@ -2576,7 +2855,6 @@ Operador retornarOperador (int codigo, int opcao) {
             while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
                 if (operador.codigo == codigo) {
                     return operador;
-                    encontrado = 1;
                 }
             }
             
@@ -2594,16 +2872,77 @@ Operador retornarOperador (int codigo, int opcao) {
             }
             
             rewind(operadorTxt);
-            while (fscanf(operadorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %d",
+            while (fscanf(operadorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %d\n",
                           &operador.codigo, operador.nome, operador.usuario,
-                          operador.senha, operador.permissoes) == 5) {
+                          operador.senha, &operador.permissoes) == 5) {
                 if (operador.codigo == codigo) {
                     return operador;
+                }
+            }
+            
+            fclose(operadorTxt);
+        break;
+    }
+}
+
+Operador retornarOperadorMemoria(Operador *listaOperadores, int tamanho, int codigo) {
+    for (int i = 0; i < tamanho; i++) {
+        if (listaOperadores[i].codigo == codigo) {
+            return listaOperadores[i];
+        }
+    }
+}
+
+int operadorExiste (int codigo, int opcao) {
+    Operador operador;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *operadorBin;
+            operadorBin = fopen("operador.bin", "rb");
+
+            /* Verificação da abertura. */
+            if (operadorBin == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(operadorBin);
+
+            while (fread(&operador, sizeof (Operador), 1, operadorBin) == 1) {
+                if (operador.codigo == codigo) {
+                    encontrado = 1;
+                }
+            }
+            
+            fclose(operadorBin);
+            
+            return encontrado;
+        break;
+            
+        case 2:
+            FILE *operadorTxt;
+            operadorTxt = fopen("operador.txt", "r");
+
+            /* Verificação da abertura. */
+            if (operadorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(operadorTxt);
+            while (fscanf(operadorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %d\n",
+                          &operador.codigo, operador.nome, operador.usuario,
+                          operador.senha, &operador.permissoes) == 5) {
+                if (operador.codigo == codigo) {
                     encontrado = 1;
                 }
             }
             
             fclose(operadorTxt);
+            
+            return encontrado;
         break;
     }
 }
@@ -2619,6 +2958,18 @@ void lerOperadorMemoria(Operador *listaOperadores, int tamanho, int codigo) {
             printf("\n");
         }
     }
+}
+
+int operadorExisteMemoria (Operador *listaOperadores, int tamanho, int codigo) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaOperadores[i].codigo == codigo) {
+            encontrado = 1;
+        }
+    }
+    
+    return encontrado;
 }
 
 void listarOperadores(int opcao) {
@@ -2684,12 +3035,7 @@ void listarOperadoresMemoria(Operador *listaOperadores, int tamanho) {
 void atualizarOperador(Operador novosDados, int codigo, int opcao) {
     switch (opcao) {
         case 1:
-            /* Como as funções lerOperador e deletarOperador possuem printf's dentro
-             * delas, o seguinte comando "bloqueará" o terminal para que não apareça
-             * nada quando essas funções forem chamadas (descarta-se o output). */
-            freopen("/dev/null", "w", stdout);
-
-            if (lerOperador(codigo, opcao) != 0) {
+            if (operadorExiste(codigo, opcao) != 0) {
                 deletarOperador(codigo, opcao);
 
                 FILE *operadorBin;
@@ -2700,10 +3046,6 @@ void atualizarOperador(Operador novosDados, int codigo, int opcao) {
                     printf("Erro na abertura do arquivo.\n");
                     exit(1);
                 }
-
-                /* O comando seguinte "desbloqueará" o terminal para que os printf's
-                 * sejam exibidos novamente. */
-                freopen("/dev/tty", "w", stdout);
 
                 fwrite(&novosDados, sizeof (Operador), 1, operadorBin);
                 printf("Atualizado o operador de código %d.", codigo);
@@ -2716,18 +3058,12 @@ void atualizarOperador(Operador novosDados, int codigo, int opcao) {
         break;
             
         case 2:
-             /* Bloqueando o terminal. */
-            freopen("/dev/null", "w", stdout);
-            
-            if (lerOperador(codigo, opcao) != 0) {
+            if (operadorExiste(codigo, opcao) != 0) {
                 /* Deletando os dados antigos. */
                 deletarOperador(codigo, opcao);
                 
                 /* Atualizando o hóspede. */
                 inserirOperador(novosDados, opcao);
-                
-                /* Desbloqueando o terminal. */
-                freopen("/dev/tty", "w", stdout);
                 
                 printf("Atualizado o operador de código %d.", codigo);
             }
