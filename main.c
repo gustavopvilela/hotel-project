@@ -46,6 +46,17 @@ void menuHospedes () {
     printf("7 - Voltar\n");
 }
 
+void menuOperadores () {
+    printf("\e[1;1H\e[2J");
+    printf("=== MENU DE OPERADORES ===\n");
+    printf("1 - Cadastrar operador\n");
+    printf("2 - Buscar operador por código\n");
+    printf("3 - Listar operadores\n");
+    printf("4 - Atualizar operador por código\n");
+    printf("5 - Deletar operador por código\n");
+    printf("6 - Voltar\n");
+}
+
 int main(int argc, char** argv) {
     int formaArmazenamento = 0,
         opcaoOperador = 0,
@@ -457,7 +468,106 @@ int main(int argc, char** argv) {
                                 case 4: break;
                                 case 5: break;
                                 case 6: break;
-                                case 7: break;
+                                case 7:
+                                    do {
+                                        menuOperadores();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoOperador);
+                                        
+                                        switch (opcaoOperador) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+                                                
+                                                printf("Digite o código do operador: ");
+                                                scanf("%d", &operador.codigo);
+                                                
+                                                if (operadorExiste(operador.codigo, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!\n");
+                                                    opcaoOperador = 0;
+                                                    pressioneParaContinuar();
+                                                }
+                                                
+                                                printf("Digite o nome do operador: ");
+                                                scanf(" %[^/n]s", operador.nome);
+                                                
+                                                printf("Digite o usuário do operador: ");
+                                                scanf("%s", operador.usuario);
+                                                
+                                                printf("Digite a senha do operador:");
+                                                printf("%s", operador.senha);
+                                                
+                                                printf("Digite o código de permissões do operador: ");
+                                                scanf("%d", &operador.permissoes);
+                                                
+                                                inserirOperador(operador, formaArmazenamento);
+                                                
+                                                opcaoOperador = 0;
+                                            break;
+                                            case 2:
+                                                printf("\e[1;1H\e[2J");
+                                                
+                                                printf("Digite o código do operador que deseja buscar: ");
+                                                scanf("%d", &operador.codigo);
+                                                
+                                                lerOperador(operador.codigo, formaArmazenamento);
+                                                opcaoOperador = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                printf("\e[1;1H\e[2J");
+                                                
+                                                listarOperadores(formaArmazenamento);
+                                                opcaoOperador = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                printf("\e[1;1H\e[2J");
+                                                
+                                                printf("Digite o código do operador que deseja atualizar: ");
+                                                scanf("%d", &operador.codigo);
+                                                
+                                                if (operadorExiste(operador.codigo, formaArmazenamento) == 0) {
+                                                    printf("Código não existe\n!");
+                                                    opcaoOperador = 0;
+                                                    pressioneParaContinuar();
+                                                }
+                                                
+                                                printf("Digite o novo nome do operador: ");
+                                                scanf(" %[^/n]s", operador.nome);
+                                                
+                                                printf("Digite o novo usuário do operador: ");
+                                                scanf("%s", operador.usuario);
+                                                
+                                                printf("Digite a nova senha do operador:");
+                                                printf("%s", operador.senha);
+                                                
+                                                printf("Digite o novo código de permissões do operador: ");
+                                                scanf("%d", &operador.permissoes);
+                                                
+                                                atualizarOperador(operador, operador.codigo, formaArmazenamento);
+                                                
+                                                opcaoOperador = 0;
+                                                
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 5:
+                                                printf("Digite o código do operador que deseja atualizar: ");
+                                                scanf("%d", &operador.codigo);
+                                                
+                                                deletarOperador(operador.codigo, formaArmazenamento);
+                                                opcaoOperador = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 6:
+                                                opcaoOperador = 0;
+                                            break;
+                                            default:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Opção inválida!\n\n");
+                                        }
+                                    }
+                                    while (opcaoOperador < 1 || opcaoOperador > 6);
+                                break;
                                 case 8:
                                     opcaoModulo = 0;
                                 break;
@@ -484,7 +594,7 @@ int main(int argc, char** argv) {
         }
         else { /* Utiliza alocação dinâmica. */
             switch (opcaoModulo) {
-                case 1:
+                case 1: /* Cadastro e gestão de dados. */
                     if (operador.permissoes < 1000) {
                         printf("\e[1;1H\e[2J");
                         printf("=== Você não tem permissão para acessar este módulo ===\n");
@@ -594,7 +704,7 @@ int main(int argc, char** argv) {
                                                 printf("Digite o código do hóspede que deseja atualizar: ");
                                                 scanf("%d", &hospede.codigo);
                                                 
-                                                if (hospedeExiste(hospede.codigo, formaArmazenamento) == 0) {
+                                                if (hospedeExisteMemoria(listaHospedes, contadorHospedes, hospede.codigo) == 0) {
                                                     printf("Código já existente!");
                                                     opcaoHospede = 0;
                                                     pressioneParaContinuar();
@@ -632,7 +742,7 @@ int main(int argc, char** argv) {
                                                 printf("Digite a novo data de nascimento do hóspede: ");
                                                 scanf("%s", hospede.dataNascimento);
                                                 
-                                                atualizarHospede(hospede, hospede.codigo, formaArmazenamento);
+                                                atualizarHospedeMemoria(listaHospedes, hospede, hospede.codigo, contadorHospedes);
                                                 opcaoHospede = 0;
                                                 pressioneParaContinuar();
                                             break;
@@ -643,7 +753,7 @@ int main(int argc, char** argv) {
                                                 printf("Digite o código do hóspede que deseja deletar: ");
                                                 scanf("%d", &hospede.codigo);
                                                 
-                                                deletarHospede(hospede.codigo, formaArmazenamento);
+                                                deletarHospedeMemoria(listaHospedes, &contadorHospedes, hospede.codigo);
                                                 opcaoHospede = 0;
                                                 pressioneParaContinuar();
                                             break;
@@ -651,6 +761,7 @@ int main(int argc, char** argv) {
                                             case 7:
                                                 opcaoGestaoDados = 0;
                                             break;
+                                            
                                             default:
                                                 printf("Opcao invalida");
                                         }
@@ -663,19 +774,117 @@ int main(int argc, char** argv) {
                                 case 4: break;
                                 case 5: break;
                                 case 6: break;
-                                case 7: break;
+                                case 7:
+                                    do {
+                                        menuOperadores();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoOperador);
+                                        
+                                        switch (opcaoOperador) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+                                                
+                                                printf("Digite o código do operador: ");
+                                                scanf("%d", &operador.codigo);
+                                                
+                                                if (operadorExisteMemoria(listaOperadores, contadorOperadores, operador.codigo) == 1) {
+                                                    printf("Código já existente!\n");
+                                                    opcaoOperador = 0;
+                                                    pressioneParaContinuar();
+                                                }
+                                                
+                                                printf("Digite o nome do operador: ");
+                                                scanf(" %[^/n]s", operador.nome);
+                                                
+                                                printf("Digite o usuário do operador: ");
+                                                scanf("%s", operador.usuario);
+                                                
+                                                printf("Digite a senha do operador:");
+                                                printf("%s", operador.senha);
+                                                
+                                                printf("Digite o código de permissões do operador: ");
+                                                scanf("%d", &operador.permissoes);
+                                                
+                                                inserirOperadorMemoria(operador, &listaOperadores, &contadorOperadores);
+                                                
+                                                opcaoOperador = 0;
+                                            break;
+                                            case 2:
+                                                printf("\e[1;1H\e[2J");
+                                                
+                                                printf("Digite o código do operador que deseja buscar: ");
+                                                scanf("%d", &operador.codigo);
+                                                
+                                                lerOperadorMemoria(listaOperadores, contadorOperadores, operador.codigo);
+                                                opcaoOperador = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                printf("\e[1;1H\e[2J");
+                                                
+                                                listarOperadoresMemoria(listaOperadores, contadorOperadores);
+                                                opcaoOperador = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                printf("\e[1;1H\e[2J");
+                                                
+                                                printf("Digite o código do operador que deseja atualizar: ");
+                                                scanf("%d", &operador.codigo);
+                                                
+                                                if (operadorExisteMemoria(listaOperadores, contadorOperadores, operador.codigo) == 0) {
+                                                    printf("Código não existe\n!");
+                                                    opcaoOperador = 0;
+                                                    pressioneParaContinuar();
+                                                }
+                                                
+                                                printf("Digite o novo nome do operador: ");
+                                                scanf(" %[^/n]s", operador.nome);
+                                                
+                                                printf("Digite o novo usuário do operador: ");
+                                                scanf("%s", operador.usuario);
+                                                
+                                                printf("Digite a nova senha do operador:");
+                                                printf("%s", operador.senha);
+                                                
+                                                printf("Digite o novo código de permissões do operador: ");
+                                                scanf("%d", &operador.permissoes);
+                                                
+                                                atualizarOperadorMemoria(listaOperadores, operador, operador.codigo, contadorOperadores);
+                                                
+                                                opcaoOperador = 0;
+                                                
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 5:
+                                                printf("Digite o código do operador que deseja deletar: ");
+                                                scanf("%d", &operador.codigo);
+                                                
+                                                deletarOperadorMemoria(listaOperadores, &contadorOperadores, operador.codigo);
+                                                opcaoOperador = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 6:
+                                                opcaoOperador = 0;
+                                            break;
+                                            default:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Opção inválida!\n\n");
+                                        }
+                                    }
+                                    while (opcaoOperador < 1 || opcaoOperador > 6);
+                                break;
                                 case 8:
                                     opcaoModulo = 0;
                                 break;
                                 default:
                                     printf("\e[1;1H\e[2J");
                                     printf("Opção inválida!\n\n");
-                            }
-                        }
+                            }}
                         while (opcaoGestaoDados < 1 || opcaoGestaoDados > 8);
                     }
-                break;
-                case 2:
+                        break;
+                case 2: /* Reservas. */
                     if (operador.permissoes < 2000) {
                         pressioneParaContinuar();
                         opcaoModulo = 0;
