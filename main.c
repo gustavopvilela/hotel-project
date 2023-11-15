@@ -2,8 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <unistd.h>
-#include "gestao_dados.h"
+
+/* Bibliotecas. */
+#include "gestao_dados/acomodacao/acomodacao.h"
+#include "gestao_dados/categoria_acomodacao/categoria_acomodacao.h"
+#include "gestao_dados/controle_arquivos/controle_arquivos.h"
+#include "gestao_dados/fornecedor/fornecedor.h"
+#include "gestao_dados/hospede/hospede.h"
+#include "gestao_dados/hotel/hotel.h"
+#include "gestao_dados/operador/operador.h"
+#include "gestao_dados/produto/produto.h"
 
 void pressioneParaContinuar () {
     printf("Pressione \"Enter\" para continuar...");
@@ -12,13 +20,6 @@ void pressioneParaContinuar () {
     printf("\e[1;1H\e[2J");
 }
 
-void menuModulos () {
-    printf("\e[1;1H\e[2J");
-    printf("=== MENU DE MÓDULOS ===\n");
-    printf("1 - Módulo de cadastro e gestão de dados\n");
-    printf("2 - Módulo de reservas\n");
-    printf("3 - Sair do programa\n");
-}
 
 void menuGestaoDados () {
     printf("\e[1;1H\e[2J");
@@ -282,7 +283,11 @@ int main(int argc, char** argv) {
     
     /* Feito o login do operador, aqui ele poderá acessar os módulos da aplicação. */
     do {
-        
+        printf("\e[1;1H\e[2J");
+        printf("=== MENU DE MÓDULOS ===\n");
+        printf("1 - Módulo de cadastro e gestão de dados\n");
+        printf("2 - Módulo de reservas\n");
+        printf("3 - Sair do programa\n");
         printf("Digite a opção desejada: ");
         scanf("%d", &opcaoModulo);
         
@@ -583,6 +588,9 @@ int main(int argc, char** argv) {
                     if (operador.permissoes < 2000) {
                         pressioneParaContinuar();
                         opcaoModulo = 0;
+                    }
+                    else {
+                        
                     }
                 case 3:
                     printf("\nEncerrando o programa...\n");

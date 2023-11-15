@@ -35,7 +35,14 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/gestao_dados.o \
+	${OBJECTDIR}/gestao_dados/acomodacao/acomodacao.o \
+	${OBJECTDIR}/gestao_dados/categoria_acomodacao/categoria_acomodacao.o \
+	${OBJECTDIR}/gestao_dados/controle_arquivos/controle_arquivos.o \
+	${OBJECTDIR}/gestao_dados/fornecedor/fornecedor.o \
+	${OBJECTDIR}/gestao_dados/hospede/hospede.o \
+	${OBJECTDIR}/gestao_dados/hotel/hotel.o \
+	${OBJECTDIR}/gestao_dados/operador/operador.o \
+	${OBJECTDIR}/gestao_dados/produto/produto.o \
 	${OBJECTDIR}/main.o
 
 
@@ -63,10 +70,45 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hotel-project.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hotel-project ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/gestao_dados.o: gestao_dados.c
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/gestao_dados/acomodacao/acomodacao.o: gestao_dados/acomodacao/acomodacao.c
+	${MKDIR} -p ${OBJECTDIR}/gestao_dados/acomodacao
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestao_dados.o gestao_dados.c
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestao_dados/acomodacao/acomodacao.o gestao_dados/acomodacao/acomodacao.c
+
+${OBJECTDIR}/gestao_dados/categoria_acomodacao/categoria_acomodacao.o: gestao_dados/categoria_acomodacao/categoria_acomodacao.c
+	${MKDIR} -p ${OBJECTDIR}/gestao_dados/categoria_acomodacao
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestao_dados/categoria_acomodacao/categoria_acomodacao.o gestao_dados/categoria_acomodacao/categoria_acomodacao.c
+
+${OBJECTDIR}/gestao_dados/controle_arquivos/controle_arquivos.o: gestao_dados/controle_arquivos/controle_arquivos.c
+	${MKDIR} -p ${OBJECTDIR}/gestao_dados/controle_arquivos
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestao_dados/controle_arquivos/controle_arquivos.o gestao_dados/controle_arquivos/controle_arquivos.c
+
+${OBJECTDIR}/gestao_dados/fornecedor/fornecedor.o: gestao_dados/fornecedor/fornecedor.c
+	${MKDIR} -p ${OBJECTDIR}/gestao_dados/fornecedor
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestao_dados/fornecedor/fornecedor.o gestao_dados/fornecedor/fornecedor.c
+
+${OBJECTDIR}/gestao_dados/hospede/hospede.o: gestao_dados/hospede/hospede.c
+	${MKDIR} -p ${OBJECTDIR}/gestao_dados/hospede
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestao_dados/hospede/hospede.o gestao_dados/hospede/hospede.c
+
+${OBJECTDIR}/gestao_dados/hotel/hotel.o: gestao_dados/hotel/hotel.c
+	${MKDIR} -p ${OBJECTDIR}/gestao_dados/hotel
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestao_dados/hotel/hotel.o gestao_dados/hotel/hotel.c
+
+${OBJECTDIR}/gestao_dados/operador/operador.o: gestao_dados/operador/operador.c
+	${MKDIR} -p ${OBJECTDIR}/gestao_dados/operador
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestao_dados/operador/operador.o gestao_dados/operador/operador.c
+
+${OBJECTDIR}/gestao_dados/produto/produto.o: gestao_dados/produto/produto.c
+	${MKDIR} -p ${OBJECTDIR}/gestao_dados/produto
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestao_dados/produto/produto.o gestao_dados/produto/produto.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
