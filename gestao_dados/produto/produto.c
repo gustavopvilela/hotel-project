@@ -68,7 +68,7 @@ void inserirProdutoMemoria(Produto dados, Produto **listaProdutos, int *contador
     (*contador)++;
 }
 
-int lerProduto (int codigo, int opcao) {
+void lerProduto (int codigo, int opcao) {
     Produto produto;
     int encontrado = 0;
     
@@ -144,6 +144,60 @@ int lerProduto (int codigo, int opcao) {
     }
 }
 
+int produtoExiste (int codigo, int opcao) {
+    Produto produto;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *produtoBin;
+            produtoBin = fopen(PRODUTO_BIN, "rb");
+
+            /* Verificação da abertura. */
+            if(produtoBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+
+            rewind(produtoBin);
+
+            while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
+                if (produto.codigo == codigo) {
+                    encontrado = 1;
+                }
+            }
+            fclose(produtoBin);
+            
+            return encontrado;
+        break;
+            
+        case 2:
+            FILE *produtoTxt;
+            produtoTxt = fopen(PRODUTO_TXT, "r");
+
+            /* Verificação da abertura. */
+            if (produtoTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(produtoTxt);
+            while (fscanf(produtoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d\n%*s %f\n%*s %f",
+                          &produto.codigo, produto.descricao, &produto.estoque,
+                          &produto.estoqueMin, &produto.precoCusto, &produto.precoVenda) == 6) {
+                if (produto.codigo == codigo) {
+                    encontrado = 1;
+                }
+            }
+            
+            fclose(produtoTxt);
+            
+            return encontrado;
+        break;
+    }
+}
+
 void lerProdutoMemoria(Produto *listaProdutos, int tamanho, int codigo) {
     for (int i = 0; i < tamanho; i++) {
         if (listaProdutos[i].codigo == codigo) {
@@ -156,6 +210,18 @@ void lerProdutoMemoria(Produto *listaProdutos, int tamanho, int codigo) {
             printf("\n");
         }
     }
+}
+
+int produtoExisteMemoria (Produto *listaProdutos, int tamanho, int codigo) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaProdutos[i].codigo == codigo) {
+            encontrado = 1;
+        }
+    }
+    
+    return encontrado;
 }
 
 void listarProdutos(int opcao) {
@@ -224,9 +290,7 @@ void listarProdutosMemoria(Produto *listaProdutos, int tamanho) {
 void atualizarProduto (Produto novosDados, int codigo, int opcao) {
     switch (opcao) {
         case 1:
-            freopen("/dev/null", "w", stdout);
-   
-            if (lerProduto(codigo, opcao) != 0) {
+            if (produtoExiste(codigo, opcao) != 0) {
                 deletarProduto(codigo, opcao);
 
                 FILE *produtoBin;
@@ -237,10 +301,6 @@ void atualizarProduto (Produto novosDados, int codigo, int opcao) {
                     printf("Erro na abertura do arquivo.\n");
                     exit(1);
                 }
-
-                /* O comando seguinte "desbloqueará" o terminal para que os printf's
-                 * sejam exibidos novamente. */
-                freopen("/dev/tty", "w", stdout);
 
                 fwrite(&novosDados, sizeof(Produto), 1, produtoBin);
                 printf("Atualizado o produto de código %d.", codigo);
@@ -253,18 +313,12 @@ void atualizarProduto (Produto novosDados, int codigo, int opcao) {
         break;
             
         case 2:
-             /* Bloqueando o terminal. */
-            freopen("/dev/null", "w", stdout);
-            
-            if (lerProduto(codigo, opcao) != 0) {
+            if (produtoExiste(codigo, opcao) != 0) {
                 /* Deletando os dados antigos. */
                 deletarProduto(codigo, opcao);
                 
                 /* Atualizando o hóspede. */
                 inserirProduto(novosDados, opcao);
-                
-                /* Desbloqueando o terminal. */
-                freopen("/dev/tty", "w", stdout);
                 
                 printf("Atualizada a produto de código %d.", codigo);
             }
@@ -273,7 +327,6 @@ void atualizarProduto (Produto novosDados, int codigo, int opcao) {
             }
         break;
     }
-    
     
 }
 

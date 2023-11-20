@@ -23,8 +23,10 @@ typedef struct {
 
 void inserirFornecedor(Fornecedor fornecedor, int opcao);
 void inserirFornecedorMemoria(Fornecedor dados, Fornecedor **listaFornecedores, int *contador);
-int lerFornecedor(int codigo, int opcao);
+void lerFornecedor(int codigo, int opcao);
+int fornecedorExiste (int codigo, int opcao);
 void lerFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho, int codigo);
+int fornecedorExisteMemoria (Fornecedor *listaFornecedores, int tamanho, int codigo);
 void listarFornecedores(int opcao);
 void listarFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho);
 void atualizarFornecedor(Fornecedor novosDados, int codigo, int opcao);

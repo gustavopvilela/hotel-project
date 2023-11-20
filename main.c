@@ -20,7 +20,6 @@ void pressioneParaContinuar () {
     printf("\e[1;1H\e[2J");
 }
 
-
 void menuGestaoDados () {
     printf("\e[1;1H\e[2J");
     printf("=== MENU DE CADASTRO E GESTÃO DE DADOS ===\n");
@@ -287,7 +286,12 @@ int main(int argc, char** argv) {
         printf("=== MENU DE MÓDULOS ===\n");
         printf("1 - Módulo de cadastro e gestão de dados\n");
         printf("2 - Módulo de reservas\n");
-        printf("3 - Sair do programa\n");
+        printf("3 - Módulo de transação\n");
+        printf("4 - Módulo de feedback\n");
+        printf("5 - Módulo de importação/exportação de dados\n");
+        printf("6 - Mudar forma de armazenamento\n");
+        printf("7 - Mudar operador\n");
+        printf("8 - Sair do programa\n");
         printf("Digite a opção desejada: ");
         scanf("%d", &opcaoModulo);
         

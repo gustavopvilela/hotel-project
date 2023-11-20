@@ -21,8 +21,10 @@ typedef struct {
 
 void inserirProduto(Produto produto, int opcao);
 void inserirProdutoMemoria(Produto dados, Produto **listaProdutos, int *contador);
-int lerProduto (int codigo, int opcao);
+void lerProduto (int codigo, int opcao);
+int produtoExiste (int codigo, int opcao);
 void lerProdutoMemoria(Produto *listaProdutos, int tamanho, int codigo);
+int produtoExisteMemoria (Produto *listaProdutos, int tamanho, int codigo);
 void listarProduto(int opcao);
 void listarProdutosMemoria(Produto *listaProdutos, int tamanho);
 void atualizarProduto (Produto novosDados, int codigo, int opcao);

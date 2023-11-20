@@ -68,7 +68,7 @@ void inserirAcomodacaoMemoria(Acomodacao dados, Acomodacao **listaAcom, int *con
     (*contador)++;
 }
 
-int lerAcomodacao (int codigo, int opcao) {
+void lerAcomodacao (int codigo, int opcao) {
     Acomodacao acomodacao;
     int encontrado = 0;
     
@@ -101,8 +101,6 @@ int lerAcomodacao (int codigo, int opcao) {
 
             /*Fechando o arquivo*/
             fclose(acomodacaoBin);
-            
-            return encontrado;
         break;
             
         case 2:
@@ -132,10 +130,64 @@ int lerAcomodacao (int codigo, int opcao) {
             }
             
             fclose(acomodacaoTxt);
+        break;
+    }
+}
+
+int acomodacaoExiste (int codigo, int opcao) {
+  Acomodacao acomodacao;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *acomodacaoBin;
+            acomodacaoBin = fopen(ACOMODACAO_BIN, "ab");
+
+            /* Verificação da abertura. */
+            if(acomodacaoBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(acomodacaoBin);
+
+            while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
+                if (acomodacao.codigo == codigo) {
+                    encontrado = 1;
+                    break;
+                }
+            }
+
+            /*Fechando o arquivo*/
+            fclose(acomodacaoBin);
             
             return encontrado;
         break;
-    }
+            
+        case 2:
+            FILE *acomodacaoTxt;
+            acomodacaoTxt = fopen(ACOMODACAO_TXT, "r");
+
+            /* Verificação da abertura. */
+            if (acomodacaoTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(acomodacaoTxt);
+            while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
+                          &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
+                if (acomodacao.codigo == codigo) {
+                    encontrado = 1;
+                    break;
+                }
+            }
+            
+            fclose(acomodacaoTxt);
+            
+            return encontrado;
+        break;
+    }   
 }
 
 void lerAcomodacaoMemoria(Acomodacao *listaAcom, int tamanho, int codigo) {
@@ -148,6 +200,19 @@ void lerAcomodacaoMemoria(Acomodacao *listaAcom, int tamanho, int codigo) {
             printf("\n");
         }
     }
+}
+
+int acomodacaoExisteMemoria (Acomodacao *listaAcom, int tamanho, int codigo) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaAcom[i].codigo == codigo) {
+            encontrado = 1;
+            break;
+        }
+    }
+    
+    return encontrado;
 }
 
 void listarAcomodacoes (int opcao) {
@@ -215,12 +280,7 @@ void listarAcomodacaoMemoria(Acomodacao *listaAcom, int tamanho) {
 void atualizarAcomodacao (Acomodacao novosDados, int codigo, int opcao) {
     switch (opcao) {
         case 1:
-            /* Como as funções lerAcomodacao e deletarAcomodacao possuem printf's dentro
-             * delas, o seguinte comando "bloqueará" o terminal para que não apareça
-             * nada quando essas funções forem chamadas (descarta-se o output). */
-            freopen("/dev/null", "w", stdout);
-
-            if (lerAcomodacao(codigo, opcao) != 0) {
+            if (acomodacaoExiste(codigo, opcao) != 0) {
                 deletarAcomodacao(codigo, opcao);
 
                 FILE *acomodacaoBin;
@@ -231,10 +291,6 @@ void atualizarAcomodacao (Acomodacao novosDados, int codigo, int opcao) {
                     printf("Erro na abertura do arquivo.\n");
                     exit(1);
                 }
-
-                /* O comando seguinte "desbloqueará" o terminal para que os printf's
-                 * sejam exibidos novamente. */
-                freopen("/dev/tty", "w", stdout);
 
                 fwrite(&novosDados, sizeof(Acomodacao), 1, acomodacaoBin);
                 printf("Atualizada a acomodação de código %d.", codigo);
@@ -247,18 +303,12 @@ void atualizarAcomodacao (Acomodacao novosDados, int codigo, int opcao) {
         break;
             
         case 2:
-            /* Bloqueando o terminal. */
-            freopen("/dev/null", "w", stdout);
-            
-            if (lerAcomodacao(codigo, opcao) != 0) {
+            if (acomodacaoExiste(codigo, opcao) != 0) {
                 /* Deletando os dados antigos. */
                 deletarAcomodacao(codigo, opcao);
                 
                 /* Atualizando o hóspede. */
                 inserirAcomodacao(novosDados, opcao);
-                
-                /* Desbloqueando o terminal. */
-                freopen("/dev/tty", "w", stdout);
                 
                 printf("Atualizada a acomodação de código %d.", codigo);
             }

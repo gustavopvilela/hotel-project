@@ -70,7 +70,7 @@ void inserirFornecedorMemoria(Fornecedor dados, Fornecedor **listaFornecedores, 
     (*contador)++;
 }
 
-int lerFornecedor (int codigo, int opcao) {
+void lerFornecedor (int codigo, int opcao) {
     Fornecedor fornecedor;
     int encontrado = 0;
     
@@ -99,7 +99,6 @@ int lerFornecedor (int codigo, int opcao) {
                     printf("Telefone: %s\n", fornecedor.telefone);
                     printf("E-mail: %s\n", fornecedor.email);
                     printf("\n");
-                    encontrado = 1;
                 }
             }
             if (!encontrado) {
@@ -107,8 +106,6 @@ int lerFornecedor (int codigo, int opcao) {
             }
             
             fclose(fornecedorBin);
-            
-            return encontrado;
         break;
             
         case 2:
@@ -136,11 +133,64 @@ int lerFornecedor (int codigo, int opcao) {
                     printf("Telefone: %s\n", fornecedor.telefone);
                     printf("E-mail: %s\n", fornecedor.email);
                     printf("\n");
-                    encontrado = 1;
                 }
             }
             if (!encontrado) {
                 printf("Fornecedor com código %d não encontrado.\n", codigo);
+            }
+            
+            fclose(fornecedorTxt);
+        break;
+    }
+}
+
+int fornecedorExiste (int codigo, int opcao) {
+    Fornecedor fornecedor;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *fornecedorBin;
+            fornecedorBin = fopen(FORNECEDOR_BIN, "rb");
+
+            /* Verificação da abertura. */
+            if(fornecedorBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+
+            rewind(fornecedorBin);
+
+            while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
+                if (fornecedor.codigo == codigo) {
+                    encontrado = 1;
+                }
+            }
+            
+            fclose(fornecedorBin);
+            
+            return encontrado;
+        break;
+            
+        case 2:
+            FILE *fornecedorTxt;
+            fornecedorTxt = fopen(FORNECEDOR_TXT, "r");
+
+            /* Verificação da abertura. */
+            if (fornecedorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(fornecedorTxt);
+            while (fscanf(fornecedorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",
+                          &fornecedor.codigo, fornecedor.nomeFantasia, fornecedor.razaoSocial,
+                          fornecedor.inscricaoEstadual, fornecedor.cnpj, fornecedor.endereco,
+                          fornecedor.telefone, fornecedor.email) == 8) {
+                if (fornecedor.codigo == codigo) {
+                    encontrado = 1;
+                }
             }
             
             fclose(fornecedorTxt);
@@ -164,6 +214,19 @@ void lerFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho, int codigo
             printf("\n");
         }
     }
+}
+
+int fornecedorExisteMemoria (Fornecedor *listaFornecedores, int tamanho, int codigo) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaFornecedores[i].codigo == codigo) {
+            encontrado = 1;
+            break;
+        }
+    }
+    
+    return encontrado;
 }
 
 void listarFornecedores(int opcao) {
@@ -239,9 +302,7 @@ void listarFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho) {
 void atualizarFornecedor (Fornecedor novosDados, int codigo, int opcao) {
     switch (opcao) {
         case 1:
-            freopen("/dev/null", "w", stdout);
-   
-            if (lerFornecedor(codigo, opcao) != 0) {
+            if (fornecedorExiste(codigo, opcao) != 0) {
                 deletarFornecedor(codigo, opcao);
 
                 FILE *fornecedorBin;
@@ -252,10 +313,6 @@ void atualizarFornecedor (Fornecedor novosDados, int codigo, int opcao) {
                     printf("Erro na abertura do arquivo.\n");
                     exit(1);
                 }
-
-                /* O comando seguinte "desbloqueará" o terminal para que os printf's
-                 * sejam exibidos novamente. */
-                freopen("/dev/tty", "w", stdout);
 
                 fwrite(&novosDados, sizeof(Fornecedor), 1, fornecedorBin);
                 printf("Atualizado o fornecedor de código %d.", codigo);
@@ -268,18 +325,12 @@ void atualizarFornecedor (Fornecedor novosDados, int codigo, int opcao) {
         break;
             
         case 2:
-             /* Bloqueando o terminal. */
-            freopen("/dev/null", "w", stdout);
-            
-            if (lerFornecedor(codigo, opcao) != 0) {
+            if (fornecedorExiste(codigo, opcao) != 0) {
                 /* Deletando os dados antigos. */
                 deletarFornecedor(codigo, opcao);
                 
                 /* Atualizando o fornecedor. */
                 inserirFornecedor(novosDados, opcao);
-                
-                /* Desbloqueando o terminal. */
-                freopen("/dev/tty", "w", stdout);
                 
                 printf("Atualizada o fornecedor de código %d.", codigo);
             }

@@ -75,7 +75,7 @@ void inserirCategoriaAcomodacaoMemoria(CategoriaAcomodacao dados, CategoriaAcomo
     (*contador)++;
 }
 
-int lerCategoriaAcomodacao (int codigo, int opcao) {
+void lerCategoriaAcomodacao (int codigo, int opcao) {
     CategoriaAcomodacao catAcom;
     int encontrado = 0;
     
@@ -110,8 +110,6 @@ int lerCategoriaAcomodacao (int codigo, int opcao) {
 
             /*Fechando o arquivo*/
             fclose(catAcomBin);
-            
-            return encontrado;
         break;
             
         case 2:
@@ -144,12 +142,62 @@ int lerCategoriaAcomodacao (int codigo, int opcao) {
             }
             
             fclose(catAcomTxt);
+        break;
+    }
+}
+
+int categoriaAcomodacaoExiste (int codigo, int opcao) {
+    CategoriaAcomodacao catAcom;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *catAcomBin;
+            catAcomBin = fopen(CATACOM_BIN, "rb");
+
+            /* Verificação da abertura. */
+            if(catAcomBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(catAcomBin);
+
+            while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
+                if (catAcom.codigo == codigo) {
+                    encontrado = 1;
+                }
+            }
+
+            /*Fechando o arquivo*/
+            fclose(catAcomBin);
+            
+            return encontrado;
+        break;
+            
+        case 2:
+            FILE *catAcomTxt;
+            catAcomTxt = fopen(CATACOM_TXT, "r");
+
+            /* Verificação da abertura. */
+            if (catAcomTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(catAcomTxt);
+            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %f\n%*s %d\n%*s %d",
+                          &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
+                if (catAcom.codigo == codigo) {
+                    encontrado = 1;
+                }
+            }
+            
+            fclose(catAcomTxt);
             
             return encontrado;
         break;
     }
-    
-    
 }
 
 void lerCategoriaAcomodacaoMemoria(CategoriaAcomodacao *listaCatAcom, int tamanho, int codigo) {
@@ -164,6 +212,18 @@ void lerCategoriaAcomodacaoMemoria(CategoriaAcomodacao *listaCatAcom, int tamanh
             printf("\n");
         }
     }
+}
+
+int categoriaAcomodacaoExisteMemoria(CategoriaAcomodacao *listaCatAcom, int tamanho, int codigo) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (listaCatAcom[i].codigo == codigo) {
+            encontrado = 1;
+        }
+    }
+    
+    return encontrado;
 }
 
 void listarCategoriaAcomodacao (int opcao) {
@@ -236,12 +296,7 @@ void listarCategoriaAcomodacaoMemoria (CategoriaAcomodacao *listaCatAcom, int ta
 void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo, int opcao) {
     switch (opcao) {
         case 1:
-            /* Como as funções lerCategoriaAcomodacao e deletarCategoriaAcomodacao possuem printf's dentro
-             * delas, o seguinte comando "bloqueará" o terminal para que não apareça
-             * nada quando essas funções forem chamadas (descarta-se o output). */
-            freopen("/dev/null", "w", stdout);
-
-            if (lerCategoriaAcomodacao(codigo, opcao) != 0) {
+            if (categoriaAcomodacaoExiste(codigo, opcao) != 0) {
                deletarCategoriaAcomodacao(codigo, opcao);
 
                FILE *catAcomBin;
@@ -252,10 +307,6 @@ void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo, i
                    printf("Erro na abertura do arquivo.\n");
                    exit(1);
                }
-
-               /* O comando seguinte "desbloqueará" o terminal para que os printf's
-                * sejam exibidos novamente. */
-               freopen("/dev/tty", "w", stdout);
 
                fwrite(&novosDados, sizeof(CategoriaAcomodacao), 1, catAcomBin);
                printf("Atualizado a categoria de acomodação de código %d.", codigo);
@@ -268,18 +319,12 @@ void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo, i
         break;
             
         case 2:
-            /* Bloqueando o terminal. */
-            freopen("/dev/null", "w", stdout);
-            
-            if (lerCategoriaAcomodacao(codigo, opcao) != 0) {
+            if (categoriaAcomodacaoExiste(codigo, opcao) != 0) {
                 /* Deletando os dados antigos. */
                 deletarCategoriaAcomodacao(codigo, opcao);
                 
                 /* Atualizando o hóspede. */
                 inserirCategoriaAcomodacao(novosDados, opcao);
-                
-                /* Desbloqueando o terminal. */
-                freopen("/dev/tty", "w", stdout);
                 
                 printf("Atualizada a categoria de acomodação de código %d.", codigo);
             }

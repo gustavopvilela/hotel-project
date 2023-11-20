@@ -8,12 +8,10 @@
       <itemPath>gestao_dados/categoria_acomodacao/categoria_acomodacao.h</itemPath>
       <itemPath>gestao_dados/controle_arquivos/controle_arquivos.h</itemPath>
       <itemPath>gestao_dados/fornecedor/fornecedor.h</itemPath>
-      <itemPath>gestao_dados.h</itemPath>
       <itemPath>gestao_dados/hospede/hospede.h</itemPath>
       <itemPath>gestao_dados/hotel/hotel.h</itemPath>
       <itemPath>gestao_dados/operador/operador.h</itemPath>
       <itemPath>gestao_dados/produto/produto.h</itemPath>
-      <itemPath>reserva.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Arquivos de Código-Fonte"
@@ -54,8 +52,6 @@
       </toolsSet>
       <compileType>
       </compileType>
-      <item path="gestao_dados.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="gestao_dados/acomodacao/acomodacao.c"
             ex="false"
             tool="0"
@@ -113,8 +109,6 @@
       <item path="gestao_dados/produto/produto.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="reserva.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -137,8 +131,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="gestao_dados.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="gestao_dados/acomodacao/acomodacao.c"
             ex="false"
             tool="0"
@@ -196,8 +188,6 @@
       <item path="gestao_dados/produto/produto.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="reserva.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -21,8 +21,10 @@ typedef struct {
 
 void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom, int opcao);
 void inserirCategoriaAcomodacaoMemoria(CategoriaAcomodacao dados, CategoriaAcomodacao **listaCatAcom, int *contador);
-int lerCategoriaAcomodacao (int codigo, int opcao);
+void lerCategoriaAcomodacao (int codigo, int opcao);
+int categoriaAcomodacaoExiste (int codigo, int opcao);
 void lerCategoriaAcomodacaoMemoria(CategoriaAcomodacao *listaCatAcom, int tamanho, int codigo);
+int categoriaAcomodacaoExisteMemoria(CategoriaAcomodacao *listaCatAcom, int tamanho, int codigo);
 void listarCategoriaAcomodacao (int opcao);
 void listarCategoriaAcomodacaoMemoria (CategoriaAcomodacao *listaCatAcom, int tamanho);
 void atualizarCategoriaAcomodacao (CategoriaAcomodacao novosDados, int codigo, int opcao);

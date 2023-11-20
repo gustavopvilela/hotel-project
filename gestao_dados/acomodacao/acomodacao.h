@@ -19,8 +19,10 @@ typedef struct {
 
 void inserirAcomodacao (Acomodacao acomodacao, int opcao);
 void inserirAcomodacaoMemoria(Acomodacao dados, Acomodacao **listaAcom, int *contador);
-int lerAcomodacao (int codigo, int opcao);
+void lerAcomodacao (int codigo, int opcao);
+int acomodacaoExiste (int codigo, int opcao);
 void lerAcomodacaoMemoria(Acomodacao *listaAcom, int tamanho, int codigo);
+int acomodacaoExisteMemoria (Acomodacao *listaAcom, int tamanho, int codigo);
 void listarAcomodacoes (int opcao);
 void listarAcomodacaoMemoria(Acomodacao *listaAcom, int tamanho);
 void atualizarAcomodacao (Acomodacao novosDados, int codigo, int opcao);
