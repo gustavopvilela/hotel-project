@@ -12,6 +12,7 @@
       <itemPath>gestao_dados/hotel/hotel.h</itemPath>
       <itemPath>gestao_dados/operador/operador.h</itemPath>
       <itemPath>gestao_dados/produto/produto.h</itemPath>
+      <itemPath>reserva/reserva.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Arquivos de Código-Fonte"
@@ -25,6 +26,7 @@
       <itemPath>main.c</itemPath>
       <itemPath>gestao_dados/operador/operador.c</itemPath>
       <itemPath>gestao_dados/produto/produto.c</itemPath>
+      <itemPath>reserva/reserva.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Arquivos de Recurso"
@@ -110,6 +112,10 @@
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="reserva/reserva.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="reserva/reserva.h" ex="false" tool="3" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -188,6 +194,10 @@
       <item path="gestao_dados/produto/produto.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="reserva/reserva.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="reserva/reserva.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

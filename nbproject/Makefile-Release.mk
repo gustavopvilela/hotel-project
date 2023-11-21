@@ -43,7 +43,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/gestao_dados/hotel/hotel.o \
 	${OBJECTDIR}/gestao_dados/operador/operador.o \
 	${OBJECTDIR}/gestao_dados/produto/produto.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/reserva/reserva.o
 
 
 # C Compiler Flags
@@ -114,6 +115,11 @@ ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+
+${OBJECTDIR}/reserva/reserva.o: reserva/reserva.c
+	${MKDIR} -p ${OBJECTDIR}/reserva
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/reserva/reserva.o reserva/reserva.c
 
 # Subprojects
 .build-subprojects:

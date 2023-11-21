@@ -18,7 +18,7 @@ void inserirCategoriaAcomodacao (CategoriaAcomodacao catAcom, int opcao) {
 
             /* Inserindo no arquivo binário. */
             if (!feof(catAcomBin)) {
-                if (lerCategoriaAcomodacao(catAcom.codigo, opcao) == 0) {
+                if (categoriaAcomodacaoExiste(catAcom.codigo, opcao) == 0) {
                     fwrite(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin);
                 }
                 else {

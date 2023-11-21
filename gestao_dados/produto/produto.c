@@ -103,8 +103,6 @@ void lerProduto (int codigo, int opcao) {
             }
             
             fclose(produtoBin);
-            
-            return encontrado;
         break;
             
         case 2:
@@ -138,8 +136,6 @@ void lerProduto (int codigo, int opcao) {
             }
             
             fclose(produtoTxt);
-            
-            return encontrado;
         break;
     }
 }
