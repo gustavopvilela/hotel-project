@@ -34,6 +34,16 @@ void menuGestaoDados () {
     printf("8 - Voltar\n");
 }
 
+void menuHotel () {
+    printf("\e[1;1H\e[2J");
+    printf("=== MENU DO HOTEL ===\n");
+    printf("1 - Cadastrar hotel\n");
+    printf("2 - Mostrar hotel cadastrado\n");
+    printf("3 - Atualizar hotel\n");
+    printf("4 - Deletar hotel\n");
+    printf("5 - Voltar\n");
+}
+
 void menuHospedes () {
     printf("\e[1;1H\e[2J");
     printf("=== MENU DE HÓSPEDES ===\n");
@@ -48,6 +58,7 @@ void menuHospedes () {
 
 void menuCategoriaAcomodacao () {
     printf("\e[1;1H\e[2J");
+    printf("=== MENU DE CATEGORIAS DE ACOMODAÇÕES ===\n");
     printf("1 - Cadastrar categoria de acomodação\n");
     printf("2 - Buscar categoria de acomodação por código\n");
     printf("3 - Listar categorias de acomodação\n");
@@ -56,8 +67,20 @@ void menuCategoriaAcomodacao () {
     printf("6 - Voltar\n");
 }
 
+void menuAcomodacao () {
+    printf("\e[1;1H\e[2J");
+    printf("=== MENU DE ACOMODAÇÕES ===\n");
+    printf("1 - Cadastrar acomodação\n");
+    printf("2 - Buscar acomodação por código\n");
+    printf("3 - Listar acomodações\n");
+    printf("4 - Atualizar acomodação por código\n");
+    printf("5 - Deletar acomodação por código\n");
+    printf("6 - Voltar\n");
+}
+
 void menuProdutos () {
     printf("\e[1;1H\e[2J");
+    printf("=== MENU DE PRODUTOS ===\n");
     printf("1 - Cadastrar produto\n");
     printf("2 - Buscar produto por código\n");
     printf("3 - Listar produtos\n");
@@ -68,6 +91,7 @@ void menuProdutos () {
 
 void menuFornecedores () {
     printf("\e[1;1H\e[2J");
+    printf("=== MENU DE FORNECEDORES ===\n");
     printf("1 - Cadastrar fornecedor\n");
     printf("2 - Buscar fornecedor por código\n");
     printf("3 - Buscar fornecedor por CNPJ");
@@ -93,8 +117,10 @@ int main(int argc, char** argv) {
         opcaoOperador = 0,
         opcaoModulo = 0,
         opcaoGestaoDados = 0,
+        opcaoHotel = 0,
         opcaoHospede = 0,
         opcaoCatAcom = 0,
+        opcaoAcomodacao = 0,
         opcaoProduto = 0,
         opcaoFornecedor = 0;
     
@@ -106,6 +132,10 @@ int main(int argc, char** argv) {
     Operador *listaOperadores = NULL;
     int contadorOperadores = 0;
     
+    Hotel hotel;
+    Hotel *listaHotel = NULL;
+    int contadorHotel = 0;
+    
     Hospede hospede;
     Hospede *listaHospedes = NULL;
     int contadorHospedes = 0;
@@ -113,6 +143,10 @@ int main(int argc, char** argv) {
     CategoriaAcomodacao catAcom;
     CategoriaAcomodacao *listaCatAcom = NULL;
     int contadorCatAcom = 0;
+    
+    Acomodacao acomodacao;
+    Acomodacao *listaAcomodacao = NULL;
+    int contadorAcomodacao = 0;
     
     Produto produto;
     Produto *listaProdutos = NULL;
@@ -334,12 +368,7 @@ int main(int argc, char** argv) {
         printf("=== MENU DE MÓDULOS ===\n");
         printf("1 - Módulo de cadastro e gestão de dados\n");
         printf("2 - Módulo de reservas\n");
-        printf("3 - Módulo de transação\n");
-        printf("4 - Módulo de feedback\n");
-        printf("5 - Módulo de importação/exportação de dados\n");
-        printf("6 - Mudar forma de armazenamento\n");
-        printf("7 - Mudar operador\n");
-        printf("8 - Sair do programa\n");
+        printf("3 - Sair do programa\n");
         printf("Digite a opção desejada: ");
         scanf("%d", &opcaoModulo);
         
@@ -360,7 +389,111 @@ int main(int argc, char** argv) {
 
                             switch (opcaoGestaoDados) {
                                 case 1: /* Hotel */
-
+                                    do {
+                                        menuHotel();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoHotel);
+                                        
+                                        switch (opcaoHotel) {
+                                            case 1:
+                                                printf("Digite o nome fantasia do hotel: ");
+                                                scanf("%[^\n]s", hotel.nomeFantasia);
+                                                
+                                                printf("Digite a razão social do hotel: ");
+                                                scanf("%[^\n]s", hotel.razaoSocial);
+                                                
+                                                printf("Digite a inscrição estadual do hotel: ");
+                                                scanf("%[^\n]s", hotel.inscricaoEstadual);
+                                                
+                                                printf("Digite o CNPJ do hotel: ");
+                                                scanf("%s", hotel.cnpj);
+                                                
+                                                printf("Digite o endereço do hotel: ");
+                                                scanf("%[^\n]s", hotel.endereco);
+                                                
+                                                printf("Digite o telefone do hotel: ");
+                                                scanf("%s", hotel.telefone);
+                                                
+                                                printf("Digite o email do hotel: ");
+                                                scanf("%s", hotel.email);
+                                                
+                                                printf("Digite o nome do responsável pelo hotel: ");
+                                                scanf("%[^\n]s", hotel.responsavel);
+                                                
+                                                printf("Digite o telefone do responsável pelo hotel: ");
+                                                scanf("%s", hotel.telefoneResponsavel);
+                                                
+                                                printf("Digite o horário de check-in do hotel: ");
+                                                scanf("%s", hotel.horarioCheckIn);
+                                                
+                                                printf("Digite o horário de check-out do hotel: ");
+                                                scanf("%s", hotel.horarioCheckOut);
+                                                
+                                                inserirHotel(hotel, formaArmazenamento);
+                                                
+                                                opcaoHotel = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                listarHotel(formaArmazenamento);
+                                                
+                                                opcaoHotel = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                printf("Digite o novo nome fantasia do hotel: ");
+                                                scanf("%[^\n]s", hotel.nomeFantasia);
+                                                
+                                                printf("Digite a nova razão social do hotel: ");
+                                                scanf("%[^\n]s", hotel.razaoSocial);
+                                                
+                                                printf("Digite a nova inscrição estadual do hotel: ");
+                                                scanf("%[^\n]s", hotel.inscricaoEstadual);
+                                                
+                                                printf("Digite o novo CNPJ do hotel: ");
+                                                scanf("%s", hotel.cnpj);
+                                                
+                                                printf("Digite o novo endereço do hotel: ");
+                                                scanf("%[^\n]s", hotel.endereco);
+                                                
+                                                printf("Digite o novo telefone do hotel: ");
+                                                scanf("%s", hotel.telefone);
+                                                
+                                                printf("Digite o novo email do hotel: ");
+                                                scanf("%s", hotel.email);
+                                                
+                                                printf("Digite o novo nome do responsável pelo hotel: ");
+                                                scanf("%[^\n]s", hotel.responsavel);
+                                                
+                                                printf("Digite o novo telefone do responsável pelo hotel: ");
+                                                scanf("%s", hotel.telefoneResponsavel);
+                                                
+                                                printf("Digite o novo horário de check-in do hotel: ");
+                                                scanf("%s", hotel.horarioCheckIn);
+                                                
+                                                printf("Digite o novo horário de check-out do hotel: ");
+                                                scanf("%s", hotel.horarioCheckOut);
+                                                
+                                                atualizarHotel(hotel, formaArmazenamento);
+                                                
+                                                opcaoHotel = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                deletarHotel(formaArmazenamento);
+                                                
+                                                opcaoHotel = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 5:
+                                                opcaoGestaoDados = 0;
+                                            break;
+                                            default:
+                                                printf("Opção inválida");
+                                                pressioneParaContinuar();
+                                        }
+                                    }
+                                    while (opcaoHotel < 1 || opcaoHotel > 5);
                                 break;
                                 case 2: /* Hóspede */
                                     do {
@@ -514,7 +647,8 @@ int main(int argc, char** argv) {
                                                 opcaoGestaoDados = 0;
                                             break;
                                             default:
-                                                printf("Opcao invalida");
+                                                printf("Opção inválida");
+                                                pressioneParaContinuar();
                                         }
                                     }
                                     while (opcaoHospede < 1 || opcaoHospede > 7);
@@ -527,14 +661,92 @@ int main(int argc, char** argv) {
                                         
                                         switch (opcaoCatAcom) {
                                             case 1:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da categoria de acomodação: ");
+                                                scanf("%d", &catAcom.codigo);
                                                 
+                                                if (categoriaAcomodacaoExiste(catAcom.codigo, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!");
+                                                    opcaoCatAcom = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("Digite o número da categoria: ");
+                                                scanf("%d", &catAcom.categoria);
+                                                
+                                                printf("Digite o valor da diária desta categoria: ");
+                                                scanf("%f", &catAcom.valorDiaria);
+                                                
+                                                printf("Digite a quantidade de adultos para esta categoria: ");
+                                                scanf("%d", &catAcom.qtdeAdultos);
+                                                
+                                                printf("Digite a quantidade de crianças para esta categoria: ");
+                                                scanf("%d", &catAcom.qtdeCriancas);
+                                                
+                                                inserirCategoriaAcomodacao(catAcom, formaArmazenamento);
+                                                
+                                                opcaoCatAcom = 0;
+                                                pressioneParaContinuar();
                                             break;
-                                            case 2: break;
-                                            case 3: break;
-                                            case 4: break;
-                                            case 5: break;
+                                            case 2:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da categoria de acomodação que quer buscar: ");
+                                                scanf("%d", &catAcom.codigo);
+                                                
+                                                lerCategoriaAcomodacao(catAcom.codigo, formaArmazenamento);
+                                                
+                                                opcaoCatAcom = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                printf("\e[1;1H\e[2J");
+                                                listarCategoriaAcomodacao(formaArmazenamento);
+                                                
+                                                opcaoCatAcom = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da categoria de acomodação que quer atualizar: ");
+                                                scanf("%d", &catAcom.codigo);
+                                                
+                                                if (categoriaAcomodacaoExiste(catAcom.codigo, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    opcaoCatAcom = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("Digite o novo número da categoria: ");
+                                                scanf("%d", &catAcom.categoria);
+                                                
+                                                printf("Digite o novo valor da diária desta categoria: ");
+                                                scanf("%f", &catAcom.valorDiaria);
+                                                
+                                                printf("Digite a nova quantidade de adultos para esta categoria: ");
+                                                scanf("%d", &catAcom.qtdeAdultos);
+                                                
+                                                printf("Digite a nova quantidade de crianças para esta categoria: ");
+                                                scanf("%d", &catAcom.qtdeCriancas);
+                                                
+                                                atualizarCategoriaAcomodacao(catAcom, catAcom.codigo, formaArmazenamento);
+                                                
+                                                opcaoCatAcom = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 5:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da categoria de acomodação que quer deletar: ");
+                                                scanf("%d", &catAcom.codigo);
+                                                
+                                                deletarCategoriaAcomodacao(catAcom.codigo, formaArmazenamento);
+                                                
+                                                opcaoCatAcom = 0;
+                                                pressioneParaContinuar();
+                                            break;
                                             case 6:
-                                                opcaoModulo = 0;
+                                                opcaoGestaoDados = 0;
                                             break;
                                             default:
                                                 printf("Opção inválida!");
@@ -543,7 +755,113 @@ int main(int argc, char** argv) {
                                     while (opcaoCatAcom < 1 || opcaoCatAcom > 6);
                                 break;
                                 case 4: /* Acomodação */
-                                    
+                                    do {
+                                        menuAcomodacao();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoAcomodacao);
+                                        
+                                        switch (opcaoAcomodacao) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da acomodação: ");
+                                                scanf("%d", &acomodacao.codigo);
+                                                
+                                                if (acomodacaoExiste(acomodacao.codigo, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!");
+                                                    opcaoAcomodacao = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("Digite a descrição da acomodação: ");
+                                                scanf("%[^\n]s", acomodacao.descricao);
+                                                
+                                                printf("Digite o número das facilidades da acomodação: ");
+                                                scanf("%d", &acomodacao.facilidades);
+                                                
+                                                printf("Digite a categoria desta acomodação: ");
+                                                scanf("%d", &acomodacao.categoria);
+                                                
+                                                if (categoriaAcomodacaoExiste(acomodacao.categoria, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    opcaoAcomodacao = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                inserirAcomodacao(acomodacao, formaArmazenamento);
+                                                
+                                                opcaoAcomodacao = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da acomodação que deseja buscar: ");
+                                                scanf("%d", &acomodacao.codigo);
+                                                
+                                                lerAcomodacao(acomodacao.codigo, formaArmazenamento);
+                                                
+                                                opcaoAcomodacao = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                printf("\e[1;1H\e[2J");
+                                                listarAcomodacoes(formaArmazenamento);
+                                                
+                                                opcaoAcomodacao = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da acomodação que deseja atualizar: ");
+                                                scanf("%d", &acomodacao.codigo);
+                                                
+                                                if (acomodacaoExiste(acomodacao.codigo, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    opcaoAcomodacao = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("Digite a nova descrição da acomodação: ");
+                                                scanf("%[^\n]s", acomodacao.descricao);
+                                                
+                                                printf("Digite o novo número das facilidades da acomodação: ");
+                                                scanf("%d", &acomodacao.facilidades);
+                                                
+                                                printf("Digite anova  categoria desta acomodação: ");
+                                                scanf("%d", &acomodacao.categoria);
+                                                
+                                                if (categoriaAcomodacaoExiste(acomodacao.categoria, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    opcaoAcomodacao = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                atualizarAcomodacao(acomodacao, acomodacao.codigo, formaArmazenamento);
+                                                
+                                                opcaoAcomodacao = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 5:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da acomodação que deseja deletar: ");
+                                                scanf("%d", &acomodacao.codigo);
+                                                
+                                                deletarAcomodacao(acomodacao.codigo, formaArmazenamento);
+                                                
+                                                opcaoAcomodacao = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 6:
+                                                opcaoGestaoDados = 0;
+                                            break;
+                                            default:
+                                                printf("Opção inválida!");
+                                        }
+                                    }
+                                    while (opcaoAcomodacao < 1 || opcaoAcomodacao > 6);
                                 break;
                                 case 5: /* Produto */
                                     do {
@@ -645,7 +963,7 @@ int main(int argc, char** argv) {
                                                 opcaoProduto = 0;
                                             break;
                                             case 6:
-                                                opcaoModulo = 0;
+                                                opcaoGestaoDados = 0;
                                             break;
                                             default:
                                                 printf("Opção inválida!");
@@ -783,7 +1101,7 @@ int main(int argc, char** argv) {
                                                 pressioneParaContinuar();
                                             break;
                                             case 7:
-                                                opcaoModulo = 0;
+                                                opcaoGestaoDados = 0;
                                             break;
                                             default:
                                                 printf("Opção inálida!");
@@ -883,7 +1201,7 @@ int main(int argc, char** argv) {
                                                 pressioneParaContinuar();
                                             break;
                                             case 6:
-                                                opcaoOperador = 0;
+                                                opcaoGestaoDados = 0;
                                             break;
                                             default:
                                                 printf("\e[1;1H\e[2J");
@@ -914,6 +1232,15 @@ int main(int argc, char** argv) {
                     }
                 case 3:
                     printf("\nEncerrando o programa...\n");
+                    
+                    /* Liberando a memória caso ela tenha sido usada. */
+                    free(listaAcomodacao);
+                    free(listaCatAcom);
+                    free(listaFornecedores);
+                    free(listaHospedes);
+                    free(listaHotel);
+                    free(listaOperadores);
+                    free(listaProdutos);
                 break;
                 default:
                     printf("\e[1;1H\e[2J");
@@ -937,7 +1264,111 @@ int main(int argc, char** argv) {
 
                             switch (opcaoGestaoDados) {
                                 case 1: /* Hotel */
-
+                                    do {
+                                        menuHotel();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoHotel);
+                                        
+                                        switch (opcaoHotel) {
+                                            case 1:
+                                                printf("Digite o nome fantasia do hotel: ");
+                                                scanf("%[^\n]s", hotel.nomeFantasia);
+                                                
+                                                printf("Digite a razão social do hotel: ");
+                                                scanf("%[^\n]s", hotel.razaoSocial);
+                                                
+                                                printf("Digite a inscrição estadual do hotel: ");
+                                                scanf("%[^\n]s", hotel.inscricaoEstadual);
+                                                
+                                                printf("Digite o CNPJ do hotel: ");
+                                                scanf("%s", hotel.cnpj);
+                                                
+                                                printf("Digite o endereço do hotel: ");
+                                                scanf("%[^\n]s", hotel.endereco);
+                                                
+                                                printf("Digite o telefone do hotel: ");
+                                                scanf("%s", hotel.telefone);
+                                                
+                                                printf("Digite o email do hotel: ");
+                                                scanf("%s", hotel.email);
+                                                
+                                                printf("Digite o nome do responsável pelo hotel: ");
+                                                scanf("%[^\n]s", hotel.responsavel);
+                                                
+                                                printf("Digite o telefone do responsável pelo hotel: ");
+                                                scanf("%s", hotel.telefoneResponsavel);
+                                                
+                                                printf("Digite o horário de check-in do hotel: ");
+                                                scanf("%s", hotel.horarioCheckIn);
+                                                
+                                                printf("Digite o horário de check-out do hotel: ");
+                                                scanf("%s", hotel.horarioCheckOut);
+                                                
+                                                inserirHotelMemoria(hotel, &listaHotel, &contadorHotel);
+                                                
+                                                opcaoHotel = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                listarHotelMemoria(listaHotel, contadorHotel);
+                                                
+                                                opcaoHotel = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                printf("Digite o novo nome fantasia do hotel: ");
+                                                scanf("%[^\n]s", hotel.nomeFantasia);
+                                                
+                                                printf("Digite a nova razão social do hotel: ");
+                                                scanf("%[^\n]s", hotel.razaoSocial);
+                                                
+                                                printf("Digite a nova inscrição estadual do hotel: ");
+                                                scanf("%[^\n]s", hotel.inscricaoEstadual);
+                                                
+                                                printf("Digite o novo CNPJ do hotel: ");
+                                                scanf("%s", hotel.cnpj);
+                                                
+                                                printf("Digite o novo endereço do hotel: ");
+                                                scanf("%[^\n]s", hotel.endereco);
+                                                
+                                                printf("Digite o novo telefone do hotel: ");
+                                                scanf("%s", hotel.telefone);
+                                                
+                                                printf("Digite o novo email do hotel: ");
+                                                scanf("%s", hotel.email);
+                                                
+                                                printf("Digite o novo nome do responsável pelo hotel: ");
+                                                scanf("%[^\n]s", hotel.responsavel);
+                                                
+                                                printf("Digite o novo telefone do responsável pelo hotel: ");
+                                                scanf("%s", hotel.telefoneResponsavel);
+                                                
+                                                printf("Digite o novo horário de check-in do hotel: ");
+                                                scanf("%s", hotel.horarioCheckIn);
+                                                
+                                                printf("Digite o novo horário de check-out do hotel: ");
+                                                scanf("%s", hotel.horarioCheckOut);
+                                                
+                                                atualizarHotelMemoria(listaHotel, hotel, contadorHotel);
+                                                
+                                                opcaoHotel = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                deletarHotelMemoria(listaHotel, &contadorHotel);
+                                                
+                                                opcaoHotel = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 5:
+                                                opcaoGestaoDados = 0;
+                                            break;
+                                            default:
+                                                printf("Opção inválida");
+                                                pressioneParaContinuar();
+                                        }
+                                    }
+                                    while (opcaoHotel < 1 || opcaoHotel > 5);
                                 break;
                                 case 2: /* Hóspede */
                                     do {
@@ -1097,16 +1528,461 @@ int main(int argc, char** argv) {
                                     while (opcaoHospede < 1 || opcaoHospede > 7);
                                 break;
                                 case 3: /* Categoria de acomodação */
-                                    
+                                    do {
+                                        menuCategoriaAcomodacao();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoCatAcom);
+                                        
+                                        switch (opcaoCatAcom) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da categoria de acomodação: ");
+                                                scanf("%d", &catAcom.codigo);
+                                                
+                                                if (categoriaAcomodacaoExiste(catAcom.codigo, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!");
+                                                    opcaoCatAcom = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("Digite o número da categoria: ");
+                                                scanf("%d", &catAcom.categoria);
+                                                
+                                                printf("Digite o valor da diária desta categoria: ");
+                                                scanf("%f", &catAcom.valorDiaria);
+                                                
+                                                printf("Digite a quantidade de adultos para esta categoria: ");
+                                                scanf("%d", &catAcom.qtdeAdultos);
+                                                
+                                                printf("Digite a quantidade de crianças para esta categoria: ");
+                                                scanf("%d", &catAcom.qtdeCriancas);
+                                                
+                                                inserirCategoriaAcomodacaoMemoria(catAcom, &listaCatAcom, &contadorCatAcom);
+                                                
+                                                opcaoCatAcom = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da categoria de acomodação que quer buscar: ");
+                                                scanf("%d", &catAcom.codigo);
+                                                
+                                                lerCategoriaAcomodacaoMemoria(listaCatAcom, contadorCatAcom, catAcom.codigo);
+                                                
+                                                opcaoCatAcom = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                printf("\e[1;1H\e[2J");
+                                                listarCategoriaAcomodacaoMemoria(listaCatAcom, contadorCatAcom);
+                                                
+                                                opcaoCatAcom = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da categoria de acomodação que quer atualizar: ");
+                                                scanf("%d", &catAcom.codigo);
+                                                
+                                                if (categoriaAcomodacaoExiste(catAcom.codigo, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    opcaoCatAcom = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("Digite o novo número da categoria: ");
+                                                scanf("%d", &catAcom.categoria);
+                                                
+                                                printf("Digite o novo valor da diária desta categoria: ");
+                                                scanf("%f", &catAcom.valorDiaria);
+                                                
+                                                printf("Digite a nova quantidade de adultos para esta categoria: ");
+                                                scanf("%d", &catAcom.qtdeAdultos);
+                                                
+                                                printf("Digite a nova quantidade de crianças para esta categoria: ");
+                                                scanf("%d", &catAcom.qtdeCriancas);
+                                                
+                                                atualizarCategoriaAcomodacaoMemoria(listaCatAcom, catAcom, catAcom.codigo, contadorCatAcom);
+                                                
+                                                opcaoCatAcom = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 5:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da categoria de acomodação que quer deletar: ");
+                                                scanf("%d", &catAcom.codigo);
+                                                
+                                                deletarCategoriaAcomodacaoMemoria(listaCatAcom, &contadorCatAcom, catAcom.codigo);
+                                                
+                                                opcaoCatAcom = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 6:
+                                                opcaoGestaoDados = 0;
+                                            break;
+                                            default:
+                                                printf("Opção inválida!");
+                                        }
+                                    }
+                                    while (opcaoCatAcom < 1 || opcaoCatAcom > 6);
                                 break;
                                 case 4: /* Acomodacao*/
-                                    
+                                    do {
+                                        menuAcomodacao();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoAcomodacao);
+                                        
+                                        switch (opcaoAcomodacao) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da acomodação: ");
+                                                scanf("%d", &acomodacao.codigo);
+                                                
+                                                if (acomodacaoExiste(acomodacao.codigo, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!");
+                                                    opcaoAcomodacao = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("Digite a descrição da acomodação: ");
+                                                scanf("%[^\n]s", acomodacao.descricao);
+                                                
+                                                printf("Digite o número das facilidades da acomodação: ");
+                                                scanf("%d", &acomodacao.facilidades);
+                                                
+                                                printf("Digite a categoria desta acomodação: ");
+                                                scanf("%d", &acomodacao.categoria);
+                                                
+                                                if (categoriaAcomodacaoExiste(acomodacao.categoria, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    opcaoAcomodacao = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                inserirAcomodacaoMemoria(acomodacao, &listaAcomodacao, &contadorAcomodacao);
+                                                
+                                                opcaoAcomodacao = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da acomodação que deseja buscar: ");
+                                                scanf("%d", &acomodacao.codigo);
+                                                
+                                                lerAcomodacaoMemoria(listaAcomodacao, contadorAcomodacao, acomodacao.codigo);
+                                                
+                                                opcaoAcomodacao = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                printf("\e[1;1H\e[2J");
+                                                listarAcomodacaoMemoria(listaAcomodacao, contadorAcomodacao);
+                                                
+                                                opcaoAcomodacao = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da acomodação que deseja atualizar: ");
+                                                scanf("%d", &acomodacao.codigo);
+                                                
+                                                if (acomodacaoExiste(acomodacao.codigo, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    opcaoAcomodacao = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("Digite a nova descrição da acomodação: ");
+                                                scanf("%[^\n]s", acomodacao.descricao);
+                                                
+                                                printf("Digite o novo número das facilidades da acomodação: ");
+                                                scanf("%d", &acomodacao.facilidades);
+                                                
+                                                printf("Digite anova  categoria desta acomodação: ");
+                                                scanf("%d", &acomodacao.categoria);
+                                                
+                                                if (categoriaAcomodacaoExiste(acomodacao.categoria, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    opcaoAcomodacao = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                atualizarAcomodacaoMemoria(listaAcomodacao, acomodacao, acomodacao.codigo, contadorAcomodacao);
+                                                
+                                                opcaoAcomodacao = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 5:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código da acomodação que deseja deletar: ");
+                                                scanf("%d", &acomodacao.codigo);
+                                                
+                                                deletarAcomodacaoMemoria(listaAcomodacao, &contadorAcomodacao, acomodacao.codigo);
+                                                
+                                                opcaoAcomodacao = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 6:
+                                                opcaoGestaoDados = 0;
+                                            break;
+                                            default:
+                                                printf("Opção inválida!");
+                                        }
+                                    }
+                                    while (opcaoAcomodacao < 1 || opcaoAcomodacao > 6);
                                 break;
                                 case 5: /* Produto */
-                                    
+                                    do {
+                                        menuProdutos();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoProduto);
+
+                                        switch (opcaoProduto) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+
+                                                printf("Digite o código do produto: ");
+                                                scanf("%d", &produto.codigo);
+
+                                                if (produtoExiste(produto.codigo, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!");
+                                                    opcaoProduto = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+
+                                                printf("Digite a descrição do produto: ");
+                                                scanf("%[^\n]s", produto.descricao);
+
+                                                printf("Digite o estoque do produto: ");
+                                                scanf("%d", &produto.estoque);
+
+                                                printf("Digite o estoque mínimo para este produto: ");
+                                                scanf("%d", &produto.estoqueMin);
+
+                                                printf("Digite o preço de custo do produto: ");
+                                                scanf("%f", &produto.precoCusto);
+
+                                                printf("Digite o preço de venda do produto: ");
+                                                scanf("%f", &produto.precoVenda);
+
+                                                inserirProdutoMemoria(produto, &listaProdutos, &contadorProdutos);
+
+                                                pressioneParaContinuar();
+                                                opcaoProduto = 0;
+                                            break;
+                                            case 2:
+                                               printf("\e[1;1H\e[2J");
+                                               printf("Digite o código do produto que deseja buscar: ");
+                                               scanf("%d", &produto.codigo);
+
+                                               lerProdutoMemoria(listaProdutos, contadorProdutos, produto.codigo);
+
+                                               pressioneParaContinuar();
+                                               opcaoProduto = 0;
+                                            break;
+                                            case 3:
+                                                printf("\e[1;1H\e[2J");
+                                                listarProdutosMemoria(listaProdutos, contadorProdutos);
+
+                                                opcaoProduto = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código do produto que deseja atualizar: ");
+                                                scanf("%d", &produto.codigo);
+
+                                                if (produtoExiste(produto.codigo, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    opcaoProduto = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+
+                                                printf("Digite a nova descrição do produto: ");
+                                                scanf("%[^\n]s", produto.descricao);
+
+                                                printf("Digite o novo estoque do produto: ");
+                                                scanf("%d", &produto.estoque);
+
+                                                printf("Digite o novo estoque mínimo para este produto: ");
+                                                scanf("%d", &produto.estoqueMin);
+
+                                                printf("Digite o novo preço de custo do produto: ");
+                                                scanf("%f", &produto.precoCusto);
+
+                                                printf("Digite o novo preço de venda do produto: ");
+                                                scanf("%f", &produto.precoVenda);
+
+                                                atualizarProdutoMemoria(listaProdutos, produto, produto.codigo, contadorProdutos);
+
+                                                pressioneParaContinuar();
+                                                opcaoProduto = 0;
+                                            break;
+                                            case 5:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código do produto que deseja deletar: ");
+                                                scanf("%d", &produto.codigo);
+
+                                                deletarProdutoMemoria(listaProdutos, &contadorProdutos, produto.codigo);
+
+                                                pressioneParaContinuar();
+                                                opcaoProduto = 0;
+                                            break;
+                                            case 6:
+                                                opcaoGestaoDados = 0;
+                                            break;
+                                            default:
+                                                printf("Opção inválida!");
+                                                pressioneParaContinuar();
+                                        }
+                                    }
+                                    while (opcaoProduto < 1 || opcaoProduto > 6);
                                 break;
                                 case 6: /* Fornecedor */
-                                    
+                                    do {
+                                        menuFornecedores();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoFornecedor);
+
+                                        switch (opcaoFornecedor) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código do fornecedor: ");
+                                                scanf("%d", &fornecedor.codigo);
+
+                                                if (fornecedorExiste(fornecedor.codigo, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!");
+                                                    opcaoFornecedor = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+
+                                                printf("Digite o nome fantasia do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.nomeFantasia);
+
+                                                printf("Digite a razão social do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.razaoSocial);
+
+                                                printf("Digite a inscrição estadual do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.inscricaoEstadual);
+
+                                                printf("Digite o CNPJ do fornecedor: ");
+                                                scanf("%s", fornecedor.cnpj);
+
+                                                if (fornecedorExisteCNPJ(fornecedor.cnpj, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!");
+                                                    opcaoFornecedor = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+
+                                                printf("Digite o endereço do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.endereco);
+
+                                                printf("Digite o telefone do fornecedor: ");
+                                                scanf("%s", fornecedor.telefone);
+
+                                                printf("Digite o email do fornecedor: ");
+                                                scanf("%s", fornecedor.email);
+
+                                                inserirFornecedorMemoria(fornecedor, &listaFornecedores, &contadorFornecedores);
+
+                                                opcaoFornecedor = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código do fornecedor que deseja buscar: ");
+                                                scanf("%d", &fornecedor.codigo);
+
+                                                lerFornecedorMemoria(listaFornecedores, contadorFornecedores, fornecedor.codigo);
+
+                                                opcaoFornecedor = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o CNPJ do fornecedor que deseja buscar: ");
+                                                scanf("%s", fornecedor.cnpj);
+
+                                                lerFornecedorCNPJMemoria(listaFornecedores, contadorFornecedores, fornecedor.cnpj);
+
+                                                opcaoFornecedor = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                printf("\e[1;1H\e[2J");
+                                                listarFornecedorMemoria(listaFornecedores, contadorFornecedores);
+
+                                                pressioneParaContinuar();
+                                                opcaoFornecedor = 0;
+                                            break;
+                                            case 5:
+                                                printf("\e[1;1H\e[2J");
+
+                                                printf("Digite o código do fornecedor que deseja atualizar: ");
+                                                scanf("%d", &fornecedor.codigo);
+
+                                                if (fornecedorExiste(fornecedor.codigo, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    pressioneParaContinuar();
+                                                    opcaoFornecedor = 0;
+                                                    break;
+                                                }
+
+                                                printf("Digite o novo nome fantasia do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.nomeFantasia);
+
+                                                printf("Digite a nova razão social do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.razaoSocial);
+
+                                                printf("Digite a nova inscrição estadual do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.inscricaoEstadual);
+
+                                                printf("Digite o novo CNPJ do fornecedor: ");
+                                                scanf("%s", fornecedor.cnpj);
+
+                                                printf("Digite o novo endereço do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.endereco);
+
+                                                printf("Digite o novo telefone do fornecedor: ");
+                                                scanf("%s", fornecedor.telefone);
+
+                                                printf("Digite o novo email do fornecedor: ");
+                                                scanf("%s", fornecedor.email);
+
+                                                atualizarFornecedorMemoria(listaFornecedores, fornecedor, fornecedor.codigo, contadorFornecedores);
+
+                                                opcaoFornecedor = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 6:
+                                                printf("\e[1;1H\e[2J");
+
+                                                printf("Digite o código do fornecedor que deseja deletar: ");
+                                                scanf("%d", &fornecedor.codigo);
+
+                                                deletarFornecedorMemoria(listaFornecedores, &contadorFornecedores, fornecedor.codigo);
+                                                opcaoFornecedor = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 7:
+                                                opcaoGestaoDados = 0;
+                                            break;
+                                            default:
+                                                printf("Opção inálida!");
+                                                pressioneParaContinuar();
+                                        }
+                                    }
+                                    while (opcaoFornecedor < 1 || opcaoFornecedor > 7);
                                 break;
                                 case 7:
                                     do {
@@ -1199,7 +2075,7 @@ int main(int argc, char** argv) {
                                                 pressioneParaContinuar();
                                             break;
                                             case 6:
-                                                opcaoOperador = 0;
+                                                opcaoGestaoDados = 0;
                                             break;
                                             default:
                                                 printf("\e[1;1H\e[2J");
@@ -1209,7 +2085,7 @@ int main(int argc, char** argv) {
                                     while (opcaoOperador < 1 || opcaoOperador > 6);
                                 break;
                                 case 8:
-                                    opcaoModulo = 0;
+                                    opcaoGestaoDados = 0;
                                 break;
                                 default:
                                     printf("\e[1;1H\e[2J");
@@ -1229,6 +2105,15 @@ int main(int argc, char** argv) {
                 break;
                 case 3:
                     printf("\nEncerrando o programa...\n");
+                    
+                    /* Liberando a memória caso ela tenha sido usada. */
+                    free(listaAcomodacao);
+                    free(listaCatAcom);
+                    free(listaFornecedores);
+                    free(listaHospedes);
+                    free(listaHotel);
+                    free(listaOperadores);
+                    free(listaProdutos);
                 break;
                 
                 default:
