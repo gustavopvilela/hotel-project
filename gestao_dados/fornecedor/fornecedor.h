@@ -15,7 +15,7 @@ typedef struct {
     char nomeFantasia[200];
     char razaoSocial[200];
     char inscricaoEstadual[200];
-    char cnpj[15]; /* O CNPJ contém os pontos e traços. */
+    char cnpj[15]; /* O CNPJ não contém os pontos e traços. */
     char endereco[300];
     char telefone[12]; /* O telefone não comporta os parênteses do DDD. */
     char email[100];
@@ -24,9 +24,13 @@ typedef struct {
 void inserirFornecedor(Fornecedor fornecedor, int opcao);
 void inserirFornecedorMemoria(Fornecedor dados, Fornecedor **listaFornecedores, int *contador);
 void lerFornecedor(int codigo, int opcao);
+void lerFornecedorCNPJ (char* cnpj, int opcao);
 int fornecedorExiste (int codigo, int opcao);
+int fornecedorExisteCNPJ (char* cnpj, int opcao);
 void lerFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho, int codigo);
+void lerFornecedorCNPJMemoria (Fornecedor *listaFornecedores, int tamanho, char* cnpj);
 int fornecedorExisteMemoria (Fornecedor *listaFornecedores, int tamanho, int codigo);
+int fornecedorExisteCNPJMemoria (Fornecedor *listaFornecedores, int tamanho, char* cnpj);
 void listarFornecedores(int opcao);
 void listarFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho);
 void atualizarFornecedor(Fornecedor novosDados, int codigo, int opcao);

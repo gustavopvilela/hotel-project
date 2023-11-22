@@ -144,6 +144,80 @@ void lerFornecedor (int codigo, int opcao) {
     }
 }
 
+void lerFornecedorCNPJ (char* cnpj, int opcao) {
+    Fornecedor fornecedor;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *fornecedorBin;
+            fornecedorBin = fopen(FORNECEDOR_BIN, "rb");
+
+            /* Verificação da abertura. */
+            if(fornecedorBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+
+            rewind(fornecedorBin);
+
+            while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
+                if (strcmp(fornecedor.cnpj, cnpj) == 0) {
+                    printf("Código: %d\n", fornecedor.codigo);
+                    printf("Nome Fantasia: %s\n", fornecedor.nomeFantasia);
+                    printf("Razão Social: %s\n", fornecedor.razaoSocial);
+                    printf("Inscrição Estadual: %s\n", fornecedor.inscricaoEstadual);
+                    printf("CNPJ: %s\n", fornecedor.cnpj);
+                    printf("Endereço: %s\n", fornecedor.endereco);
+                    printf("Telefone: %s\n", fornecedor.telefone);
+                    printf("E-mail: %s\n", fornecedor.email);
+                    printf("\n");
+                }
+            }
+            if (!encontrado) {
+                printf("Fornecedor com CNPJ %s não encontrado.\n", cnpj);
+            }
+            
+            fclose(fornecedorBin);
+        break;
+            
+        case 2:
+            FILE *fornecedorTxt;
+            fornecedorTxt = fopen(FORNECEDOR_TXT, "r");
+
+            /* Verificação da abertura. */
+            if (fornecedorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(fornecedorTxt);
+            while (fscanf(fornecedorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",
+                          &fornecedor.codigo, fornecedor.nomeFantasia, fornecedor.razaoSocial,
+                          fornecedor.inscricaoEstadual, fornecedor.cnpj, fornecedor.endereco,
+                          fornecedor.telefone, fornecedor.email) == 8) {
+                if (strcmp(fornecedor.cnpj, cnpj) == 0) {
+                    printf("Código: %d\n", fornecedor.codigo);
+                    printf("Nome Fantasia: %s\n", fornecedor.nomeFantasia);
+                    printf("Razão Social: %s\n", fornecedor.razaoSocial);
+                    printf("Inscrição Estadual: %s\n", fornecedor.inscricaoEstadual);
+                    printf("CNPJ: %s\n", fornecedor.cnpj);
+                    printf("Endereço: %s\n", fornecedor.endereco);
+                    printf("Telefone: %s\n", fornecedor.telefone);
+                    printf("E-mail: %s\n", fornecedor.email);
+                    printf("\n");
+                }
+            }
+            if (!encontrado) {
+                printf("Fornecedor com CNPJ %s não encontrado.\n", cnpj);
+            }
+            
+            fclose(fornecedorTxt);
+        break;
+    }
+}
+
 int fornecedorExiste (int codigo, int opcao) {
     Fornecedor fornecedor;
     int encontrado = 0;
@@ -200,7 +274,65 @@ int fornecedorExiste (int codigo, int opcao) {
     }
 }
 
+int fornecedorExisteCNPJ (char* cnpj, int opcao) {
+    Fornecedor fornecedor;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE *fornecedorBin;
+            fornecedorBin = fopen(FORNECEDOR_BIN, "rb");
+
+            /* Verificação da abertura. */
+            if(fornecedorBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+
+            rewind(fornecedorBin);
+
+            while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
+                if (strcmp(fornecedor.cnpj, cnpj) == 0) {
+                    encontrado = 1;
+                }
+            }
+            
+            fclose(fornecedorBin);
+            
+            return encontrado;
+        break;
+            
+        case 2:
+            FILE *fornecedorTxt;
+            fornecedorTxt = fopen(FORNECEDOR_TXT, "r");
+
+            /* Verificação da abertura. */
+            if (fornecedorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(fornecedorTxt);
+            while (fscanf(fornecedorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",
+                          &fornecedor.codigo, fornecedor.nomeFantasia, fornecedor.razaoSocial,
+                          fornecedor.inscricaoEstadual, fornecedor.cnpj, fornecedor.endereco,
+                          fornecedor.telefone, fornecedor.email) == 8) {
+                if (strcmp(fornecedor.cnpj, cnpj) == 0) {
+                    encontrado = 1;
+                }
+            }
+            
+            fclose(fornecedorTxt);
+            
+            return encontrado;
+        break;
+    }
+}
+
 void lerFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho, int codigo) {
+    int encontrado = 0;
+    
     for (int i = 0; i < tamanho; i++) {
         if (listaFornecedores[i].codigo == codigo) {
             printf("Código: %d\n", listaFornecedores[i].codigo);
@@ -212,7 +344,35 @@ void lerFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho, int codigo
             printf("Telefone: %s\n", listaFornecedores[i].telefone);
             printf("E-mail: %s\n", listaFornecedores[i].email);
             printf("\n");
+            encontrado = 1;
         }
+    }
+    
+    if (encontrado == 0) {
+        printf("Fornecedor não encontrado!");
+    }
+}
+
+void lerFornecedorCNPJMemoria (Fornecedor *listaFornecedores, int tamanho, char* cnpj) {
+    int encontrado = 1;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (strcmp(listaFornecedores[i].cnpj, cnpj) == 0) {
+            printf("Código: %d\n", listaFornecedores[i].codigo);
+            printf("Nome Fantasia: %s\n", listaFornecedores[i].nomeFantasia);
+            printf("Razão Social: %s\n", listaFornecedores[i].razaoSocial);
+            printf("Inscrição Estadual: %s\n", listaFornecedores[i].inscricaoEstadual);
+            printf("CNPJ: %s\n", listaFornecedores[i].cnpj);
+            printf("Endereço: %s\n", listaFornecedores[i].endereco);
+            printf("Telefone: %s\n", listaFornecedores[i].telefone);
+            printf("E-mail: %s\n", listaFornecedores[i].email);
+            printf("\n");
+            encontrado = 1;
+        }
+    }
+    
+    if (encontrado == 0) {
+        printf("Fornecedor não encontrado!");
     }
 }
 
@@ -227,6 +387,19 @@ int fornecedorExisteMemoria (Fornecedor *listaFornecedores, int tamanho, int cod
     }
     
     return encontrado;
+}
+
+int fornecedorExisteCNPJMemoria (Fornecedor *listaFornecedores, int tamanho, char* cnpj) {
+    int encontrado = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (strcmp(listaFornecedores[i].cnpj, cnpj)) {
+            encontrado = 1;
+            break;
+        }
+    }
+    
+    return encontrado;   
 }
 
 void listarFornecedores(int opcao) {

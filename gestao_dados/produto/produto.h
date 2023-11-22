@@ -25,7 +25,7 @@ void lerProduto (int codigo, int opcao);
 int produtoExiste (int codigo, int opcao);
 void lerProdutoMemoria(Produto *listaProdutos, int tamanho, int codigo);
 int produtoExisteMemoria (Produto *listaProdutos, int tamanho, int codigo);
-void listarProduto(int opcao);
+void listarProdutos (int opcao);
 void listarProdutosMemoria(Produto *listaProdutos, int tamanho);
 void atualizarProduto (Produto novosDados, int codigo, int opcao);
 void atualizarProdutoMemoria (Produto *listaProdutos, Produto novosDados, int codigo, int tamanho);

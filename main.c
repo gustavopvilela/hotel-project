@@ -46,6 +46,37 @@ void menuHospedes () {
     printf("7 - Voltar\n");
 }
 
+void menuCategoriaAcomodacao () {
+    printf("\e[1;1H\e[2J");
+    printf("1 - Cadastrar categoria de acomodação\n");
+    printf("2 - Buscar categoria de acomodação por código\n");
+    printf("3 - Listar categorias de acomodação\n");
+    printf("4 - Atualizar categoria de acomodação por código\n");
+    printf("5 - Deletar categoria de acomodação por código\n");
+    printf("6 - Voltar\n");
+}
+
+void menuProdutos () {
+    printf("\e[1;1H\e[2J");
+    printf("1 - Cadastrar produto\n");
+    printf("2 - Buscar produto por código\n");
+    printf("3 - Listar produtos\n");
+    printf("4 - Atualizar produto por código\n");
+    printf("5 - Deletar produto por código\n");
+    printf("6 - Voltar\n");
+}
+
+void menuFornecedores () {
+    printf("\e[1;1H\e[2J");
+    printf("1 - Cadastrar fornecedor\n");
+    printf("2 - Buscar fornecedor por código\n");
+    printf("3 - Buscar fornecedor por CNPJ");
+    printf("4 - Listar fornecedores\n");
+    printf("5 - Atualizar fornecedor por código\n");
+    printf("6 - Deletar fornecedor por código\n");
+    printf("7 - Voltar\n");
+}
+
 void menuOperadores () {
     printf("\e[1;1H\e[2J");
     printf("=== MENU DE OPERADORES ===\n");
@@ -62,7 +93,10 @@ int main(int argc, char** argv) {
         opcaoOperador = 0,
         opcaoModulo = 0,
         opcaoGestaoDados = 0,
-        opcaoHospede = 0;
+        opcaoHospede = 0,
+        opcaoCatAcom = 0,
+        opcaoProduto = 0,
+        opcaoFornecedor = 0;
     
     Operador operador; /* Aqui ficará os dados do operador logado no sistema,
                         * bem como será utilizado para adicionar dados aos
@@ -75,6 +109,20 @@ int main(int argc, char** argv) {
     Hospede hospede;
     Hospede *listaHospedes = NULL;
     int contadorHospedes = 0;
+    
+    CategoriaAcomodacao catAcom;
+    CategoriaAcomodacao *listaCatAcom = NULL;
+    int contadorCatAcom = 0;
+    
+    Produto produto;
+    Produto *listaProdutos = NULL;
+    int contadorProdutos = 0;
+    
+    Fornecedor fornecedor;
+    Fornecedor *listaFornecedores = NULL;
+    int contadorFornecedores = 0;
+    
+    /* ===================================================================== */
     
     /* Chama a função de inicializar todos os arquivos, para garantir
      * que não haja erros de inexistência. */
@@ -311,10 +359,10 @@ int main(int argc, char** argv) {
                             scanf("%d", &opcaoGestaoDados);
 
                             switch (opcaoGestaoDados) {
-                                case 1:
+                                case 1: /* Hotel */
 
                                 break;
-                                case 2:
+                                case 2: /* Hóspede */
                                     do {
                                         menuHospedes();
                                         printf("Digite: ");
@@ -471,13 +519,280 @@ int main(int argc, char** argv) {
                                     }
                                     while (opcaoHospede < 1 || opcaoHospede > 7);
                                 break;
-                                case 3:
+                                case 3: /* Categorias de acomodação */
+                                    do {
+                                        menuCategoriaAcomodacao();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoCatAcom);
+                                        
+                                        switch (opcaoCatAcom) {
+                                            case 1:
+                                                
+                                            break;
+                                            case 2: break;
+                                            case 3: break;
+                                            case 4: break;
+                                            case 5: break;
+                                            case 6:
+                                                opcaoModulo = 0;
+                                            break;
+                                            default:
+                                                printf("Opção inválida!");
+                                        }
+                                    }
+                                    while (opcaoCatAcom < 1 || opcaoCatAcom > 6);
+                                break;
+                                case 4: /* Acomodação */
                                     
                                 break;
-                                case 4: break;
-                                case 5: break;
-                                case 6: break;
-                                case 7:
+                                case 5: /* Produto */
+                                    do {
+                                        menuProdutos();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoProduto);
+
+                                        switch (opcaoProduto) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+
+                                                printf("Digite o código do produto: ");
+                                                scanf("%d", &produto.codigo);
+
+                                                if (produtoExiste(produto.codigo, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!");
+                                                    opcaoProduto = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+
+                                                printf("Digite a descrição do produto: ");
+                                                scanf("%[^\n]s", produto.descricao);
+
+                                                printf("Digite o estoque do produto: ");
+                                                scanf("%d", &produto.estoque);
+
+                                                printf("Digite o estoque mínimo para este produto: ");
+                                                scanf("%d", &produto.estoqueMin);
+
+                                                printf("Digite o preço de custo do produto: ");
+                                                scanf("%f", &produto.precoCusto);
+
+                                                printf("Digite o preço de venda do produto: ");
+                                                scanf("%f", &produto.precoVenda);
+
+                                                inserirProduto(produto, formaArmazenamento);
+
+                                                pressioneParaContinuar();
+                                                opcaoProduto = 0;
+                                            break;
+                                            case 2:
+                                               printf("\e[1;1H\e[2J");
+                                               printf("Digite o código do produto que deseja buscar: ");
+                                               scanf("%d", &produto.codigo);
+
+                                               lerProduto(produto.codigo, formaArmazenamento);
+
+                                               pressioneParaContinuar();
+                                               opcaoProduto = 0;
+                                            break;
+                                            case 3:
+                                                printf("\e[1;1H\e[2J");
+                                                listarProdutos(formaArmazenamento);
+
+                                                opcaoProduto = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código do produto que deseja atualizar: ");
+                                                scanf("%d", &produto.codigo);
+
+                                                if (produtoExiste(produto.codigo, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    opcaoProduto = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+
+                                                printf("Digite a nova descrição do produto: ");
+                                                scanf("%[^\n]s", produto.descricao);
+
+                                                printf("Digite o novo estoque do produto: ");
+                                                scanf("%d", &produto.estoque);
+
+                                                printf("Digite o novo estoque mínimo para este produto: ");
+                                                scanf("%d", &produto.estoqueMin);
+
+                                                printf("Digite o novo preço de custo do produto: ");
+                                                scanf("%f", &produto.precoCusto);
+
+                                                printf("Digite o novo preço de venda do produto: ");
+                                                scanf("%f", &produto.precoVenda);
+
+                                                atualizarProduto(produto, produto.codigo, formaArmazenamento);
+
+                                                pressioneParaContinuar();
+                                                opcaoProduto = 0;
+                                            break;
+                                            case 5:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código do produto que deseja deletar: ");
+                                                scanf("%d", &produto.codigo);
+
+                                                deletarProduto(produto.codigo, formaArmazenamento);
+
+                                                pressioneParaContinuar();
+                                                opcaoProduto = 0;
+                                            break;
+                                            case 6:
+                                                opcaoModulo = 0;
+                                            break;
+                                            default:
+                                                printf("Opção inválida!");
+                                                pressioneParaContinuar();
+                                        }
+                                    }
+                                    while (opcaoProduto < 1 || opcaoProduto > 6);
+                                break;
+                                case 6: /* Fornecedor */
+                                    do {
+                                        menuFornecedores();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoFornecedor);
+
+                                        switch (opcaoFornecedor) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código do fornecedor: ");
+                                                scanf("%d", &fornecedor.codigo);
+
+                                                if (fornecedorExiste(fornecedor.codigo, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!");
+                                                    opcaoFornecedor = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+
+                                                printf("Digite o nome fantasia do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.nomeFantasia);
+
+                                                printf("Digite a razão social do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.razaoSocial);
+
+                                                printf("Digite a inscrição estadual do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.inscricaoEstadual);
+
+                                                printf("Digite o CNPJ do fornecedor: ");
+                                                scanf("%s", fornecedor.cnpj);
+
+                                                if (fornecedorExisteCNPJ(fornecedor.cnpj, formaArmazenamento) == 1) {
+                                                    printf("Código já existente!");
+                                                    opcaoFornecedor = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+
+                                                printf("Digite o endereço do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.endereco);
+
+                                                printf("Digite o telefone do fornecedor: ");
+                                                scanf("%s", fornecedor.telefone);
+
+                                                printf("Digite o email do fornecedor: ");
+                                                scanf("%s", fornecedor.email);
+
+                                                inserirFornecedor(fornecedor, formaArmazenamento);
+
+                                                opcaoFornecedor = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código do fornecedor que deseja buscar: ");
+                                                scanf("%d", &fornecedor.codigo);
+
+                                                lerFornecedor(fornecedor.codigo, formaArmazenamento);
+
+                                                opcaoFornecedor = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o CNPJ do fornecedor que deseja buscar: ");
+                                                scanf("%s", fornecedor.cnpj);
+
+                                                lerFornecedorCNPJ(fornecedor.cnpj, formaArmazenamento);
+
+                                                opcaoFornecedor = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 4:
+                                                printf("\e[1;1H\e[2J");
+                                                listarFornecedores(formaArmazenamento);
+
+                                                pressioneParaContinuar();
+                                                opcaoFornecedor = 0;
+                                            break;
+                                            case 5:
+                                                printf("\e[1;1H\e[2J");
+
+                                                printf("Digite o código do fornecedor que deseja atualizar: ");
+                                                scanf("%d", &fornecedor.codigo);
+
+                                                if (fornecedorExiste(fornecedor.codigo, formaArmazenamento) == 0) {
+                                                    printf("Código não existente!");
+                                                    pressioneParaContinuar();
+                                                    opcaoFornecedor = 0;
+                                                    break;
+                                                }
+
+                                                printf("Digite o novo nome fantasia do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.nomeFantasia);
+
+                                                printf("Digite a nova razão social do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.razaoSocial);
+
+                                                printf("Digite a nova inscrição estadual do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.inscricaoEstadual);
+
+                                                printf("Digite o novo CNPJ do fornecedor: ");
+                                                scanf("%s", fornecedor.cnpj);
+
+                                                printf("Digite o novo endereço do fornecedor: ");
+                                                scanf("%[^\n]s", fornecedor.endereco);
+
+                                                printf("Digite o novo telefone do fornecedor: ");
+                                                scanf("%s", fornecedor.telefone);
+
+                                                printf("Digite o novo email do fornecedor: ");
+                                                scanf("%s", fornecedor.email);
+
+                                                atualizarFornecedor(fornecedor, fornecedor.codigo, formaArmazenamento);
+
+                                                opcaoFornecedor = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 6:
+                                                printf("\e[1;1H\e[2J");
+
+                                                printf("Digite o código do fornecedor que deseja deletar: ");
+                                                scanf("%d", &fornecedor.codigo);
+
+                                                deletarFornecedor(fornecedor.codigo, formaArmazenamento);
+                                                opcaoFornecedor = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 7:
+                                                opcaoModulo = 0;
+                                            break;
+                                            default:
+                                                printf("Opção inálida!");
+                                                pressioneParaContinuar();
+                                        }
+                                    }
+                                    while (opcaoFornecedor < 1 || opcaoFornecedor > 7);
+                                break;
+                                case 7: /* Operador */
                                     do {
                                         menuOperadores();
                                         printf("Digite: ");
@@ -583,6 +898,7 @@ int main(int argc, char** argv) {
                                 default:
                                     printf("\e[1;1H\e[2J");
                                     printf("Opção inválida!\n\n");
+                                    pressioneParaContinuar();
                             }
                         }
                         while (opcaoGestaoDados < 1 || opcaoGestaoDados > 8);
@@ -620,10 +936,10 @@ int main(int argc, char** argv) {
                             scanf("%d", &opcaoGestaoDados);
 
                             switch (opcaoGestaoDados) {
-                                case 1:
+                                case 1: /* Hotel */
 
                                 break;
-                                case 2:
+                                case 2: /* Hóspede */
                                     do {
                                         menuHospedes();
                                         printf("Digite: ");
@@ -780,12 +1096,18 @@ int main(int argc, char** argv) {
                                     }
                                     while (opcaoHospede < 1 || opcaoHospede > 7);
                                 break;
-                                case 3:
+                                case 3: /* Categoria de acomodação */
                                     
                                 break;
-                                case 4: break;
-                                case 5: break;
-                                case 6: break;
+                                case 4: /* Acomodacao*/
+                                    
+                                break;
+                                case 5: /* Produto */
+                                    
+                                break;
+                                case 6: /* Fornecedor */
+                                    
+                                break;
                                 case 7:
                                     do {
                                         menuOperadores();
