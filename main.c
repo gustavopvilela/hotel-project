@@ -1228,7 +1228,61 @@ int main(int argc, char** argv) {
                         opcaoModulo = 0;
                     }
                     else {
+                        Reserva newReserva;
+                        Acomodacao newAcomodacao;
+                        CategoriaAcomodacao newCategoria;
+                        Data datas;
+                        int categoria;
+                        int qtdAdul;
+                        int qtdCrian;
+                        int facilidade;
+                        int opc;
                         
+                        listarReservas(2);
+                        
+                        printf("---Reserva---\n\n");
+                        printf("procure por um quarto\n");
+                        printf("os campos que não forem de seu interesse digite apenas um 0");
+                        printf("\nA data de entrada e saída é obrigatória");
+
+                        printf("Qual a opção??\n");
+                        printf("1. Binário\n2. TXT\n3. Memória\n");
+                        printf("Opção desejada: ");
+                        scanf("%d", &opc);
+
+                        printf("\n\nDia entrada: ");
+                        scanf("%d", &datas.diaEntrada);
+
+                        printf("\nMês entrada: ");
+                        scanf("%d", &datas.mesEntrada);
+
+                        printf("\nAno entrada: ");
+                        scanf("%d", &datas.anoEntrada);
+
+                        printf("\n\nDia saída: ");
+                        scanf("%d", &datas.diaSaida);
+
+                        printf("\nMês saída: ");
+                        scanf("%d", &datas.mesSaida);
+
+                        printf("\nAno saída: ");
+                        scanf("%d", &datas.anoSaida);
+
+                        printf("\nCategoria: ");
+                        scanf("%d", &categoria);
+
+                        printf("\nQuantidade adultos: ");
+                        scanf("%d", &qtdAdul);
+                        printf("\nQuantidade criancas: ");
+                        scanf("%d", &qtdCrian);
+
+                        printf("\nAlguma facilidade? (Ex. banheira, tv...)");
+                        scanf("%d", &facilidade);
+
+                        pesquisa(datas, categoria, qtdAdul, qtdCrian, facilidade, opc);
+                        
+                        pressioneParaContinuar();
+                        opcaoModulo = 0;
                     }
                 case 3:
                     printf("\nEncerrando o programa...\n");
