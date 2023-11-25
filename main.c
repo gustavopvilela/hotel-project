@@ -676,6 +676,9 @@ int main(int argc, char** argv) {
                                                 printf("Digite o número da categoria: ");
                                                 scanf("%d", &catAcom.categoria);
                                                 
+                                                printf("Digite a descrição da categoria: ");
+                                                scanf(" %[^\n]s", catAcom.descricao);
+                                                
                                                 printf("Digite o valor da diária desta categoria: ");
                                                 scanf("%f", &catAcom.valorDiaria);
                                                 

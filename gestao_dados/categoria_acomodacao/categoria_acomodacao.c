@@ -124,7 +124,7 @@ void lerCategoriaAcomodacao (int codigo, int opcao) {
             
             rewind(catAcomTxt);
             while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %f\n%*s %d\n%*s %d",
-                          &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
+                          &catAcom.codigo, catAcom.descricao, &catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
                 if (catAcom.codigo == codigo) {
                     printf("Código: %d\n", catAcom.codigo);
                     printf("Descrição: %s\n", catAcom.descricao);
@@ -187,7 +187,7 @@ int categoriaAcomodacaoExiste (int codigo, int opcao) {
             
             rewind(catAcomTxt);
             while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %f\n%*s %d\n%*s %d",
-                          &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
+                          &catAcom.codigo, catAcom.descricao, &catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
                 if (catAcom.codigo == codigo) {
                     encontrado = 1;
                 }
@@ -266,7 +266,7 @@ void listarCategoriaAcomodacao (int opcao) {
             
             rewind(catAcomTxt);
             while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %f\n%*s %d\n%*s %d",
-                          &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
+                          &catAcom.codigo, catAcom.descricao, &catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
                 printf("Código: %d\n", catAcom.codigo);
                 printf("Descrição: %s\n", catAcom.descricao);
                 printf("Categoria: %d\n", catAcom.categoria);
@@ -418,7 +418,7 @@ void deletarCategoriaAcomodacao (int codigo, int opcao) {
             
             rewind(catAcomTxt);
             while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %f\n%*s %d\n%*s %d",
-                          &catAcom.codigo, catAcom.descricao, catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
+                          &catAcom.codigo, catAcom.descricao, &catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
                 if (catAcom.codigo == codigo) {
                     printf("Deleção concluída!");
                     dadoAchado = 1;

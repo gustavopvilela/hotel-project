@@ -1,0 +1,6 @@
+Código: 1
+Descrição: Categoria
+Categoria: 1
+Diaria: 100.000000
+Adultos: 1
+Crianças: 0

@@ -1,0 +1,10 @@
+Codigo: 1
+Nome: Gustavo
+Usuario: gus
+Senha: 123
+Permissoes: 90000
+Codigo: 2
+Nome: gustavo
+Usuario: gustavo
+Senha: 123
+Permissoes: 90000
