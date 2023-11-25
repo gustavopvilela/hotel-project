@@ -1,0 +1,9 @@
+Codigo reserva: 1
+Codigo acomodacao: 1
+Codigo hospede: 1
+Dia entrada: 20
+Mes entrada: 12
+Ano entrada: 2023
+Dia saida: 25
+Mes saida: 12
+Ano saida: 2023

@@ -59,7 +59,7 @@ void lerReservaMemoria(Reserva *listaReservas, int tamanho, int codigo);
 void listarReservas(int opcao);
 void listarReservasMemoria (Reserva *listaReservas, int tamanho);
 void atualizarReserva (Reserva novosDados, int codigo, int opcao);
-void atualizarReservaMemoria (Reserva *listaReservas, Reserva novosDados, int codigo, int tamanho, Acomodacao listaAcomodacoes,  int contadorAcomodacoes);
+void atualizarReservaMemoria (Reserva *listaReservas, Reserva novosDados, int codigo, int tamanho, Acomodacao *listaAcomodacoes,  int contadorAcomodacoes);
 void cancelarReserva(int codigo, int opcao);
 void cancelarReservaMemoria (Reserva *listaReservas, int *tamanho, int codigo);
 

@@ -1,0 +1,9 @@
+Código: 1
+Nome: Patrick
+Nascimento: 05/01/2000
+Endereço: abc
+CPF: 14089499623
+Telefone: 999399902
+E-mail: patrick@email
+Sexo: masculino
+EC: solteiro

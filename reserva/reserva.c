@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "reserva.h"
+#include "../reserva/reserva.h"
 #include "../gestao_dados/acomodacao/acomodacao.h"
 #include "../gestao_dados/categoria_acomodacao/categoria_acomodacao.h"
 
@@ -1012,12 +1012,12 @@ int existeReserva(int codigo, int opcao) {
             rewind(reservaBin);
             while (fread(&reserva, sizeof (Reserva), 1, reservaBin) == 1) {
                 if (reserva.codigo == codigo) {
-                    return 0; //já existe uma reserva com esse código
+                    return 1; //já existe uma reserva com esse código
                 }
             }
             fclose(reservaBin);
-            return 1;
-            break;
+            return 0;
+        break;
 
         case 2:
             FILE *reservaTxt;
@@ -1038,14 +1038,16 @@ int existeReserva(int codigo, int opcao) {
                     reserva.mesEntrada, reserva.anoEntrada, reserva.diaSaida,
                     reserva.mesSaida, reserva.anoSaida) == 9) {
                 if (reserva.codigo == codigo) {
-                    return 0; //já existe uma reserva com esse código
+                    return 1; //já existe uma reserva com esse código
                 }
             }
 
             fclose(reservaTxt);
-            return 1;
-            break;
+            return 0;
+        break;
     }
+    
+    return 1;
 }
 
 int existeReservaMemoria(Reserva *listaReservas, int tamanho, int codigo) {
@@ -1061,8 +1063,8 @@ int existeReservaMemoria(Reserva *listaReservas, int tamanho, int codigo) {
 
 void cadastrarReserva(Reserva reserva, int opcao) {
     Data datas;
-    int *quartosDisponiveis;
-    int contadorDisponiveis;
+    int *quartosDisponiveis = NULL;
+    int contadorDisponiveis = 0;
     /*Bloqueando o terminal*/
     freopen("/dev/null", "w", stdout);
 
@@ -1083,7 +1085,8 @@ void cadastrarReserva(Reserva reserva, int opcao) {
 
     /* Desbloqueando o terminal. */
     freopen("/dev/tty", "w", stdout);
-
+    
+    free(quartosDisponiveis);
     if (flag == 1) {
         if (existeReserva(reserva.codigo, opcao) != 0) {
             switch (opcao) {
@@ -1149,8 +1152,8 @@ void cadastrarReserva(Reserva reserva, int opcao) {
 
 void cadastrarReservaMemoria(Reserva novaReserva, Reserva **listaReservas, int *contador, Acomodacao *listaAcomodacoes, int contadorAcomodacoes) {
     Data datas;
-    int *quartosDisponiveis;
-    int contadorDisponiveis;
+    int *quartosDisponiveis = NULL;
+    int contadorDisponiveis = 0;
 
     /*Bloqueando o terminal*/
     freopen("/dev/null", "w", stdout);
@@ -1169,6 +1172,8 @@ void cadastrarReservaMemoria(Reserva novaReserva, Reserva **listaReservas, int *
             flag = 1;
         }
     }
+    
+    free(quartosDisponiveis);
 
     /* Desbloqueando o terminal. */
     freopen("/dev/tty", "w", stdout);
@@ -1362,8 +1367,8 @@ void listarReservasMemoria(Reserva *listaReservas, int tamanho) {
 
 void atualizarReserva(Reserva novosDados, int codigo, int opcao) {
     Data datas;
-    int *quartosDisponiveis;
-    int contadorDisponiveis;
+    int *quartosDisponiveis = NULL;
+    int contadorDisponiveis = 0;
 
     /*Bloqueando o terminal*/
     freopen("/dev/null", "w", stdout);
@@ -1383,6 +1388,7 @@ void atualizarReserva(Reserva novosDados, int codigo, int opcao) {
         }
     }
 
+    free(quartosDisponiveis);
     /* Desbloqueando o terminal. */
     freopen("/dev/tty", "w", stdout);
 
@@ -1438,7 +1444,7 @@ void atualizarReserva(Reserva novosDados, int codigo, int opcao) {
     }
 }
 
-void atualizarReservaMemoria(Reserva *listaReservas, Reserva novosDados, int codigo, int tamanho, Acomodacao listaAcomodacoes, int contadorAcomodacoes) {
+void atualizarReservaMemoria(Reserva *listaReservas, Reserva novosDados, int codigo, int tamanho, Acomodacao *listaAcomodacoes, int contadorAcomodacoes) {
     int encontrado = 0;
     Data datas;
     int *quartosDisponiveis;

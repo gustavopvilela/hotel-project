@@ -1,0 +1,10 @@
+Codigo: 1
+Nome: patrick
+Usuario: trick
+Senha: 123
+Permissoes: 10000
+Codigo: 2
+Nome: patrick
+Usuario: trick
+Senha: 123
+Permissoes: 10000
