@@ -7,6 +7,8 @@
 #include "../hotel/hotel.h"
 #include "../operador/operador.h"
 #include "../produto/produto.h"
+#include "../../reserva/reserva.h"
+#include "../../transacoes/checkin/checkin.h"
 
 void inicializarArquivos () {
     /* Hotel */
@@ -169,4 +171,46 @@ void inicializarArquivos () {
     }
     
     fclose(operadorTxt);
+    
+    /* Reserva. */
+    FILE *reservaBin;
+    reservaBin = fopen(RESERVA_BIN, "ab");
+
+    if (reservaBin == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(reservaBin);
+    
+    FILE *reservaTxt;
+    reservaTxt = fopen(RESERVA_TXT, "a");
+
+    if (reservaTxt == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(reservaTxt);
+    
+    /* Check-in. */
+    FILE *checkInBin;
+    checkInBin = fopen(CHECKIN_BIN, "ab");
+    
+    if (checkInBin == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(checkInBin);
+    
+    FILE *checkInTxt;
+    checkInTxt = fopen(CHECKIN_TXT, "a");
+    
+    if (checkInTxt == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(checkInTxt);
 }

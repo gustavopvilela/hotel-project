@@ -44,7 +44,10 @@ OBJECTFILES= \
 	${OBJECTDIR}/gestao_dados/operador/operador.o \
 	${OBJECTDIR}/gestao_dados/produto/produto.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/reserva/reserva.o
+	${OBJECTDIR}/reserva/reserva.o \
+	${OBJECTDIR}/transacoes/checkin/checkin.o \
+	${OBJECTDIR}/transacoes/checkout/checkout.o \
+	${OBJECTDIR}/transacoes/venda/vendas.o
 
 
 # C Compiler Flags
@@ -120,6 +123,21 @@ ${OBJECTDIR}/reserva/reserva.o: reserva/reserva.c
 	${MKDIR} -p ${OBJECTDIR}/reserva
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/reserva/reserva.o reserva/reserva.c
+
+${OBJECTDIR}/transacoes/checkin/checkin.o: transacoes/checkin/checkin.c
+	${MKDIR} -p ${OBJECTDIR}/transacoes/checkin
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/transacoes/checkin/checkin.o transacoes/checkin/checkin.c
+
+${OBJECTDIR}/transacoes/checkout/checkout.o: transacoes/checkout/checkout.c
+	${MKDIR} -p ${OBJECTDIR}/transacoes/checkout
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/transacoes/checkout/checkout.o transacoes/checkout/checkout.c
+
+${OBJECTDIR}/transacoes/venda/vendas.o: transacoes/venda/vendas.c
+	${MKDIR} -p ${OBJECTDIR}/transacoes/venda
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/transacoes/venda/vendas.o transacoes/venda/vendas.c
 
 # Subprojects
 .build-subprojects:

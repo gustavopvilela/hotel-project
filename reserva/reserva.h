@@ -25,7 +25,7 @@ typedef struct{
 
 
 /*estrutura referente aos dados de cada reserva*/
-typedef struct{
+typedef struct {
     int codigo;
     int codigoAcomodacao; //chave estrangeira da acomodação
     int codigoHospede; //chave estrangeira do hóspede
@@ -35,7 +35,7 @@ typedef struct{
     int diaSaida;
     int mesSaida;
     int anoSaida;
-}Reserva;
+} Reserva;
 
 int validaData(Data datas);
 void pesquisaData(Data datas, int *contadorData, int **quartosDisponiveisData, int opcao);

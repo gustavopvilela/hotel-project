@@ -6,6 +6,9 @@
                    projectFiles="true">
       <itemPath>gestao_dados/acomodacao/acomodacao.h</itemPath>
       <itemPath>gestao_dados/categoria_acomodacao/categoria_acomodacao.h</itemPath>
+      <itemPath>transacoes/checkin/checkin.h</itemPath>
+      <itemPath>transacoes/checkin/checkout.h</itemPath>
+      <itemPath>transacoes/checkout/checkout.h</itemPath>
       <itemPath>gestao_dados/controle_arquivos/controle_arquivos.h</itemPath>
       <itemPath>gestao_dados/fornecedor/fornecedor.h</itemPath>
       <itemPath>gestao_dados/hospede/hospede.h</itemPath>
@@ -13,12 +16,15 @@
       <itemPath>gestao_dados/operador/operador.h</itemPath>
       <itemPath>gestao_dados/produto/produto.h</itemPath>
       <itemPath>reserva/reserva.h</itemPath>
+      <itemPath>transacoes/vendas/vendas.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Arquivos de Código-Fonte"
                    projectFiles="true">
       <itemPath>gestao_dados/acomodacao/acomodacao.c</itemPath>
       <itemPath>gestao_dados/categoria_acomodacao/categoria_acomodacao.c</itemPath>
+      <itemPath>transacoes/checkin/checkin.c</itemPath>
+      <itemPath>transacoes/checkout/checkout.c</itemPath>
       <itemPath>gestao_dados/controle_arquivos/controle_arquivos.c</itemPath>
       <itemPath>gestao_dados/fornecedor/fornecedor.c</itemPath>
       <itemPath>gestao_dados/hospede/hospede.c</itemPath>
@@ -27,6 +33,7 @@
       <itemPath>gestao_dados/operador/operador.c</itemPath>
       <itemPath>gestao_dados/produto/produto.c</itemPath>
       <itemPath>reserva/reserva.c</itemPath>
+      <itemPath>transacoes/venda/vendas.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Arquivos de Recurso"
@@ -116,6 +123,20 @@
       </item>
       <item path="reserva/reserva.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="transacoes/checkin/checkin.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="transacoes/checkin/checkin.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="transacoes/checkin/checkout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="transacoes/checkout/checkout.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="transacoes/checkout/checkout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="transacoes/venda/vendas.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="transacoes/vendas/vendas.h" ex="false" tool="3" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -198,6 +219,20 @@
       <item path="reserva/reserva.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="reserva/reserva.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="transacoes/checkin/checkin.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="transacoes/checkin/checkin.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="transacoes/checkin/checkout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="transacoes/checkout/checkout.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="transacoes/checkout/checkout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="transacoes/venda/vendas.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="transacoes/vendas/vendas.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
