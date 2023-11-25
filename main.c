@@ -12,6 +12,7 @@
 #include "gestao_dados/hotel/hotel.h"
 #include "gestao_dados/operador/operador.h"
 #include "gestao_dados/produto/produto.h"
+#include "reserva/reserva.h"
 
 void pressioneParaContinuar () {
     printf("Pressione \"Enter\" para continuar...");
@@ -208,7 +209,7 @@ int main(int argc, char** argv) {
                     }
                     
                     printf("Digite o nome do operador que deseja cadastrar: ");
-                    scanf(" %[^\n]s", operador.nome);
+                    scanf("  %[^\n]s", operador.nome);
                     
                     printf("Digite o usuário do operador que deseja cadastrar: ");
                     scanf("%s", operador.usuario);
@@ -295,7 +296,7 @@ int main(int argc, char** argv) {
                     }
                     
                     printf("Digite o nome do operador que deseja cadastrar: ");
-                    scanf(" %[^\n]s", operador.nome);
+                    scanf("  %[^\n]s", operador.nome);
                     
                     printf("Digite o usuário do operador que deseja cadastrar: ");
                     scanf("%s", operador.usuario);
@@ -397,19 +398,19 @@ int main(int argc, char** argv) {
                                         switch (opcaoHotel) {
                                             case 1:
                                                 printf("Digite o nome fantasia do hotel: ");
-                                                scanf("%[^\n]s", hotel.nomeFantasia);
+                                                scanf(" %[^\n]s", hotel.nomeFantasia);
                                                 
                                                 printf("Digite a razão social do hotel: ");
-                                                scanf("%[^\n]s", hotel.razaoSocial);
+                                                scanf(" %[^\n]s", hotel.razaoSocial);
                                                 
                                                 printf("Digite a inscrição estadual do hotel: ");
-                                                scanf("%[^\n]s", hotel.inscricaoEstadual);
+                                                scanf(" %[^\n]s", hotel.inscricaoEstadual);
                                                 
                                                 printf("Digite o CNPJ do hotel: ");
                                                 scanf("%s", hotel.cnpj);
                                                 
                                                 printf("Digite o endereço do hotel: ");
-                                                scanf("%[^\n]s", hotel.endereco);
+                                                scanf(" %[^\n]s", hotel.endereco);
                                                 
                                                 printf("Digite o telefone do hotel: ");
                                                 scanf("%s", hotel.telefone);
@@ -418,7 +419,7 @@ int main(int argc, char** argv) {
                                                 scanf("%s", hotel.email);
                                                 
                                                 printf("Digite o nome do responsável pelo hotel: ");
-                                                scanf("%[^\n]s", hotel.responsavel);
+                                                scanf(" %[^\n]s", hotel.responsavel);
                                                 
                                                 printf("Digite o telefone do responsável pelo hotel: ");
                                                 scanf("%s", hotel.telefoneResponsavel);
@@ -442,19 +443,19 @@ int main(int argc, char** argv) {
                                             break;
                                             case 3:
                                                 printf("Digite o novo nome fantasia do hotel: ");
-                                                scanf("%[^\n]s", hotel.nomeFantasia);
+                                                scanf(" %[^\n]s", hotel.nomeFantasia);
                                                 
                                                 printf("Digite a nova razão social do hotel: ");
-                                                scanf("%[^\n]s", hotel.razaoSocial);
+                                                scanf(" %[^\n]s", hotel.razaoSocial);
                                                 
                                                 printf("Digite a nova inscrição estadual do hotel: ");
-                                                scanf("%[^\n]s", hotel.inscricaoEstadual);
+                                                scanf(" %[^\n]s", hotel.inscricaoEstadual);
                                                 
                                                 printf("Digite o novo CNPJ do hotel: ");
                                                 scanf("%s", hotel.cnpj);
                                                 
                                                 printf("Digite o novo endereço do hotel: ");
-                                                scanf("%[^\n]s", hotel.endereco);
+                                                scanf(" %[^\n]s", hotel.endereco);
                                                 
                                                 printf("Digite o novo telefone do hotel: ");
                                                 scanf("%s", hotel.telefone);
@@ -463,7 +464,7 @@ int main(int argc, char** argv) {
                                                 scanf("%s", hotel.email);
                                                 
                                                 printf("Digite o novo nome do responsável pelo hotel: ");
-                                                scanf("%[^\n]s", hotel.responsavel);
+                                                scanf(" %[^\n]s", hotel.responsavel);
                                                 
                                                 printf("Digite o novo telefone do responsável pelo hotel: ");
                                                 scanf("%s", hotel.telefoneResponsavel);
@@ -515,10 +516,10 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite o nome do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.nome);
+                                                scanf("  %[^\n]s", hospede.nome);
                                                 
                                                 printf("Digite o endereço do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.endereco);
+                                                scanf("  %[^\n]s", hospede.endereco);
                                                 
                                                 printf("Digite o cpf do hóspede: ");
                                                 scanf("%s", hospede.cpf);
@@ -596,10 +597,10 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite o novo nome do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.nome);
+                                                scanf("  %[^\n]s", hospede.nome);
                                                 
                                                 printf("Digite o novo endereço do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.endereco);
+                                                scanf("  %[^\n]s", hospede.endereco);
                                                 
                                                 printf("Digite o novo CPF do hóspede: ");
                                                 scanf("%s", hospede.cpf);
@@ -774,7 +775,7 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite a descrição da acomodação: ");
-                                                scanf("%[^\n]s", acomodacao.descricao);
+                                                scanf(" %[^\n]s", acomodacao.descricao);
                                                 
                                                 printf("Digite o número das facilidades da acomodação: ");
                                                 scanf("%d", &acomodacao.facilidades);
@@ -824,7 +825,7 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite a nova descrição da acomodação: ");
-                                                scanf("%[^\n]s", acomodacao.descricao);
+                                                scanf(" %[^\n]s", acomodacao.descricao);
                                                 
                                                 printf("Digite o novo número das facilidades da acomodação: ");
                                                 scanf("%d", &acomodacao.facilidades);
@@ -884,7 +885,7 @@ int main(int argc, char** argv) {
                                                 }
 
                                                 printf("Digite a descrição do produto: ");
-                                                scanf("%[^\n]s", produto.descricao);
+                                                scanf(" %[^\n]s", produto.descricao);
 
                                                 printf("Digite o estoque do produto: ");
                                                 scanf("%d", &produto.estoque);
@@ -933,7 +934,7 @@ int main(int argc, char** argv) {
                                                 }
 
                                                 printf("Digite a nova descrição do produto: ");
-                                                scanf("%[^\n]s", produto.descricao);
+                                                scanf(" %[^\n]s", produto.descricao);
 
                                                 printf("Digite o novo estoque do produto: ");
                                                 scanf("%d", &produto.estoque);
@@ -992,13 +993,13 @@ int main(int argc, char** argv) {
                                                 }
 
                                                 printf("Digite o nome fantasia do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.nomeFantasia);
+                                                scanf(" %[^\n]s", fornecedor.nomeFantasia);
 
                                                 printf("Digite a razão social do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.razaoSocial);
+                                                scanf(" %[^\n]s", fornecedor.razaoSocial);
 
                                                 printf("Digite a inscrição estadual do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.inscricaoEstadual);
+                                                scanf(" %[^\n]s", fornecedor.inscricaoEstadual);
 
                                                 printf("Digite o CNPJ do fornecedor: ");
                                                 scanf("%s", fornecedor.cnpj);
@@ -1011,7 +1012,7 @@ int main(int argc, char** argv) {
                                                 }
 
                                                 printf("Digite o endereço do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.endereco);
+                                                scanf(" %[^\n]s", fornecedor.endereco);
 
                                                 printf("Digite o telefone do fornecedor: ");
                                                 scanf("%s", fornecedor.telefone);
@@ -1065,19 +1066,19 @@ int main(int argc, char** argv) {
                                                 }
 
                                                 printf("Digite o novo nome fantasia do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.nomeFantasia);
+                                                scanf(" %[^\n]s", fornecedor.nomeFantasia);
 
                                                 printf("Digite a nova razão social do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.razaoSocial);
+                                                scanf(" %[^\n]s", fornecedor.razaoSocial);
 
                                                 printf("Digite a nova inscrição estadual do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.inscricaoEstadual);
+                                                scanf(" %[^\n]s", fornecedor.inscricaoEstadual);
 
                                                 printf("Digite o novo CNPJ do fornecedor: ");
                                                 scanf("%s", fornecedor.cnpj);
 
                                                 printf("Digite o novo endereço do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.endereco);
+                                                scanf(" %[^\n]s", fornecedor.endereco);
 
                                                 printf("Digite o novo telefone do fornecedor: ");
                                                 scanf("%s", fornecedor.telefone);
@@ -1326,19 +1327,19 @@ int main(int argc, char** argv) {
                                         switch (opcaoHotel) {
                                             case 1:
                                                 printf("Digite o nome fantasia do hotel: ");
-                                                scanf("%[^\n]s", hotel.nomeFantasia);
+                                                scanf(" %[^\n]s", hotel.nomeFantasia);
                                                 
                                                 printf("Digite a razão social do hotel: ");
-                                                scanf("%[^\n]s", hotel.razaoSocial);
+                                                scanf(" %[^\n]s", hotel.razaoSocial);
                                                 
                                                 printf("Digite a inscrição estadual do hotel: ");
-                                                scanf("%[^\n]s", hotel.inscricaoEstadual);
+                                                scanf(" %[^\n]s", hotel.inscricaoEstadual);
                                                 
                                                 printf("Digite o CNPJ do hotel: ");
                                                 scanf("%s", hotel.cnpj);
                                                 
                                                 printf("Digite o endereço do hotel: ");
-                                                scanf("%[^\n]s", hotel.endereco);
+                                                scanf(" %[^\n]s", hotel.endereco);
                                                 
                                                 printf("Digite o telefone do hotel: ");
                                                 scanf("%s", hotel.telefone);
@@ -1347,7 +1348,7 @@ int main(int argc, char** argv) {
                                                 scanf("%s", hotel.email);
                                                 
                                                 printf("Digite o nome do responsável pelo hotel: ");
-                                                scanf("%[^\n]s", hotel.responsavel);
+                                                scanf(" %[^\n]s", hotel.responsavel);
                                                 
                                                 printf("Digite o telefone do responsável pelo hotel: ");
                                                 scanf("%s", hotel.telefoneResponsavel);
@@ -1371,19 +1372,19 @@ int main(int argc, char** argv) {
                                             break;
                                             case 3:
                                                 printf("Digite o novo nome fantasia do hotel: ");
-                                                scanf("%[^\n]s", hotel.nomeFantasia);
+                                                scanf(" %[^\n]s", hotel.nomeFantasia);
                                                 
                                                 printf("Digite a nova razão social do hotel: ");
-                                                scanf("%[^\n]s", hotel.razaoSocial);
+                                                scanf(" %[^\n]s", hotel.razaoSocial);
                                                 
                                                 printf("Digite a nova inscrição estadual do hotel: ");
-                                                scanf("%[^\n]s", hotel.inscricaoEstadual);
+                                                scanf(" %[^\n]s", hotel.inscricaoEstadual);
                                                 
                                                 printf("Digite o novo CNPJ do hotel: ");
                                                 scanf("%s", hotel.cnpj);
                                                 
                                                 printf("Digite o novo endereço do hotel: ");
-                                                scanf("%[^\n]s", hotel.endereco);
+                                                scanf(" %[^\n]s", hotel.endereco);
                                                 
                                                 printf("Digite o novo telefone do hotel: ");
                                                 scanf("%s", hotel.telefone);
@@ -1392,7 +1393,7 @@ int main(int argc, char** argv) {
                                                 scanf("%s", hotel.email);
                                                 
                                                 printf("Digite o novo nome do responsável pelo hotel: ");
-                                                scanf("%[^\n]s", hotel.responsavel);
+                                                scanf(" %[^\n]s", hotel.responsavel);
                                                 
                                                 printf("Digite o novo telefone do responsável pelo hotel: ");
                                                 scanf("%s", hotel.telefoneResponsavel);
@@ -1444,10 +1445,10 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite o nome do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.nome);
+                                                scanf("  %[^\n]s", hospede.nome);
                                                 
                                                 printf("Digite o endereço do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.endereco);
+                                                scanf("  %[^\n]s", hospede.endereco);
                                                 
                                                 printf("Digite o cpf do hóspede: ");
                                                 scanf("%s", hospede.cpf);
@@ -1524,10 +1525,10 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite o novo nome do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.nome);
+                                                scanf("  %[^\n]s", hospede.nome);
                                                 
                                                 printf("Digite o novo endereço do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.endereco);
+                                                scanf("  %[^\n]s", hospede.endereco);
                                                 
                                                 printf("Digite o novo CPF do hóspede: ");
                                                 scanf("%s", hospede.cpf);
@@ -1702,7 +1703,7 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite a descrição da acomodação: ");
-                                                scanf("%[^\n]s", acomodacao.descricao);
+                                                scanf(" %[^\n]s", acomodacao.descricao);
                                                 
                                                 printf("Digite o número das facilidades da acomodação: ");
                                                 scanf("%d", &acomodacao.facilidades);
@@ -1752,7 +1753,7 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite a nova descrição da acomodação: ");
-                                                scanf("%[^\n]s", acomodacao.descricao);
+                                                scanf(" %[^\n]s", acomodacao.descricao);
                                                 
                                                 printf("Digite o novo número das facilidades da acomodação: ");
                                                 scanf("%d", &acomodacao.facilidades);
@@ -1812,7 +1813,7 @@ int main(int argc, char** argv) {
                                                 }
 
                                                 printf("Digite a descrição do produto: ");
-                                                scanf("%[^\n]s", produto.descricao);
+                                                scanf(" %[^\n]s", produto.descricao);
 
                                                 printf("Digite o estoque do produto: ");
                                                 scanf("%d", &produto.estoque);
@@ -1861,7 +1862,7 @@ int main(int argc, char** argv) {
                                                 }
 
                                                 printf("Digite a nova descrição do produto: ");
-                                                scanf("%[^\n]s", produto.descricao);
+                                                scanf(" %[^\n]s", produto.descricao);
 
                                                 printf("Digite o novo estoque do produto: ");
                                                 scanf("%d", &produto.estoque);
@@ -1920,13 +1921,13 @@ int main(int argc, char** argv) {
                                                 }
 
                                                 printf("Digite o nome fantasia do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.nomeFantasia);
+                                                scanf(" %[^\n]s", fornecedor.nomeFantasia);
 
                                                 printf("Digite a razão social do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.razaoSocial);
+                                                scanf(" %[^\n]s", fornecedor.razaoSocial);
 
                                                 printf("Digite a inscrição estadual do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.inscricaoEstadual);
+                                                scanf(" %[^\n]s", fornecedor.inscricaoEstadual);
 
                                                 printf("Digite o CNPJ do fornecedor: ");
                                                 scanf("%s", fornecedor.cnpj);
@@ -1939,7 +1940,7 @@ int main(int argc, char** argv) {
                                                 }
 
                                                 printf("Digite o endereço do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.endereco);
+                                                scanf(" %[^\n]s", fornecedor.endereco);
 
                                                 printf("Digite o telefone do fornecedor: ");
                                                 scanf("%s", fornecedor.telefone);
@@ -1993,19 +1994,19 @@ int main(int argc, char** argv) {
                                                 }
 
                                                 printf("Digite o novo nome fantasia do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.nomeFantasia);
+                                                scanf(" %[^\n]s", fornecedor.nomeFantasia);
 
                                                 printf("Digite a nova razão social do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.razaoSocial);
+                                                scanf(" %[^\n]s", fornecedor.razaoSocial);
 
                                                 printf("Digite a nova inscrição estadual do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.inscricaoEstadual);
+                                                scanf(" %[^\n]s", fornecedor.inscricaoEstadual);
 
                                                 printf("Digite o novo CNPJ do fornecedor: ");
                                                 scanf("%s", fornecedor.cnpj);
 
                                                 printf("Digite o novo endereço do fornecedor: ");
-                                                scanf("%[^\n]s", fornecedor.endereco);
+                                                scanf(" %[^\n]s", fornecedor.endereco);
 
                                                 printf("Digite o novo telefone do fornecedor: ");
                                                 scanf("%s", fornecedor.telefone);
