@@ -533,10 +533,10 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite o nome do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.nome);
+                                                scanf("  %[^\n]s", hospede.nome);
                                                 
                                                 printf("Digite o endereço do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.endereco);
+                                                scanf("  %[^\n]s", hospede.endereco);
                                                 
                                                 printf("Digite o cpf do hóspede: ");
                                                 scanf("%s", hospede.cpf);
@@ -614,10 +614,10 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite o novo nome do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.nome);
+                                                scanf("  %[^\n]s", hospede.nome);
                                                 
                                                 printf("Digite o novo endereço do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.endereco);
+                                                scanf("  %[^\n]s", hospede.endereco);
                                                 
                                                 printf("Digite o novo CPF do hóspede: ");
                                                 scanf("%s", hospede.cpf);
@@ -692,6 +692,9 @@ int main(int argc, char** argv) {
                                                 
                                                 printf("Digite o número da categoria: ");
                                                 scanf("%d", &catAcom.categoria);
+                                                
+                                                printf("Digite a descrição da categoria: ");
+                                                scanf(" %[^\n]s", catAcom.descricao);
                                                 
                                                 printf("Digite o valor da diária desta categoria: ");
                                                 scanf("%f", &catAcom.valorDiaria);
@@ -1613,10 +1616,10 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite o nome do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.nome);
+                                                scanf("  %[^\n]s", hospede.nome);
                                                 
                                                 printf("Digite o endereço do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.endereco);
+                                                scanf("  %[^\n]s", hospede.endereco);
                                                 
                                                 printf("Digite o cpf do hóspede: ");
                                                 scanf("%s", hospede.cpf);
@@ -1693,10 +1696,10 @@ int main(int argc, char** argv) {
                                                 }
                                                 
                                                 printf("Digite o novo nome do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.nome);
+                                                scanf("  %[^\n]s", hospede.nome);
                                                 
                                                 printf("Digite o novo endereço do hóspede: ");
-                                                scanf(" %[^\n]s", hospede.endereco);
+                                                scanf("  %[^\n]s", hospede.endereco);
                                                 
                                                 printf("Digite o novo CPF do hóspede: ");
                                                 scanf("%s", hospede.cpf);

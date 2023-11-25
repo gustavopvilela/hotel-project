@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 codigo: 1
 descricao: 123
 facilidades: 1
 categoria: 1
+=======
+Código: 1
+Descrição: Acom
+Facilidades: 1
+Categoria: 1
+>>>>>>> 523844a155089ea144e5c1aa0af87c767a715530

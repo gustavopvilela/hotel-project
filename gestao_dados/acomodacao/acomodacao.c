@@ -115,7 +115,7 @@ void lerAcomodacao (int codigo, int opcao) {
             
             rewind(acomodacaoTxt);
             while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
-                          &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
+                          &acomodacao.codigo, acomodacao.descricao, &acomodacao.facilidades, &acomodacao.categoria) == 4) {
                 if (acomodacao.codigo == codigo) {
                     printf("Código: %d\n", acomodacao.codigo);
                     printf("Descrição: %s\n", acomodacao.descricao);
@@ -176,7 +176,7 @@ int acomodacaoExiste (int codigo, int opcao) {
             
             rewind(acomodacaoTxt);
             while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
-                          &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
+                          &acomodacao.codigo, acomodacao.descricao, &acomodacao.facilidades, &acomodacao.categoria) == 4) {
                 if (acomodacao.codigo == codigo) {
                     encontrado = 1;
                     break;
@@ -254,7 +254,7 @@ void listarAcomodacoes (int opcao) {
             
             rewind(acomodacaoTxt);
             while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
-                          &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
+                          &acomodacao.codigo, acomodacao.descricao, &acomodacao.facilidades, &acomodacao.categoria) == 4) {
                 printf("Código: %d\n", acomodacao.codigo);
                 printf("Descrição: %s\n", acomodacao.descricao);
                 printf("Facilidades: %d\n", acomodacao.facilidades);
@@ -402,7 +402,7 @@ void deletarAcomodacao (int codigo, int opcao) {
             
             rewind(acomodacaoTxt);
             while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
-                          &acomodacao.codigo, acomodacao.descricao, acomodacao.facilidades, &acomodacao.categoria) == 4) {
+                          &acomodacao.codigo, acomodacao.descricao, &acomodacao.facilidades, &acomodacao.categoria) == 4) {
                 if (acomodacao.codigo == codigo) {
                     printf("Deleção concluída!");
                     dadoAchado = 1;
