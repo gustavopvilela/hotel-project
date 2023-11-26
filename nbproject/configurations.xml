@@ -5,10 +5,13 @@
                    displayName="Arquivos de Cabeçalho"
                    projectFiles="true">
       <itemPath>gestao_dados/acomodacao/acomodacao.h</itemPath>
+      <itemPath>transacoes/controle_caixa/caixa/caixa.h</itemPath>
       <itemPath>gestao_dados/categoria_acomodacao/categoria_acomodacao.h</itemPath>
       <itemPath>transacoes/checkin/checkin.h</itemPath>
       <itemPath>transacoes/checkin/checkout.h</itemPath>
       <itemPath>transacoes/checkout/checkout.h</itemPath>
+      <itemPath>transacoes/controle_caixa/contas_pagar/contas_pagar.h</itemPath>
+      <itemPath>transacoes/controle_caixa/contas_receber/contas_receber.h</itemPath>
       <itemPath>gestao_dados/controle_arquivos/controle_arquivos.h</itemPath>
       <itemPath>gestao_dados/fornecedor/fornecedor.h</itemPath>
       <itemPath>gestao_dados/hospede/hospede.h</itemPath>
@@ -22,9 +25,12 @@
                    displayName="Arquivos de Código-Fonte"
                    projectFiles="true">
       <itemPath>gestao_dados/acomodacao/acomodacao.c</itemPath>
+      <itemPath>transacoes/controle_caixa/caixa/caixa.c</itemPath>
       <itemPath>gestao_dados/categoria_acomodacao/categoria_acomodacao.c</itemPath>
       <itemPath>transacoes/checkin/checkin.c</itemPath>
       <itemPath>transacoes/checkout/checkout.c</itemPath>
+      <itemPath>transacoes/controle_caixa/contas_pagar/contas_pagar.c</itemPath>
+      <itemPath>transacoes/controle_caixa/contas_receber/contas_receber.c</itemPath>
       <itemPath>gestao_dados/controle_arquivos/controle_arquivos.c</itemPath>
       <itemPath>gestao_dados/fornecedor/fornecedor.c</itemPath>
       <itemPath>gestao_dados/hospede/hospede.c</itemPath>
@@ -133,6 +139,36 @@
       </item>
       <item path="transacoes/checkout/checkout.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="transacoes/controle_caixa/caixa/caixa.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/caixa/caixa.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/contas_pagar/contas_pagar.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/contas_pagar/contas_pagar.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/contas_receber/contas_receber.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/contas_receber/contas_receber.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="transacoes/venda/vendas.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="transacoes/vendas/vendas.h" ex="false" tool="3" flavor2="0">
@@ -229,6 +265,36 @@
       <item path="transacoes/checkout/checkout.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="transacoes/checkout/checkout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/caixa/caixa.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/caixa/caixa.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/contas_pagar/contas_pagar.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/contas_pagar/contas_pagar.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/contas_receber/contas_receber.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="transacoes/controle_caixa/contas_receber/contas_receber.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="transacoes/venda/vendas.c" ex="false" tool="0" flavor2="0">
       </item>

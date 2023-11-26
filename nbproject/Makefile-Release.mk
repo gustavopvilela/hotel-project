@@ -47,6 +47,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/reserva/reserva.o \
 	${OBJECTDIR}/transacoes/checkin/checkin.o \
 	${OBJECTDIR}/transacoes/checkout/checkout.o \
+	${OBJECTDIR}/transacoes/controle_caixa/caixa/caixa.o \
+	${OBJECTDIR}/transacoes/controle_caixa/contas_pagar/contas_pagar.o \
+	${OBJECTDIR}/transacoes/controle_caixa/contas_receber/contas_receber.o \
 	${OBJECTDIR}/transacoes/venda/vendas.o
 
 
@@ -133,6 +136,21 @@ ${OBJECTDIR}/transacoes/checkout/checkout.o: transacoes/checkout/checkout.c
 	${MKDIR} -p ${OBJECTDIR}/transacoes/checkout
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/transacoes/checkout/checkout.o transacoes/checkout/checkout.c
+
+${OBJECTDIR}/transacoes/controle_caixa/caixa/caixa.o: transacoes/controle_caixa/caixa/caixa.c
+	${MKDIR} -p ${OBJECTDIR}/transacoes/controle_caixa/caixa
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/transacoes/controle_caixa/caixa/caixa.o transacoes/controle_caixa/caixa/caixa.c
+
+${OBJECTDIR}/transacoes/controle_caixa/contas_pagar/contas_pagar.o: transacoes/controle_caixa/contas_pagar/contas_pagar.c
+	${MKDIR} -p ${OBJECTDIR}/transacoes/controle_caixa/contas_pagar
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/transacoes/controle_caixa/contas_pagar/contas_pagar.o transacoes/controle_caixa/contas_pagar/contas_pagar.c
+
+${OBJECTDIR}/transacoes/controle_caixa/contas_receber/contas_receber.o: transacoes/controle_caixa/contas_receber/contas_receber.c
+	${MKDIR} -p ${OBJECTDIR}/transacoes/controle_caixa/contas_receber
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/transacoes/controle_caixa/contas_receber/contas_receber.o transacoes/controle_caixa/contas_receber/contas_receber.c
 
 ${OBJECTDIR}/transacoes/venda/vendas.o: transacoes/venda/vendas.c
 	${MKDIR} -p ${OBJECTDIR}/transacoes/venda
