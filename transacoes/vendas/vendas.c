@@ -4,10 +4,63 @@
 
 #include "vendas.h"
 #include "../checkout/checkout.h"
+#include "../controle_caixa/caixa/caixa.h"
 #include "../../gestao_dados/produto/produto.h"
 
-void inserirVendaAVista (int codigoHospede, Produto *produtos) {
+void inserirVendaAVista (int *produtos, int qtdeProdutos, int opcao) {
+    /* A venda à vista não precisa do código do hóspede, uma vez que o
+     * dinheiro vai direto para o caixa do hotel. */
     
+    float total = 0;
+    Caixa caixa;
+    Produto produtoAtual;
+    
+    switch (opcao) {
+        case 1:
+            /* Primeiro, calculamos o total da venda feita para o hóspede. */
+            for (int i = 0; i < qtdeProdutos; i++) {
+                produtoAtual = retornarProduto(produtos[i], opcao);
+                total += produtoAtual.precoVenda;
+
+                /* Aqui, a quantidade em estoque do produto é decrementada. */
+                produtoAtual.estoque--;
+            }
+
+            /* Pegando o montante atual do caixa.
+            FILE* caixaBin;
+            caixaBin = fopen(CAIXA_BIN, "rb");
+            if (caixaBin == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            rewind(caixaBin);
+            fread(&caixa, sizeof(Caixa), 1, caixaBin);
+
+            fclose(caixaBin); */
+            
+            /* Pegando o montante atual do caixa. */
+            caixa.montante = retornarMontanteCaixa();
+
+            /* Agora, escrevendo o novo montante no arquivo. */
+            caixa.montante += total;
+
+            FILE* caixaBin;
+            caixaBin = fopen(CAIXA_BIN, "wb");
+            if (caixaBin == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            fwrite(&caixa, sizeof(Caixa), 1, caixaBin);
+            
+            /* Agora, colocando o lançamento do caixa no arquivo de lançamentos. */
+            inserirLancamento(total, "Venda de produto", opcao);
+
+            fclose(caixaBin);
+        break;
+        case 2: break;
+    }
 }
 
 void inserirVendaAnotar (int codigoHospede, int *produtos, int qtdeProdutos, int opcao) {
@@ -35,8 +88,10 @@ void inserirVendaAnotar (int codigoHospede, int *produtos, int qtdeProdutos, int
             /* Primeiro, calculamos o total da venda feita para o hóspede. */
             for (int i = 0; i < qtdeProdutos; i++) {
                 produtoAtual = retornarProduto(produtos[i], opcao);
-                
                 total += produtoAtual.precoVenda;
+                
+                /* Aqui, a quantidade em estoque do produto é decrementada. */
+                produtoAtual.estoque--;
             }
             
             /* Agora, adicionamos à conta do hóspede. Fazemos isso */

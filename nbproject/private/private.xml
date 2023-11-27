@@ -7,19 +7,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/vendas/vendas.c</file>
-            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/gestao_dados/operador/operador.c</file>
-            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/gestao_dados/hospede/hospede.c</file>
-            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/vendas/vendas.h</file>
-            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/controle_caixa/caixa/caixa.h</file>
             <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/controle_caixa/caixa/caixa.c</file>
+            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/checkout/checkout.c</file>
+            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/vendas/vendas.c</file>
             <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/controle_caixa/contas_receber/contas_receber.c</file>
-            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/checkin/checkin.c</file>
-            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/gestao_dados/produto/produto.c</file>
-            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/controle_caixa/contas_pagar/contas_pagar.h</file>
+            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/gestao_dados/hospede/hospede.c</file>
             <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/controle_caixa/contas_receber/contas_receber.h</file>
-            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/checkout/checkout.h</file>
-            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/controle_caixa/contas_pagar/contas_pagar.c</file>
+            <file>file:/C:/Users/gusta/Documents/NetBeansProjects/hotel-project/transacoes/controle_caixa/caixa/caixa.h</file>
         </group>
     </open-files>
 </project-private>
