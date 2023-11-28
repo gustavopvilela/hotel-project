@@ -1,0 +1,12 @@
+NF: aaa
+RS: aaaaaa
+IE: w123
+CNPJ: 21212
+Endereço: wdfdf
+Telefone: 21212
+E-mail: sdq
+Responsável: ss
+Tel.Responsável: 123
+Check-in: 12:00
+Check-out: 10:00
+Lucro: 10000

@@ -7,9 +7,13 @@
       <itemPath>gestao_dados/acomodacao/acomodacao.h</itemPath>
       <itemPath>gestao_dados/categoria_acomodacao/categoria_acomodacao.h</itemPath>
       <itemPath>gestao_dados/controle_arquivos/controle_arquivos.h</itemPath>
+      <itemPath>exportacao/exportacao.h</itemPath>
       <itemPath>gestao_dados/fornecedor/fornecedor.h</itemPath>
       <itemPath>gestao_dados/hospede/hospede.h</itemPath>
       <itemPath>gestao_dados/hotel/hotel.h</itemPath>
+      <itemPath>relatorio/acomodacoes/listagemAcomodacao.h</itemPath>
+      <itemPath>relatorio/hospedes/listagemHospede.h</itemPath>
+      <itemPath>relatorio/reservas/listagemReserva.h</itemPath>
       <itemPath>gestao_dados/operador/operador.h</itemPath>
       <itemPath>gestao_dados/produto/produto.h</itemPath>
       <itemPath>reserva/reserva.h</itemPath>
@@ -20,9 +24,13 @@
       <itemPath>gestao_dados/acomodacao/acomodacao.c</itemPath>
       <itemPath>gestao_dados/categoria_acomodacao/categoria_acomodacao.c</itemPath>
       <itemPath>gestao_dados/controle_arquivos/controle_arquivos.c</itemPath>
+      <itemPath>exportacao/exportacao.c</itemPath>
       <itemPath>gestao_dados/fornecedor/fornecedor.c</itemPath>
       <itemPath>gestao_dados/hospede/hospede.c</itemPath>
       <itemPath>gestao_dados/hotel/hotel.c</itemPath>
+      <itemPath>relatorio/acomodacoes/listagemAcomodacao.c</itemPath>
+      <itemPath>relatorio/hospedes/listagemHospede.c</itemPath>
+      <itemPath>relatorio/reservas/listagemReserva.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>gestao_dados/operador/operador.c</itemPath>
       <itemPath>gestao_dados/produto/produto.c</itemPath>
@@ -54,6 +62,10 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="exportacao/exportacao.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="exportacao/exportacao.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="gestao_dados/acomodacao/acomodacao.c"
             ex="false"
             tool="0"
@@ -111,6 +123,36 @@
       <item path="gestao_dados/produto/produto.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="relatorio/acomodacoes/listagemAcomodacao.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="relatorio/acomodacoes/listagemAcomodacao.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="relatorio/hospedes/listagemHospede.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="relatorio/hospedes/listagemHospede.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="relatorio/reservas/listagemReserva.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="relatorio/reservas/listagemReserva.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="reserva/reserva.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -137,6 +179,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="exportacao/exportacao.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="exportacao/exportacao.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="gestao_dados/acomodacao/acomodacao.c"
             ex="false"
             tool="0"
@@ -194,6 +240,36 @@
       <item path="gestao_dados/produto/produto.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="relatorio/acomodacoes/listagemAcomodacao.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="relatorio/acomodacoes/listagemAcomodacao.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="relatorio/hospedes/listagemHospede.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="relatorio/hospedes/listagemHospede.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="relatorio/reservas/listagemReserva.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="relatorio/reservas/listagemReserva.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="reserva/reserva.c" ex="false" tool="0" flavor2="0">
       </item>

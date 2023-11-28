@@ -1,11 +1,8 @@
-<<<<<<< HEAD
-codigo: 1
-descricao: 123
-facilidades: 1
-categoria: 1
-=======
 Código: 1
-Descrição: Acom
+Descrição: abc
 Facilidades: 1
 Categoria: 1
->>>>>>> 523844a155089ea144e5c1aa0af87c767a715530
+Código: 2
+Descrição: quarto
+Facilidades: 2
+Categoria: 1

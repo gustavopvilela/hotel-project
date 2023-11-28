@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/exportacao/exportacao.o \
 	${OBJECTDIR}/gestao_dados/acomodacao/acomodacao.o \
 	${OBJECTDIR}/gestao_dados/categoria_acomodacao/categoria_acomodacao.o \
 	${OBJECTDIR}/gestao_dados/controle_arquivos/controle_arquivos.o \
@@ -44,6 +45,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/gestao_dados/operador/operador.o \
 	${OBJECTDIR}/gestao_dados/produto/produto.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/relatorio/acomodacoes/listagemAcomodacao.o \
+	${OBJECTDIR}/relatorio/hospedes/listagemHospede.o \
+	${OBJECTDIR}/relatorio/reservas/listagemReserva.o \
 	${OBJECTDIR}/reserva/reserva.o
 
 
@@ -70,6 +74,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hotel-project.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hotel-project ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/exportacao/exportacao.o: exportacao/exportacao.c
+	${MKDIR} -p ${OBJECTDIR}/exportacao
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/exportacao/exportacao.o exportacao/exportacao.c
 
 ${OBJECTDIR}/gestao_dados/acomodacao/acomodacao.o: gestao_dados/acomodacao/acomodacao.c
 	${MKDIR} -p ${OBJECTDIR}/gestao_dados/acomodacao
@@ -115,6 +124,21 @@ ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+
+${OBJECTDIR}/relatorio/acomodacoes/listagemAcomodacao.o: relatorio/acomodacoes/listagemAcomodacao.c
+	${MKDIR} -p ${OBJECTDIR}/relatorio/acomodacoes
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/relatorio/acomodacoes/listagemAcomodacao.o relatorio/acomodacoes/listagemAcomodacao.c
+
+${OBJECTDIR}/relatorio/hospedes/listagemHospede.o: relatorio/hospedes/listagemHospede.c
+	${MKDIR} -p ${OBJECTDIR}/relatorio/hospedes
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/relatorio/hospedes/listagemHospede.o relatorio/hospedes/listagemHospede.c
+
+${OBJECTDIR}/relatorio/reservas/listagemReserva.o: relatorio/reservas/listagemReserva.c
+	${MKDIR} -p ${OBJECTDIR}/relatorio/reservas
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/relatorio/reservas/listagemReserva.o relatorio/reservas/listagemReserva.c
 
 ${OBJECTDIR}/reserva/reserva.o: reserva/reserva.c
 	${MKDIR} -p ${OBJECTDIR}/reserva

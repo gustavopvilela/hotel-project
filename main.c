@@ -14,6 +14,12 @@
 #include "gestao_dados/produto/produto.h"
 #include "reserva/reserva.h"
 
+#include "relatorio/hospedes/listagemHospede.h"
+#include "relatorio/acomodacoes/listagemAcomodacao.h"
+#include "relatorio/reservas/listagemReserva.h"
+
+#include "exportacao/exportacao.h"
+
 void pressioneParaContinuar () {
     printf("Pressione \"Enter\" para continuar...");
     getchar();
@@ -383,6 +389,13 @@ int main(int argc, char** argv) {
     /* Feito o login do operador, aqui ele poderá acessar os módulos da aplicação. */
     do {
         printf("\e[1;1H\e[2J");
+        
+        //TESTEEEEEEEE
+        exportaDados(formaArmazenamento, 1, 1, 0, 0, 0, 0, 0);
+        //listagemHospedesCodigos(1, 2, formaArmazenamento, 2);
+        //listagemAcomodacoesCodigos(1, 3, formaArmazenamento, 2);
+        //listagemAcomodacoesCategoria(1, formaArmazenamento, 2);
+        
         printf("=== MENU DE MÓDULOS ===\n");
         printf("1 - Módulo de cadastro e gestão de dados\n");
         printf("2 - Módulo de reservas\n");

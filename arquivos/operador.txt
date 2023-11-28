@@ -1,22 +1,5 @@
 Codigo: 1
-<<<<<<< HEAD
 Nome: patrick
 Usuario: trick
 Senha: 123
 Permissoes: 10000
-Codigo: 2
-Nome: patrick
-Usuario: trick
-Senha: 123
-Permissoes: 10000
-=======
-Nome: Gustavo
-Usuario: gus
-Senha: 123
-Permissoes: 90000
-Codigo: 2
-Nome: gustavo
-Usuario: gustavo
-Senha: 123
-Permissoes: 90000
->>>>>>> 523844a155089ea144e5c1aa0af87c767a715530
