@@ -144,6 +144,8 @@ void lerFornecedor (int codigo, int opcao) {
     }
 }
 
+
+
 void lerFornecedorCNPJ (char* cnpj, int opcao) {
     Fornecedor fornecedor;
     int encontrado = 0;
@@ -211,6 +213,56 @@ void lerFornecedorCNPJ (char* cnpj, int opcao) {
             }
             if (!encontrado) {
                 printf("Fornecedor com CNPJ %s não encontrado.\n", cnpj);
+            }
+            
+            fclose(fornecedorTxt);
+        break;
+    }
+}
+
+Fornecedor retornarFornecedor (int codigo, int opcao) {
+    Fornecedor fornecedor;
+    
+    switch (opcao) {
+        case 1:
+            FILE *fornecedorBin;
+            fornecedorBin = fopen(FORNECEDOR_BIN, "rb");
+
+            /* Verificação da abertura. */
+            if (fornecedorBin == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(fornecedorBin);
+
+            while (fread(&fornecedor, sizeof (Fornecedor), 1, fornecedorBin) == 1) {
+                if (fornecedor.codigo == codigo) {
+                    return fornecedor;
+                }
+            }
+            
+            fclose(fornecedorBin);
+        break;
+            
+        case 2:
+            FILE *fornecedorTxt;
+            fornecedorTxt = fopen(FORNECEDOR_TXT, "r");
+
+            /* Verificação da abertura. */
+            if (fornecedorTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(fornecedorTxt);
+            while (fscanf(fornecedorTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",
+                          &fornecedor.codigo, fornecedor.nomeFantasia, fornecedor.razaoSocial,
+                          fornecedor.inscricaoEstadual, fornecedor.cnpj, fornecedor.endereco,
+                          fornecedor.telefone, fornecedor.email) == 8) {
+                if (fornecedor.codigo == codigo) {
+                    return fornecedor;
+                }
             }
             
             fclose(fornecedorTxt);

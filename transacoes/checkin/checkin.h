@@ -14,6 +14,9 @@ typedef struct {
     int codigoReserva;
 } Checkin;
 
+void efetuarCheckIn (int codigoHospede, int codigoReserva, int opcao);
+int checkInExiste (int codigoHospede, int codigoReserva, int opcao);
+
 
 #ifdef __cplusplus
 }

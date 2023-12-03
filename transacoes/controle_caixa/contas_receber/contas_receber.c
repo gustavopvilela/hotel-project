@@ -32,7 +32,7 @@ void baixarRecebimento (int opcao) {
             }
             
             /* Pegando o montante atual do caixa. */
-            caixa.montante = retornarMontanteCaixa();
+            caixa.montante = retornarMontanteCaixa(opcao);
             
             while (fread(&contasReceber, sizeof(ContasReceber), 1, contasReceberBin) == 1) {
                 if (contasReceber.diaRecebimento == diaAtual &&
@@ -68,6 +68,62 @@ void baixarRecebimento (int opcao) {
             remove(CONTAS_RECEBER_BIN);
             rename(CONTAS_RECEBER_TMP_BIN, CONTAS_RECEBER_BIN);
         break;
-        case 2: break;
+        case 2:
+            FILE *contasReceberTxt;
+            contasReceberTxt = fopen(CONTAS_RECEBER_TXT, "r");
+            if (contasReceberTxt == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            FILE *contasReceberTxt_tmp;
+            contasReceberTxt_tmp = fopen(CONTAS_RECEBER_TMP_TXT, "w");
+            if (contasReceberTxt_tmp == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            /* Pegando o montante atual do caixa. */
+            caixa.montante = retornarMontanteCaixa(opcao);
+
+            while (fscanf(contasReceberTxt, "*s %f\n%*s [^\n]\n%*s %d\n%*s %d\n",
+                          &contasReceber.montante, contasReceber.descricao,
+                          &contasReceber.diaRecebimento, &contasReceber.mesRecebimento,
+                          &contasReceber.anoRecebimento) == 5) {
+                if (contasReceber.diaRecebimento == diaAtual &&
+                    contasReceber.mesRecebimento == mesAtual &&
+                    contasReceber.anoRecebimento == anoAtual) {
+                    totalReceber += contasReceber.montante;
+                } else {
+                    fprintf(contasReceberTxt_tmp, "Montante: %f\nDescrição: %s\nDiaPagamento: %d\nMesPagamento: %d\nAnoPagamento: %d\n",
+                            contasReceber.montante, contasReceber.descricao,
+                            contasReceber.diaRecebimento, contasReceber.mesRecebimento,
+                            contasReceber.anoRecebimento);
+                }
+            }
+
+            /* Calculando o novo montante do caixa e colocando no arquivo. */
+            caixa.montante += totalReceber;
+
+            FILE *caixaTxt;
+            caixaTxt = fopen(CAIXA_TXT, "w");
+            if (caixaTxt == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            fprintf(caixaTxt, "Montante: %f\n", caixa.montante);
+
+            /* Inserindo o lançamento no sistema. */
+            inserirLancamento(totalReceber, "Baixa de recebimento", opcao);
+
+            /* Fechando todos os arquivos. */
+            fclose(caixaTxt);
+            fclose(contasReceberTxt);
+            fclose(contasReceberTxt_tmp);
+
+            remove(CONTAS_RECEBER_TXT);
+            rename(CONTAS_RECEBER_TMP_TXT, CONTAS_RECEBER_TXT);
+        break;
     }
 }

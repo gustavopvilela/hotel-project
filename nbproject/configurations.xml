@@ -13,6 +13,7 @@
       <itemPath>transacoes/controle_caixa/contas_pagar/contas_pagar.h</itemPath>
       <itemPath>transacoes/controle_caixa/contas_receber/contas_receber.h</itemPath>
       <itemPath>gestao_dados/controle_arquivos/controle_arquivos.h</itemPath>
+      <itemPath>transacoes/entrada_produtos/entrada_produtos.h</itemPath>
       <itemPath>gestao_dados/fornecedor/fornecedor.h</itemPath>
       <itemPath>gestao_dados/hospede/hospede.h</itemPath>
       <itemPath>gestao_dados/hotel/hotel.h</itemPath>
@@ -32,6 +33,7 @@
       <itemPath>transacoes/controle_caixa/contas_pagar/contas_pagar.c</itemPath>
       <itemPath>transacoes/controle_caixa/contas_receber/contas_receber.c</itemPath>
       <itemPath>gestao_dados/controle_arquivos/controle_arquivos.c</itemPath>
+      <itemPath>transacoes/entrada_produtos/entrada_produtos.c</itemPath>
       <itemPath>gestao_dados/fornecedor/fornecedor.c</itemPath>
       <itemPath>gestao_dados/hospede/hospede.c</itemPath>
       <itemPath>gestao_dados/hotel/hotel.c</itemPath>
@@ -169,6 +171,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="transacoes/entrada_produtos/entrada_produtos.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="transacoes/entrada_produtos/entrada_produtos.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="transacoes/venda/vendas.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="transacoes/vendas/vendas.h" ex="false" tool="3" flavor2="0">
@@ -292,6 +304,16 @@
             flavor2="0">
       </item>
       <item path="transacoes/controle_caixa/contas_receber/contas_receber.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="transacoes/entrada_produtos/entrada_produtos.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="transacoes/entrada_produtos/entrada_produtos.h"
             ex="false"
             tool="3"
             flavor2="0">

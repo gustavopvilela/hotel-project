@@ -37,7 +37,11 @@ typedef struct {
     int anoRetirada;
 } Retirada;
 
-float retornarMontanteCaixa ();
+char* retornarHoraAtual();
+int retornarDiaAtual();
+int retornarMesAtual();
+int retornarAnoAtual();
+float retornarMontanteCaixa (int opcao);
 void inserirLancamento (float total, char* descricao, int opcao);
 
 #ifdef __cplusplus

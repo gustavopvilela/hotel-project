@@ -19,6 +19,7 @@ typedef struct {
     int anoRecebimento;
 } ContasReceber;
 
+void baixarRecebimento (int opcao);
 
 #ifdef __cplusplus
 }

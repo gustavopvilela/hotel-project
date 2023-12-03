@@ -18,6 +18,13 @@ typedef struct {
     float totalConsumo; /* Referente ao consumo do hóspede dentro do hotel. */
 } ContaHospede;
 
+void criarContaHospede (ContaHospede conta, int opcao);
+void efetuarCheckOutDinheiro (ContaHospede conta, int opcao);
+void efetuarCheckOutCartao (ContaHospede conta, int opcao, int diaVencCartao, int mesVencCartao, int anoVencCartao);
+void deletarConta (int codigoHospede, int opcao);
+ContaHospede retornarConta (int codigoHospede, int opcao);
+int contaHospedeExiste (int codigoHospede, int opcao);
+
 
 #ifdef __cplusplus
 }

@@ -4,7 +4,7 @@
 #include "checkin.h"
 
 /* Em arquivo. */
-int efetuarCheckIn (int codigoHospede, int codigoReserva, int opcao) {
+void efetuarCheckIn (int codigoHospede, int codigoReserva, int opcao) {
      Reserva reserva;
      Checkin checkin;
     
@@ -34,10 +34,51 @@ int efetuarCheckIn (int codigoHospede, int codigoReserva, int opcao) {
                     checkin.codigoReserva = codigoReserva;
                     
                     fwrite(&checkin, sizeof(Checkin), 1, checkInBin);
+                    
+                    printf("Check-in efeutado!");
                 }
             }
+            
+            
+            
+            fclose(reservaBin);
+            fclose(checkInBin);
         break;
-        case 2: break;
+        case 2:
+            FILE *reservaTxt;
+            reservaTxt = fopen(RESERVA_TXT, "r");
+            if (reservaTxt == NULL) {
+                printf("Erro na abertura do arquivo de reserva.\n");
+                exit(1);
+            }
+
+            FILE *checkInTxt;
+            checkInTxt = fopen(CHECKIN_TXT, "a");
+            if (checkInTxt == NULL) {
+                printf("Erro na abertura do arquivo de check-in.\n");
+                fclose(reservaTxt);
+                exit(1);
+            }
+
+            // Primeiro, deve-se conferir se o hóspede fez a reserva
+            while (fscanf(reservaTxt, "%*s %*s %d\n%*s %*s%d\n%*s %*s %d\n%*s %*s %d\n%*s %*s %d\n%*s %*s %d\n%*s %*s %d\n%*s %*s %d\n%*s %*s %d\n",
+                          &reserva.codigo, &reserva.codigoAcomodacao, &reserva.codigoHospede,
+                          &reserva.diaEntrada, &reserva.mesEntrada, &reserva.anoEntrada,
+                          &reserva.diaSaida, &reserva.mesSaida, &reserva.anoSaida) == 9) {
+
+                if (codigoHospede == reserva.codigoHospede && codigoReserva == reserva.codigo) {
+                    checkin.codigoHospede = codigoHospede;
+                    checkin.codigoReserva = codigoReserva;
+
+                    fprintf(checkInTxt, "Hóspede: %d\nReserva: %d\n", checkin.codigoHospede, checkin.codigoReserva);
+                    
+                    printf("Check-in efeutado!");
+                }
+            }
+
+            fclose(reservaTxt);
+            fclose(checkInTxt);
+        break;
     }
 }
 
@@ -55,7 +96,7 @@ int checkInExiste (int codigoHospede, int codigoReserva, int opcao) {
             }
             
             rewind(checkInBin);
-            while (fread(&checkin, sizeof(Hospede), 1, checkInBin) == 1) {
+            while (fread(&checkin, sizeof(Checkin), 1, checkInBin) == 1) {
                 if (checkin.codigoHospede == codigoHospede && checkin.codigoReserva == codigoReserva) {
                     encontrado = 1;
                 }
@@ -63,6 +104,24 @@ int checkInExiste (int codigoHospede, int codigoReserva, int opcao) {
             
             return encontrado;
         break;
-        case 2: break;
+        case 2:
+            FILE *checkInTxt;
+            checkInTxt = fopen(CHECKIN_TXT, "r");
+            if (checkInTxt == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            while (fscanf(checkInTxt, "%*s %d\n%*s %d", &checkin.codigoHospede, &checkin.codigoReserva) == 2) {
+                if (checkin.codigoHospede == codigoHospede && checkin.codigoReserva == codigoReserva) {
+                    encontrado = 1;
+                    break;  // Pode interromper a busca assim que encontrar a correspondência.
+                }
+            }
+
+            fclose(checkInTxt);
+
+            return encontrado;
+        break;
     }
 }

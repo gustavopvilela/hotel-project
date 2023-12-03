@@ -31,7 +31,21 @@ void criarContaHospede (ContaHospede conta, int opcao) {
             
             fclose(arqContaBin);
         break;
-        case 2: break;
+        case 2:
+            FILE* arqContaTxt;
+            arqContaTxt = fopen(CONTA_HOSPEDE_TXT, "a");
+
+            if (arqContaTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            if (!feof(arqContaTxt)) {
+                fprintf(arqContaTxt, "CódigoConta: %d\nCódigoHospede: %d\nTotalDiárias: %.2f\nTotalConsumo: %.2f\n", conta.codigoConta, conta.codigoHospede, conta.totalDiarias, conta.totalConsumo);
+            }
+
+            fclose(arqContaTxt);
+        break;
     }
 }
 
@@ -46,19 +60,6 @@ void efetuarCheckOutDinheiro (ContaHospede conta, int opcao) {
         case 1:
             total += conta.totalDiarias; /* Adicionando as diárias, caso haja. */
             total += conta.totalConsumo; /* Adicionando o total de consumo. */
-            
-            /* Pegando o montante atual. 
-            FILE* caixaBin;
-            caixaBin = fopen(CAIXA_BIN, "rb");
-            if (caixaBin == NULL) {
-                printf("Erro na abertura do arquivo.");
-                exit(1);
-            }
-            
-            rewind(caixaBin);
-            fread(&caixa, sizeof(Caixa), 1, caixaBin);
-            
-            fclose(caixaBin); */
             
             /* Pegando o montante atual do caixa. */
             caixa.montante = retornarMontanteCaixa();
@@ -86,7 +87,36 @@ void efetuarCheckOutDinheiro (ContaHospede conta, int opcao) {
             
             printf("Check-out efetuado com sucesso!");
         break;
-        case 2: break;
+        case 2:
+            total += conta.totalDiarias; /* Adicionando as diárias, caso haja. */
+            total += conta.totalConsumo; /* Adicionando o total de consumo. */
+
+            /* Pegando o montante atual do caixa. */
+            caixa.montante = retornarMontanteCaixa(opcao);
+
+            /* Agora, escrevendo o novo montante no arquivo. */
+            caixa.montante += total;
+
+            FILE *caixaTxt;
+            caixaTxt = fopen(CAIXA_TXT, "a");
+            if (caixaTxt == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            fprintf(caixaTxt, "Montante: %.2f\n", caixa.montante);
+
+            fclose(caixaTxt);
+
+            /* Agora, colocando o lançamento do caixa no arquivo de lançamentos. */
+            inserirLancamento(total, "Check-out", opcao);
+
+            /* Como o check-out foi efetuado, pode-se excluir o
+             * registro da conta do hóspede do arquivo de contas. */
+            deletarConta(conta.codigoHospede, opcao);
+
+            printf("Check-out efetuado com sucesso!");
+        break;
     }
 }
 
@@ -101,7 +131,7 @@ void efetuarCheckOutCartao (ContaHospede conta, int opcao, int diaVencCartao, in
             
             /* Colocando a conta a receber no seu arquivo. */
             FILE* contasReceberBin;
-            contasReceberBin = fopen(LANCAMENTOS_BIN, "ab");
+            contasReceberBin = fopen(CONTAS_RECEBER_BIN, "ab");
             if (contasReceberBin == NULL) {
                 printf("Erro na abertura do arquivo.");
                 exit(1);
@@ -129,7 +159,34 @@ void efetuarCheckOutCartao (ContaHospede conta, int opcao, int diaVencCartao, in
             
             printf("Check-out efetuado com sucesso!");
         break;
-        case 2: break;
+        case 2:
+            total += conta.totalDiarias; /* Adicionando as diárias, caso haja. */
+            total += conta.totalConsumo; /* Adicionando o total de consumo. */
+
+            /* Colocando a conta a receber no seu arquivo. */
+            FILE *contasReceberTxt;
+            contasReceberTxt = fopen(CONTAS_RECEBER_TXT, "a");
+            if (contasReceberTxt == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            contasReceber.montante = total;
+            strcpy(contasReceber.descricao, "Check-out");
+            contasReceber.diaRecebimento = diaVencCartao;
+            contasReceber.mesRecebimento = mesVencCartao;
+            contasReceber.anoRecebimento = anoVencCartao;
+
+            fprintf(contasReceberTxt, "Montante: %.2f\nDescrição: %s\nDiaRecebimento: %d\nMesRecebimento: %d\nAnoRecebimento: %d\n", contasReceber.montante, contasReceber.descricao,
+                    contasReceber.diaRecebimento, contasReceber.mesRecebimento, contasReceber.anoRecebimento);
+
+            fclose(contasReceberTxt);
+
+            /* Como o check-out foi efetuado, pode-se excluir o registro da conta do hóspede do arquivo de contas. */
+            deletarConta(conta.codigoHospede, opcao);
+
+            printf("Check-out efetuado com sucesso!");
+        break;
     }
 }
 
@@ -164,6 +221,10 @@ void deletarConta (int codigoHospede, int opcao) {
                     fwrite(&conta, sizeof(ContaHospede), 1, arqContaBin_tmp);
                 }
             }
+            
+            if (dadoAchado == 0) {
+                printf("Conta não encontrada!");
+            }
 
             fclose(arqContaBin);
             fclose(arqContaBin_tmp);
@@ -173,7 +234,40 @@ void deletarConta (int codigoHospede, int opcao) {
         break;
         
         case 2:
-            break;
+            FILE* arqContaTxt;
+            arqContaTxt = fopen(CONTA_HOSPEDE_TXT, "r");
+            if (arqContaTxt == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            FILE* arqContaTxt_tmp;
+            arqContaTxt_tmp = fopen(CONTA_HOSPEDE_TMP_TXT, "w");
+
+            /* Verificação da abertura. */
+            if (arqContaTxt_tmp == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            while (fscanf(arqContaTxt, "%*s %d\n%*s %d\n%*s %f\n%*s %f", &conta.codigoConta, &conta.codigoHospede, &conta.totalDiarias, &conta.totalConsumo) == 4) {
+                if (conta.codigoHospede == codigoHospede) {
+                    dadoAchado = 1;
+                } else {
+                    fprintf(arqContaTxt, "CódigoConta: %d\nCódigoHospede: %d\nTotalDiárias: %.2f\nTotalConsumo: %.2f\n", conta.codigoConta, conta.codigoHospede, conta.totalDiarias, conta.totalConsumo);
+                }
+            }
+            
+            if (dadoAchado == 0) {
+                printf("Conta não encontrada!");
+            }
+
+            fclose(arqContaTxt);
+            fclose(arqContaTxt_tmp);
+
+            remove(CONTA_HOSPEDE_TXT);
+            rename(CONTA_HOSPEDE_TMP_TXT, CONTA_HOSPEDE_TXT);
+        break;
     }
 }
 
@@ -197,6 +291,71 @@ ContaHospede retornarConta (int codigoHospede, int opcao) {
             
             fclose(arqContaBin);
         break;
-        case 2: break;
+        case 2:
+            FILE* arqContaTxt;
+            arqContaTxt = fopen(CONTA_HOSPEDE_TXT, "r");
+
+            if (arqContaTxt == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            while (fscanf(arqContaTxt, "%*s %d\n%*s %d\n%*s %f\n%*s %f", &conta.codigoConta, &conta.codigoHospede, &conta.totalDiarias, &conta.totalConsumo) == 4) {
+                if (conta.codigoHospede == codigoHospede) {
+                    fclose(arqContaTxt);
+                    return conta;
+                }
+            }
+
+            fclose(arqContaTxt);
+        break;
+    }
+}
+
+int contaHospedeExiste (int codigoHospede, int opcao) {
+    ContaHospede conta;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE* arqContaBin;
+            arqContaBin = fopen(CONTA_HOSPEDE_BIN, "rb");
+    
+            if (arqContaBin == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            while (fread(&conta, sizeof(ContaHospede), 1, arqContaBin) == 1) {
+                if (conta.codigoHospede == codigoHospede) {
+                    fclose(arqContaBin);
+                    encontrado = 1; // A conta existe
+                    break;
+                }
+            }
+
+            fclose(arqContaBin);
+            
+            return encontrado;
+        break;
+        case 2:
+            FILE* arqContaTxt = fopen(CONTA_HOSPEDE_TXT, "r");
+    
+            if (arqContaTxt == NULL) {
+                printf("Erro na abertura do arquivo.");
+                exit(1);
+            }
+
+            while (fscanf(arqContaTxt, "%*s %d\n%*s %d\n%*s %f\n%*s %f", &conta.codigoConta, &conta.codigoHospede, &conta.totalDiarias, &conta.totalConsumo) == 4) {
+                if (conta.codigoHospede == codigoHospede) {
+                    fclose(arqContaTxt);
+                    encontrado = 1; // A conta existe
+                }
+            }
+
+            fclose(arqContaTxt);
+            
+            return encontrado; // A conta não existe
+        break;
     }
 }

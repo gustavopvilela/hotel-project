@@ -27,6 +27,7 @@ void lerFornecedor(int codigo, int opcao);
 void lerFornecedorCNPJ (char* cnpj, int opcao);
 int fornecedorExiste (int codigo, int opcao);
 int fornecedorExisteCNPJ (char* cnpj, int opcao);
+Fornecedor retornarFornecedor (int codigo, int opcao);
 void lerFornecedorMemoria(Fornecedor *listaFornecedores, int tamanho, int codigo);
 void lerFornecedorCNPJMemoria (Fornecedor *listaFornecedores, int tamanho, char* cnpj);
 int fornecedorExisteMemoria (Fornecedor *listaFornecedores, int tamanho, int codigo);

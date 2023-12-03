@@ -140,6 +140,55 @@ void lerProduto (int codigo, int opcao) {
     }
 }
 
+Produto retornarProduto (int codigo, int opcao) {
+    Produto produto;
+    
+    switch (opcao) {
+        case 1:
+            FILE *produtoBin;
+            produtoBin = fopen(PRODUTO_BIN, "rb");
+
+            /* Verificação da abertura. */
+            if (produtoBin == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(produtoBin);
+
+            while (fread(&produto, sizeof (Produto), 1, produtoBin) == 1) {
+                if (produto.codigo == codigo) {
+                    return produto;
+                }
+            }
+            
+            fclose(produtoBin);
+        break;
+            
+        case 2:
+            FILE *produtoTxt;
+            produtoTxt = fopen(PRODUTO_TXT, "r");
+
+            /* Verificação da abertura. */
+            if (produtoTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(produtoTxt);
+            while (fscanf(produtoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d\n%*s %f\n%*s %f",
+                          &produto.codigo, produto.descricao, &produto.estoque,
+                          &produto.estoqueMin, &produto.precoCusto, &produto.precoVenda) == 6) {
+                if (produto.codigo == codigo) {
+                    return produto;
+                }
+            }
+            
+            fclose(produtoTxt);
+        break;
+    }
+}
+
 int produtoExiste (int codigo, int opcao) {
     Produto produto;
     int encontrado = 0;

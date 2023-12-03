@@ -50,6 +50,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/transacoes/controle_caixa/caixa/caixa.o \
 	${OBJECTDIR}/transacoes/controle_caixa/contas_pagar/contas_pagar.o \
 	${OBJECTDIR}/transacoes/controle_caixa/contas_receber/contas_receber.o \
+	${OBJECTDIR}/transacoes/entrada_produtos/entrada_produtos.o \
 	${OBJECTDIR}/transacoes/venda/vendas.o
 
 
@@ -151,6 +152,11 @@ ${OBJECTDIR}/transacoes/controle_caixa/contas_receber/contas_receber.o: transaco
 	${MKDIR} -p ${OBJECTDIR}/transacoes/controle_caixa/contas_receber
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/transacoes/controle_caixa/contas_receber/contas_receber.o transacoes/controle_caixa/contas_receber/contas_receber.c
+
+${OBJECTDIR}/transacoes/entrada_produtos/entrada_produtos.o: transacoes/entrada_produtos/entrada_produtos.c
+	${MKDIR} -p ${OBJECTDIR}/transacoes/entrada_produtos
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/transacoes/entrada_produtos/entrada_produtos.o transacoes/entrada_produtos/entrada_produtos.c
 
 ${OBJECTDIR}/transacoes/venda/vendas.o: transacoes/venda/vendas.c
 	${MKDIR} -p ${OBJECTDIR}/transacoes/venda
