@@ -9,7 +9,10 @@ build/Debug/Cygwin-Windows/main.o: main.c \
  reserva/../gestao_dados/categoria_acomodacao/categoria_acomodacao.h \
  relatorio/hospedes/listagemHospede.h \
  relatorio/acomodacoes/listagemAcomodacao.h \
- relatorio/reservas/listagemReserva.h exportacao/exportacao.h
+ relatorio/reservas/listagemReserva.h \
+ relatorio/produtosConsumo/listagemProdutosConsumo.h \
+ exportacao/exportacao.h importacao/importacao.h \
+ relatorio/produtosEstoque/listagemProdutosEstoqueMin.h
 gestao_dados/acomodacao/acomodacao.h:
 gestao_dados/categoria_acomodacao/categoria_acomodacao.h:
 gestao_dados/controle_arquivos/controle_arquivos.h:
@@ -24,4 +27,7 @@ reserva/../gestao_dados/categoria_acomodacao/categoria_acomodacao.h:
 relatorio/hospedes/listagemHospede.h:
 relatorio/acomodacoes/listagemAcomodacao.h:
 relatorio/reservas/listagemReserva.h:
+relatorio/produtosConsumo/listagemProdutosConsumo.h:
 exportacao/exportacao.h:
+importacao/importacao.h:
+relatorio/produtosEstoque/listagemProdutosEstoqueMin.h:

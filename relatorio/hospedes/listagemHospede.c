@@ -78,12 +78,12 @@ void listagemHospedesCodigos(int codigo1, int codigo2, int formaArmazenamento, i
                 exit(1);
             }
             
-            rewind(hospedeTxt);
             
             //arquivo csv
             listHospedesCodigo = fopen(HOSPEDES_CODIGO_CSV, "w");
             
             for(int i = codigo1; i <= codigo2; i++){
+                rewind(hospedeTxt);
                 /* %*s significa que a string lida será ignorada. */
                 /* Iguala-se a 9 pois o fscanf deve fazer 9 "comparações" com sucesso para a leitura ser certa. */
                 while (fscanf(hospedeTxt, "%*s %d\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]",

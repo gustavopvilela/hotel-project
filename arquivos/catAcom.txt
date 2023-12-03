@@ -1,14 +1,6 @@
 Código: 1
-<<<<<<< HEAD
-Descrição: 123
+Descrição: abc
 Categoria: 1
-Diaria: 200.000000
-Adultos: 2
-Crianças: 2
-=======
-Descrição: Categoria
-Categoria: 1
-Diaria: 100.000000
-Adultos: 1
-Crianças: 0
->>>>>>> 523844a155089ea144e5c1aa0af87c767a715530
+VR: 200
+qtdAd: 2
+qtdCr:2

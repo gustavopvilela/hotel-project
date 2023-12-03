@@ -70,15 +70,14 @@ void listagemAcomodacoesCodigos(int codigo1, int codigo2, int formaArmazenamento
                 exit(1);
             }
 
-            rewind(acomodacaoTxt);
-
             // arquivo csv
             listAcomodacoesCodigo = fopen(ACOMODACOES_CODIGO_CSV, "w");
             for (int i = codigo1; i <= codigo2; i++) {
+                rewind(acomodacaoTxt);
                 /* %*s significa que a string lida será ignorada. */
                 /* Iguala-se a 4 pois o fscanf deve fazer 4 "comparações" com sucesso para a leitura ser certa. */
-                while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d\n",
-                              &acomodacao.codigo, acomodacao.descricao, &acomodacao.facilidades, &acomodacao.categoria) == 4) {
+                while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
+                          &acomodacao.codigo, acomodacao.descricao, &acomodacao.facilidades, &acomodacao.categoria) == 4) {
 
                     if (acomodacao.codigo == i) {
                         if (opcaoRelatorio == 1) {

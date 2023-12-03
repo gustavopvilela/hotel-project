@@ -1,0 +1,53 @@
+<dados>
+	<tabela=hotel>
+		<registro>
+			<NF>abc</NF>
+			<RS>cvf</RS>
+			<IE>1231</IE>
+			<CNPJ>1212</CNPJ>
+			<Endereco>dsa</Endereco>
+			<Telefone>231</Telefone>
+			<E-mail>@</E-mail>
+			<Responsavel>patrick</Responsavel>
+			<Tel.Responsavel>234</Tel.Responsavel>
+			<Check-in>12:00</Check-in>
+			<Check-out>15:00</Check-out>
+			<Lucro>-nan</Lucro>
+		</registro>
+	</tabela=hotel>
+	<tabela=hospede>
+		<registro>
+			<Codigo>1</Codigo>
+			<Nome>patrick</Nome>
+			<Endereco>abc</Endereco>
+			<CPF>14089499623</CPF>
+			<Telefone>44432</Telefone>
+			<Email>trick@rmail</Email>
+			<Sexo>masculino</Sexo>
+			<EC>solteiro</EC>
+			<Nascimento>05/01/2005</Nascimento>
+		</registro>
+		<registro>
+			<Codigo>2</Codigo>
+			<Nome>teylor</Nome>
+			<Endereco>united states</Endereco>
+			<CPF>14089499623</CPF>
+			<Telefone>3432</Telefone>
+			<Email>tayloer@brand</Email>
+			<Sexo>feminino</Sexo>
+			<EC>solteiro</EC>
+			<Nascimento>05/06/1989</Nascimento>
+		</registro>
+		<registro>
+			<Codigo>3</Codigo>
+			<Nome>any gabrielly</Nome>
+			<Endereco>los angeles</Endereco>
+			<CPF>14089499623</CPF>
+			<Telefone>453134</Telefone>
+			<Email>any@gabrielly</Email>
+			<Sexo>feminino</Sexo>
+			<EC>solteira</EC>
+			<Nascimento>10/10/2002Gb</Nascimento>
+		</registro>
+	</tabela=hospede>
+</dados>

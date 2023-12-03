@@ -44,9 +44,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/gestao_dados/hotel/hotel.o \
 	${OBJECTDIR}/gestao_dados/operador/operador.o \
 	${OBJECTDIR}/gestao_dados/produto/produto.o \
+	${OBJECTDIR}/importacao/importacao.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/relatorio/acomodacoes/listagemAcomodacao.o \
 	${OBJECTDIR}/relatorio/hospedes/listagemHospede.o \
+	${OBJECTDIR}/relatorio/produtosConsumo/listagemProdutosConsumo.o \
+	${OBJECTDIR}/relatorio/produtosEstoque/listagemProdutosEstoqueMin.o \
 	${OBJECTDIR}/relatorio/reservas/listagemReserva.o \
 	${OBJECTDIR}/reserva/reserva.o
 
@@ -120,6 +123,11 @@ ${OBJECTDIR}/gestao_dados/produto/produto.o: gestao_dados/produto/produto.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestao_dados/produto/produto.o gestao_dados/produto/produto.c
 
+${OBJECTDIR}/importacao/importacao.o: importacao/importacao.c
+	${MKDIR} -p ${OBJECTDIR}/importacao
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/importacao/importacao.o importacao/importacao.c
+
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -134,6 +142,16 @@ ${OBJECTDIR}/relatorio/hospedes/listagemHospede.o: relatorio/hospedes/listagemHo
 	${MKDIR} -p ${OBJECTDIR}/relatorio/hospedes
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/relatorio/hospedes/listagemHospede.o relatorio/hospedes/listagemHospede.c
+
+${OBJECTDIR}/relatorio/produtosConsumo/listagemProdutosConsumo.o: relatorio/produtosConsumo/listagemProdutosConsumo.c
+	${MKDIR} -p ${OBJECTDIR}/relatorio/produtosConsumo
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/relatorio/produtosConsumo/listagemProdutosConsumo.o relatorio/produtosConsumo/listagemProdutosConsumo.c
+
+${OBJECTDIR}/relatorio/produtosEstoque/listagemProdutosEstoqueMin.o: relatorio/produtosEstoque/listagemProdutosEstoqueMin.c
+	${MKDIR} -p ${OBJECTDIR}/relatorio/produtosEstoque
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/relatorio/produtosEstoque/listagemProdutosEstoqueMin.o relatorio/produtosEstoque/listagemProdutosEstoqueMin.c
 
 ${OBJECTDIR}/relatorio/reservas/listagemReserva.o: relatorio/reservas/listagemReserva.c
 	${MKDIR} -p ${OBJECTDIR}/relatorio/reservas

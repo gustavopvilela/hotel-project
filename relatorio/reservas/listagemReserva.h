@@ -16,7 +16,7 @@ extern "C" {
 #endif
 
 void listagemReservasDadosHospedes(int codigoHospede, int formaArmazenamento, int opcaoRelatório);
-
+void listagemReservasDadosAcomodacoes(int codigoAcomodacao, int formaArmazenamento, int opcaoRelatorio);
 
 #ifdef __cplusplus
 }

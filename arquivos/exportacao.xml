@@ -38,5 +38,73 @@
 			<Nascimento>30/03/2004</Nascimento>
 		</registro>
 	</tabela=hospede>
-</dados>
+	<tabela=acomodacao>
+		<registro>
+			<Codigo>1</Codigo>
+			<Descrição>abc</Descrição>
+			<Facilidades>1</Facilidades>
+			<Categoria>1</Categoria>
+		</registro>
+		<registro>
+			<Codigo>2</Codigo>
+			<Descrição>quarto</Descrição>
+			<Facilidades>2</Facilidades>
+			<Categoria>1</Categoria>
+		</registro>
+	</tabela=acomodacao>
+	<tabela=categoria_acomodacao>
+	</tabela=categoria_acomodacao>
+	<tabela=produto>
+		<registro>
+			<Codigo>1</Codigo>
+			<Descricao>barra de cereal</Descricao>
+			<Estoque>7</Estoque>
+			<EstoqueMin>1</EstoqueMin>
+			<PrecoCusto>2.00</PrecoCusto>
+			<PrecoVenda>0.00</PrecoVenda>
+		</registro>
+		<registro>
+			<Codigo>2</Codigo>
+			<Descricao>sanduiche</Descricao>
+			<Estoque>5</Estoque>
+			<EstoqueMin>1</EstoqueMin>
+			<PrecoCusto>10.00</PrecoCusto>
+			<PrecoVenda>0.00</PrecoVenda>
+		</registro>
+		<registro>
+			<Codigo>3</Codigo>
+			<Descricao>sucrilhos</Descricao>
+			<Estoque>56</Estoque>
+			<EstoqueMin>1</EstoqueMin>
+			<PrecoCusto>15.00</PrecoCusto>
+			<PrecoVenda>0.00</PrecoVenda>
+		</registro>
+		<registro>
+			<Codigo>4</Codigo>
+			<Descricao>AA</Descricao>
+			<Estoque>4</Estoque>
+			<EstoqueMin>5</EstoqueMin>
+			<PrecoCusto>12.00</PrecoCusto>
+			<PrecoVenda>0.00</PrecoVenda>
+		</registro>
+		<registro>
+			<Codigo>5</Codigo>
+			<Descricao>BB</Descricao>
+			<Estoque>2</Estoque>
+			<EstoqueMin>1</EstoqueMin>
+			<PrecoCusto>12.00</PrecoCusto>
+			<PrecoVenda>0.00</PrecoVenda>
+		</registro>
+	</tabela=produto>
+	<tabela=fornecedor>
+	</tabela=fornecedor>
+	<tabela=operador>
+		<registro>
+			<Codigo>1</Codigo>
+			<Nome>patrick</Nome>
+			<Usuario>trick</Usuario>
+			<Senha>123</Senha>
+			<Permissoes>10000</Permissoes>
+		</registro>
+	</tabela=operador>
 </dados>

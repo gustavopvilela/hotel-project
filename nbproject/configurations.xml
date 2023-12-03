@@ -11,8 +11,11 @@
       <itemPath>gestao_dados/fornecedor/fornecedor.h</itemPath>
       <itemPath>gestao_dados/hospede/hospede.h</itemPath>
       <itemPath>gestao_dados/hotel/hotel.h</itemPath>
+      <itemPath>importacao/importacao.h</itemPath>
       <itemPath>relatorio/acomodacoes/listagemAcomodacao.h</itemPath>
       <itemPath>relatorio/hospedes/listagemHospede.h</itemPath>
+      <itemPath>relatorio/produtosConsumo/listagemProdutosConsumo.h</itemPath>
+      <itemPath>relatorio/produtosEstoque/listagemProdutosEstoqueMin.h</itemPath>
       <itemPath>relatorio/reservas/listagemReserva.h</itemPath>
       <itemPath>gestao_dados/operador/operador.h</itemPath>
       <itemPath>gestao_dados/produto/produto.h</itemPath>
@@ -28,8 +31,11 @@
       <itemPath>gestao_dados/fornecedor/fornecedor.c</itemPath>
       <itemPath>gestao_dados/hospede/hospede.c</itemPath>
       <itemPath>gestao_dados/hotel/hotel.c</itemPath>
+      <itemPath>importacao/importacao.c</itemPath>
       <itemPath>relatorio/acomodacoes/listagemAcomodacao.c</itemPath>
       <itemPath>relatorio/hospedes/listagemHospede.c</itemPath>
+      <itemPath>relatorio/produtosConsumo/listagemProdutosConsumo.c</itemPath>
+      <itemPath>relatorio/produtosEstoque/listagemProdutosEstoqueMin.c</itemPath>
       <itemPath>relatorio/reservas/listagemReserva.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>gestao_dados/operador/operador.c</itemPath>
@@ -122,6 +128,10 @@
       </item>
       <item path="gestao_dados/produto/produto.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="importacao/importacao.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="importacao/importacao.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="relatorio/acomodacoes/listagemAcomodacao.c"
@@ -140,6 +150,26 @@
             flavor2="0">
       </item>
       <item path="relatorio/hospedes/listagemHospede.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="relatorio/produtosConsumo/listagemProdutosConsumo.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="relatorio/produtosConsumo/listagemProdutosConsumo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="relatorio/produtosEstoque/listagemProdutosEstoqueMin.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="relatorio/produtosEstoque/listagemProdutosEstoqueMin.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -239,6 +269,10 @@
       </item>
       <item path="gestao_dados/produto/produto.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="importacao/importacao.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="importacao/importacao.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="relatorio/acomodacoes/listagemAcomodacao.c"
@@ -257,6 +291,26 @@
             flavor2="0">
       </item>
       <item path="relatorio/hospedes/listagemHospede.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="relatorio/produtosConsumo/listagemProdutosConsumo.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="relatorio/produtosConsumo/listagemProdutosConsumo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="relatorio/produtosEstoque/listagemProdutosEstoqueMin.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="relatorio/produtosEstoque/listagemProdutosEstoqueMin.h"
             ex="false"
             tool="3"
             flavor2="0">

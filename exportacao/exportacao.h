@@ -14,7 +14,6 @@ extern "C" {
 
 void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcAcomodacao, int opcCatAcomadacao, int opcProduto, int opcFornecedor, int opcOperador);
 
-
 #ifdef __cplusplus
 }
 #endif

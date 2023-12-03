@@ -17,8 +17,12 @@
 #include "relatorio/hospedes/listagemHospede.h"
 #include "relatorio/acomodacoes/listagemAcomodacao.h"
 #include "relatorio/reservas/listagemReserva.h"
+#include "relatorio/produtosConsumo/listagemProdutosConsumo.h"
 
 #include "exportacao/exportacao.h"
+#include "importacao/importacao.h"
+#include "relatorio/produtosEstoque/listagemProdutosEstoqueMin.h"
+
 
 void pressioneParaContinuar () {
     printf("Pressione \"Enter\" para continuar...");
@@ -391,7 +395,10 @@ int main(int argc, char** argv) {
         printf("\e[1;1H\e[2J");
         
         //TESTEEEEEEEE
-        exportaDados(formaArmazenamento, 1, 1, 0, 0, 0, 0, 0);
+        //listagemProdutosEstoqueMinCodigo(1, 6, formaArmazenamento, 2);
+        //importa();
+        exportaDados(formaArmazenamento, 1, 1, 1, 1, 1, 1, 1);
+        
         //listagemHospedesCodigos(1, 2, formaArmazenamento, 2);
         //listagemAcomodacoesCodigos(1, 3, formaArmazenamento, 2);
         //listagemAcomodacoesCategoria(1, formaArmazenamento, 2);
@@ -1461,12 +1468,15 @@ int main(int argc, char** argv) {
                                 
                                 case 7:
                                     opcaoReserva = 0;
+                                    menuGestaoDados();
                                 break;
                                 
                                 default:
-                                    printf("Opção inválida\n");
+                                    printf("\e[1;1H\e[2J");
+                                    printf("Opção inválida!\n\n");
+                                    pressioneParaContinuar();
                             }
-                        }while(opcaoReserva != 0);
+                        }while(opcaoReserva < 1 || opcaoReserva > 7);
                     }
                 case 3:
                     printf("\nEncerrando o programa...\n");
@@ -2546,8 +2556,9 @@ int main(int argc, char** argv) {
                                 
                                 default:
                                     printf("Opção inválida\n");
+                                    opcaoReserva = 0;
                             }
-                        }while(opcaoReserva != 0);
+                        }while(opcaoReserva < 1 || opcaoReserva > 7);
                     }
                 break;
                 case 3:
