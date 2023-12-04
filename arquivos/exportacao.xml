@@ -1,110 +1,110 @@
 <dados>
 	<tabela=hotel>
 		<registro>
-			<NF>aaa</NF>
-			<RS>aaaaaa</RS>
-			<IE>w123</IE>
-			<CNPJ>21212</CNPJ>
-			<Endereco>wdfdf</Endereco>
-			<Telefone>21212</Telefone>
-			<E-mail>sdq</E-mail>
-			<Responsavel>ss</Responsavel>
-			<Tel.Responsavel>123</Tel.Responsavel>
-			<Check-in>12:00</Check-in>
-			<Check-out>10:00</Check-out>
+			<nome_fantasia>aaa</nome_fantasia>
+			<razao_social>aaaaaa</razao_social>
+			<inscricao_estadual>w123</inscricao_estadual>
+			<cnpj>21212</cnpj>
+			<endereco>wdfdf</endereco>
+			<telefone>21212</telefone>
+			<email>sdq</email>
+			<responsavel>ss</responsavel>
+			<tel_responsavel>123</tel_responsavel>
+			<check_in>12:00</check_in>
+			<check_out>10:00</check_out>
 		</registro>
 	</tabela=hotel>
 	<tabela=hospede>
 		<registro>
-			<Codigo>1</Codigo>
-			<Nome>Patrick</Nome>
-			<Endereco>abc</Endereco>
-			<CPF>14089499623</CPF>
-			<Telefone>999399902</Telefone>
-			<Email>patrick@email</Email>
-			<Sexo>masculino</Sexo>
-			<EC>solteiro</EC>
-			<Nascimento>05/01/2000</Nascimento>
+			<codigo>1</codigo>
+			<nome>Patrick</nome>
+			<endereco>abc</endereco>
+			<cpf>14089499623</cpf>
+			<telefone>999399902</telefone>
+			<email>patrick@email</email>
+			<sexo>masculino</sexo>
+			<estado_civil>solteiro</estado_civil>
+			<data_nasc>05/01/2000</data_nasc>
 		</registro>
 		<registro>
-			<Codigo>2</Codigo>
-			<Nome>patrickson</Nome>
-			<Endereco>sdf</Endereco>
-			<CPF>14089499623</CPF>
-			<Telefone>2332</Telefone>
-			<Email>patrick@son</Email>
-			<Sexo>masculino</Sexo>
-			<EC>solteiro</EC>
-			<Nascimento>30/03/2004</Nascimento>
+			<codigo>2</codigo>
+			<nome>patrickson</nome>
+			<endereco>sdf</endereco>
+			<cpf>14089499623</cpf>
+			<telefone>2332</telefone>
+			<email>patrick@son</email>
+			<sexo>masculino</sexo>
+			<estado_civil>solteiro</estado_civil>
+			<data_nasc>30/03/2004</data_nasc>
 		</registro>
 	</tabela=hospede>
 	<tabela=acomodacao>
 		<registro>
-			<Codigo>1</Codigo>
-			<Descrição>abc</Descrição>
-			<Facilidades>1</Facilidades>
-			<Categoria>1</Categoria>
+			<codigo>1</codigo>
+			<descricao>abc</descricao>
+			<facilidades>1</facilidades>
+			<categoria>1</categoria>
 		</registro>
 		<registro>
-			<Codigo>2</Codigo>
-			<Descrição>quarto</Descrição>
-			<Facilidades>2</Facilidades>
-			<Categoria>1</Categoria>
+			<codigo>2</codigo>
+			<descricao>quarto</descricao>
+			<facilidades>2</facilidades>
+			<categoria>1</categoria>
 		</registro>
 	</tabela=acomodacao>
 	<tabela=categoria_acomodacao>
 	</tabela=categoria_acomodacao>
 	<tabela=produto>
 		<registro>
-			<Codigo>1</Codigo>
-			<Descricao>barra de cereal</Descricao>
-			<Estoque>7</Estoque>
-			<EstoqueMin>1</EstoqueMin>
-			<PrecoCusto>2.00</PrecoCusto>
-			<PrecoVenda>0.00</PrecoVenda>
+			<codigo>1</codigo>
+			<descricao>barra de cereal</descricao>
+			<estoque>7</estoque>
+			<estoque_minimo>1</estoque_minimo>
+			<preco_custo>2.00</preco_custo>
+			<preco_venda>0.00</preco_venda>
 		</registro>
 		<registro>
-			<Codigo>2</Codigo>
-			<Descricao>sanduiche</Descricao>
-			<Estoque>5</Estoque>
-			<EstoqueMin>1</EstoqueMin>
-			<PrecoCusto>10.00</PrecoCusto>
-			<PrecoVenda>0.00</PrecoVenda>
+			<codigo>2</codigo>
+			<descricao>sanduiche</descricao>
+			<estoque>5</estoque>
+			<estoque_minimo>1</estoque_minimo>
+			<preco_custo>10.00</preco_custo>
+			<preco_venda>0.00</preco_venda>
 		</registro>
 		<registro>
-			<Codigo>3</Codigo>
-			<Descricao>sucrilhos</Descricao>
-			<Estoque>56</Estoque>
-			<EstoqueMin>1</EstoqueMin>
-			<PrecoCusto>15.00</PrecoCusto>
-			<PrecoVenda>0.00</PrecoVenda>
+			<codigo>3</codigo>
+			<descricao>sucrilhos</descricao>
+			<estoque>56</estoque>
+			<estoque_minimo>1</estoque_minimo>
+			<preco_custo>15.00</preco_custo>
+			<preco_venda>0.00</preco_venda>
 		</registro>
 		<registro>
-			<Codigo>4</Codigo>
-			<Descricao>AA</Descricao>
-			<Estoque>4</Estoque>
-			<EstoqueMin>5</EstoqueMin>
-			<PrecoCusto>12.00</PrecoCusto>
-			<PrecoVenda>0.00</PrecoVenda>
+			<codigo>4</codigo>
+			<descricao>AA</descricao>
+			<estoque>4</estoque>
+			<estoque_minimo>5</estoque_minimo>
+			<preco_custo>12.00</preco_custo>
+			<preco_venda>0.00</preco_venda>
 		</registro>
 		<registro>
-			<Codigo>5</Codigo>
-			<Descricao>BB</Descricao>
-			<Estoque>2</Estoque>
-			<EstoqueMin>1</EstoqueMin>
-			<PrecoCusto>12.00</PrecoCusto>
-			<PrecoVenda>0.00</PrecoVenda>
+			<codigo>5</codigo>
+			<descricao>BB</descricao>
+			<estoque>2</estoque>
+			<estoque_minimo>1</estoque_minimo>
+			<preco_custo>12.00</preco_custo>
+			<preco_venda>0.00</preco_venda>
 		</registro>
 	</tabela=produto>
 	<tabela=fornecedor>
 	</tabela=fornecedor>
 	<tabela=operador>
 		<registro>
-			<Codigo>1</Codigo>
-			<Nome>patrick</Nome>
-			<Usuario>trick</Usuario>
-			<Senha>123</Senha>
-			<Permissoes>10000</Permissoes>
+			<codigo>1</codigo>
+			<nome>patrick</nome>
+			<usuario>trick</usuario>
+			<senha>123</senha>
+			<permissoes>10000</permissoes>
 		</registro>
 	</tabela=operador>
 </dados>

@@ -43,18 +43,18 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                 fprintf(exportaXml, "\t<tabela=hotel>\n");
                 while (fread(&hotel, sizeof(Hotel), 1, hotelBin) == 1) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<NF>%s</NF>\n", hotel.nomeFantasia);
-                    fprintf(exportaXml, "\t\t\t<RS>%s</RS>\n", hotel.razaoSocial);
-                    fprintf(exportaXml, "\t\t\t<IE>%s</IE>\n", hotel.inscricaoEstadual);
-                    fprintf(exportaXml, "\t\t\t<CNPJ>%s</CNPJ>\n", hotel.cnpj);
-                    fprintf(exportaXml, "\t\t\t<Endereco>%s</Endereco>\n", hotel.endereco);
-                    fprintf(exportaXml, "\t\t\t<Telefone>%s</Telefone>\n", hotel.telefone);
-                    fprintf(exportaXml, "\t\t\t<E-mail>%s</E-mail>\n", hotel.email);
-                    fprintf(exportaXml, "\t\t\t<Responsavel>%s</Responsavel>\n", hotel.responsavel);
-                    fprintf(exportaXml, "\t\t\t<Tel.Responsavel>%s</Tel.Responsavel>\n", hotel.telefoneResponsavel);
-                    fprintf(exportaXml, "\t\t\t<Check-in>%s</Check-in>\n", hotel.horarioCheckIn);
-                    fprintf(exportaXml, "\t\t\t<Check-out>%s</Check-out>\n", hotel.horarioCheckOut);
-                    fprintf(exportaXml, "\t\t\t<Lucro>%.2f</Lucro>\n", hotel.margemLucro);
+                    fprintf(exportaXml, "\t\t\t<nome_fantasia>%s</nome_fantasia>\n", hotel.nomeFantasia);
+                    fprintf(exportaXml, "\t\t\t<razao_social>%s</razao_social>\n", hotel.razaoSocial);
+                    fprintf(exportaXml, "\t\t\t<inscricao_estadual>%s</inscricao_estadual>\n", hotel.inscricaoEstadual);
+                    fprintf(exportaXml, "\t\t\t<cnpj>%s</cnpj>\n", hotel.cnpj);
+                    fprintf(exportaXml, "\t\t\t<endereco>%s</endereco>\n", hotel.endereco);
+                    fprintf(exportaXml, "\t\t\t<telefone>%s</telefone>\n", hotel.telefone);
+                    fprintf(exportaXml, "\t\t\t<email>%s</email>\n", hotel.email);
+                    fprintf(exportaXml, "\t\t\t<responsavel>%s</responsavel>\n", hotel.responsavel);
+                    fprintf(exportaXml, "\t\t\t<tel_responsavel>%s</tel_responsavel>\n", hotel.telefoneResponsavel);
+                    fprintf(exportaXml, "\t\t\t<check_in>%s</check_in>\n", hotel.horarioCheckIn);
+                    fprintf(exportaXml, "\t\t\t<check_out>%s</check_out>\n", hotel.horarioCheckOut);
+                    fprintf(exportaXml, "\t\t\t<lucro>%.2f</lucro>\n", hotel.margemLucro);
                     fprintf(exportaXml, "\t\t</registro>\n");
 
                 }
@@ -84,18 +84,18 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                                       hotel.telefoneResponsavel, hotel.horarioCheckIn,
                                       hotel.horarioCheckOut) == 11) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<NF>%s</NF>\n", hotel.nomeFantasia);
-                    fprintf(exportaXml, "\t\t\t<RS>%s</RS>\n", hotel.razaoSocial);
-                    fprintf(exportaXml, "\t\t\t<IE>%s</IE>\n", hotel.inscricaoEstadual);
-                    fprintf(exportaXml, "\t\t\t<CNPJ>%s</CNPJ>\n", hotel.cnpj);
-                    fprintf(exportaXml, "\t\t\t<Endereco>%s</Endereco>\n", hotel.endereco);
-                    fprintf(exportaXml, "\t\t\t<Telefone>%s</Telefone>\n", hotel.telefone);
-                    fprintf(exportaXml, "\t\t\t<E-mail>%s</E-mail>\n", hotel.email);
-                    fprintf(exportaXml, "\t\t\t<Responsavel>%s</Responsavel>\n", hotel.responsavel);
-                    fprintf(exportaXml, "\t\t\t<Tel.Responsavel>%s</Tel.Responsavel>\n", hotel.telefoneResponsavel);
-                    fprintf(exportaXml, "\t\t\t<Check-in>%s</Check-in>\n", hotel.horarioCheckIn);
-                    fprintf(exportaXml, "\t\t\t<Check-out>%s</Check-out>\n", hotel.horarioCheckOut);
-                    //fprintf(exportaXml, "\t\t\t<Lucro>%.2f</Lucro>\n", hotel.margemLucro);
+                    fprintf(exportaXml, "\t\t\t<nome_fantasia>%s</nome_fantasia>\n", hotel.nomeFantasia);
+                    fprintf(exportaXml, "\t\t\t<razao_social>%s</razao_social>\n", hotel.razaoSocial);
+                    fprintf(exportaXml, "\t\t\t<inscricao_estadual>%s</inscricao_estadual>\n", hotel.inscricaoEstadual);
+                    fprintf(exportaXml, "\t\t\t<cnpj>%s</cnpj>\n", hotel.cnpj);
+                    fprintf(exportaXml, "\t\t\t<endereco>%s</endereco>\n", hotel.endereco);
+                    fprintf(exportaXml, "\t\t\t<telefone>%s</telefone>\n", hotel.telefone);
+                    fprintf(exportaXml, "\t\t\t<email>%s</email>\n", hotel.email);
+                    fprintf(exportaXml, "\t\t\t<responsavel>%s</responsavel>\n", hotel.responsavel);
+                    fprintf(exportaXml, "\t\t\t<tel_responsavel>%s</tel_responsavel>\n", hotel.telefoneResponsavel);
+                    fprintf(exportaXml, "\t\t\t<check_in>%s</check_in>\n", hotel.horarioCheckIn);
+                    fprintf(exportaXml, "\t\t\t<check_out>%s</check_out>\n", hotel.horarioCheckOut);
+                    //fprintf(exportaXml, "\t\t\t<lucro>%.2f</lucro>\n", hotel.margemLucro);
                     fprintf(exportaXml, "\t\t</registro>\n");
 
                 }
@@ -126,15 +126,15 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                 fprintf(exportaXml, "\t<tabela=hospede>\n");
                 while (fread(&hospede, sizeof(Hospede), 1, hospedeBin) == 1) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", hospede.codigo);
-                    fprintf(exportaXml, "\t\t\t<Nome>%s</Nome>\n", hospede.nome);
-                    fprintf(exportaXml, "\t\t\t<Endereco>%s</Endereco>\n", hospede.endereco);
-                    fprintf(exportaXml, "\t\t\t<CPF>%s</CPF>\n", hospede.cpf);
-                    fprintf(exportaXml, "\t\t\t<Telefone>%s</Telefone>\n", hospede.telefone);
-                    fprintf(exportaXml, "\t\t\t<Email>%s</Email>\n", hospede.email);
-                    fprintf(exportaXml, "\t\t\t<Sexo>%s</Sexo>\n", hospede.sexo);
-                    fprintf(exportaXml, "\t\t\t<EC>%s</EC>\n", hospede.estadoCivil);
-                    fprintf(exportaXml, "\t\t\t<Nascimento>%s</Nascimento>\n", hospede.dataNascimento);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", hospede.codigo);
+                    fprintf(exportaXml, "\t\t\t<nome>%s</nome>\n", hospede.nome);
+                    fprintf(exportaXml, "\t\t\t<endereco>%s</endereco>\n", hospede.endereco);
+                    fprintf(exportaXml, "\t\t\t<cpf>%s</cpf>\n", hospede.cpf);
+                    fprintf(exportaXml, "\t\t\t<telefone>%s</telefone>\n", hospede.telefone);
+                    fprintf(exportaXml, "\t\t\t<email>%s</email>\n", hospede.email);
+                    fprintf(exportaXml, "\t\t\t<sexo>%s</sexo>\n", hospede.sexo);
+                    fprintf(exportaXml, "\t\t\t<estado_civil>%s</estado_civil>\n", hospede.estadoCivil);
+                    fprintf(exportaXml, "\t\t\t<data_nasc>%s</data_nasc>\n", hospede.dataNascimento);
                     fprintf(exportaXml, "\t\t</registro>\n");
                 }
                 fprintf(exportaXml, "\t</tabela=hospede>\n");
@@ -160,15 +160,15 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                           &hospede.codigo, hospede.nome, hospede.dataNascimento, hospede.endereco, hospede.cpf, hospede.telefone, hospede.email,
                           hospede.sexo, hospede.estadoCivil) == 9) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", hospede.codigo);
-                    fprintf(exportaXml, "\t\t\t<Nome>%s</Nome>\n", hospede.nome);
-                    fprintf(exportaXml, "\t\t\t<Endereco>%s</Endereco>\n", hospede.endereco);
-                    fprintf(exportaXml, "\t\t\t<CPF>%s</CPF>\n", hospede.cpf);
-                    fprintf(exportaXml, "\t\t\t<Telefone>%s</Telefone>\n", hospede.telefone);
-                    fprintf(exportaXml, "\t\t\t<Email>%s</Email>\n", hospede.email);
-                    fprintf(exportaXml, "\t\t\t<Sexo>%s</Sexo>\n", hospede.sexo);
-                    fprintf(exportaXml, "\t\t\t<EC>%s</EC>\n", hospede.estadoCivil);
-                    fprintf(exportaXml, "\t\t\t<Nascimento>%s</Nascimento>\n", hospede.dataNascimento);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", hospede.codigo);
+                    fprintf(exportaXml, "\t\t\t<nome>%s</nome>\n", hospede.nome);
+                    fprintf(exportaXml, "\t\t\t<endereco>%s</endereco>\n", hospede.endereco);
+                    fprintf(exportaXml, "\t\t\t<cpf>%s</cpf>\n", hospede.cpf);
+                    fprintf(exportaXml, "\t\t\t<telefone>%s</telefone>\n", hospede.telefone);
+                    fprintf(exportaXml, "\t\t\t<email>%s</email>\n", hospede.email);
+                    fprintf(exportaXml, "\t\t\t<sexo>%s</sexo>\n", hospede.sexo);
+                    fprintf(exportaXml, "\t\t\t<estado_civil>%s</estado_civil>\n", hospede.estadoCivil);
+                    fprintf(exportaXml, "\t\t\t<data_nasc>%s</data_nasc>\n", hospede.dataNascimento);
                     fprintf(exportaXml, "\t\t</registro>\n");
 
                 }
@@ -198,10 +198,10 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                 fprintf(exportaXml, "\t<tabela=acomodacao>\n");
                 while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", acomodacao.codigo);
-                    fprintf(exportaXml, "\t\t\t<Descrição>%s</Descrição>\n", acomodacao.descricao);
-                    fprintf(exportaXml, "\t\t\t<Facilidades>%d</Facilidades>\n", acomodacao.facilidades);
-                    fprintf(exportaXml, "\t\t\t<Categoria>%d</Categoria>\n", acomodacao.categoria);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", acomodacao.codigo);
+                    fprintf(exportaXml, "\t\t\t<descricao>%s</descricao>\n", acomodacao.descricao);
+                    fprintf(exportaXml, "\t\t\t<facilidades>%d</facilidades>\n", acomodacao.facilidades);
+                    fprintf(exportaXml, "\t\t\t<categoria>%d</categoria>\n", acomodacao.categoria);
                     fprintf(exportaXml, "\t\t</registro>\n");
                 }
                 fprintf(exportaXml, "\t</tabela=acomodacao>\n");
@@ -226,10 +226,10 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                 while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
                           &acomodacao.codigo, acomodacao.descricao, &acomodacao.facilidades, &acomodacao.categoria) == 4) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", acomodacao.codigo);
-                    fprintf(exportaXml, "\t\t\t<Descrição>%s</Descrição>\n", acomodacao.descricao);
-                    fprintf(exportaXml, "\t\t\t<Facilidades>%d</Facilidades>\n", acomodacao.facilidades);
-                    fprintf(exportaXml, "\t\t\t<Categoria>%d</Categoria>\n", acomodacao.categoria);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", acomodacao.codigo);
+                    fprintf(exportaXml, "\t\t\t<descricao>%s</descricao>\n", acomodacao.descricao);
+                    fprintf(exportaXml, "\t\t\t<facilidades>%d</facilidades>\n", acomodacao.facilidades);
+                    fprintf(exportaXml, "\t\t\t<categoria>%d</categoria>\n", acomodacao.categoria);
                     fprintf(exportaXml, "\t\t</registro>\n");
 
                 }
@@ -260,12 +260,12 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                 fprintf(exportaXml, "\t<tabela=categoria_acomodacao>\n");
                 while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", catAcom.codigo);
-                    fprintf(exportaXml, "\t\t\t<Descricao>%s</Descricao>\n", catAcom.descricao);
-                    fprintf(exportaXml, "\t\t\t<Categoria>%d</Categoria>\n", catAcom.categoria);
-                    fprintf(exportaXml, "\t\t\t<ValorDiaria>%.2f</ValorDiaria>\n", catAcom.valorDiaria);
-                    fprintf(exportaXml, "\t\t\t<QtdeAdultos>%d</QtdeAdultos>\n", catAcom.qtdeAdultos);
-                    fprintf(exportaXml, "\t\t\t<QtdeCriancas>%d</QtdeCriancas>\n", catAcom.qtdeCriancas);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", catAcom.codigo);
+                    fprintf(exportaXml, "\t\t\t<descricao>%s</descricao>\n", catAcom.descricao);
+                    fprintf(exportaXml, "\t\t\t<categoria>%d</categoria>\n", catAcom.categoria);
+                    fprintf(exportaXml, "\t\t\t<valor_diaria>%.2f</valor_diaria>\n", catAcom.valorDiaria);
+                    fprintf(exportaXml, "\t\t\t<quantidade_adultos>%d</quantidade_adultos>\n", catAcom.qtdeAdultos);
+                    fprintf(exportaXml, "\t\t\t<quantidade_criancas>%d</quantidade_criancas>\n", catAcom.qtdeCriancas);
                     fprintf(exportaXml, "\t\t</registro>\n");
                 }
                 fprintf(exportaXml, "\t</tabela=categoria_acomodacao>\n");
@@ -291,12 +291,12 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                           &catAcom.codigo, catAcom.descricao, &catAcom.categoria, 
                           &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", catAcom.codigo);
-                    fprintf(exportaXml, "\t\t\t<Descricao>%s</Descricao>\n", catAcom.descricao);
-                    fprintf(exportaXml, "\t\t\t<Categoria>%d</Categoria>\n", catAcom.categoria);
-                    fprintf(exportaXml, "\t\t\t<ValorDiaria>%.2f</ValorDiaria>\n", catAcom.valorDiaria);
-                    fprintf(exportaXml, "\t\t\t<QtdeAdultos>%d</QtdeAdultos>\n", catAcom.qtdeAdultos);
-                    fprintf(exportaXml, "\t\t\t<QtdeCriancas>%d</QtdeCriancas>\n", catAcom.qtdeCriancas);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", catAcom.codigo);
+                    fprintf(exportaXml, "\t\t\t<descricao>%s</descricao>\n", catAcom.descricao);
+                    fprintf(exportaXml, "\t\t\t<categoria>%d</categoria>\n", catAcom.categoria);
+                    fprintf(exportaXml, "\t\t\t<valor_diaria>%.2f</valor_diaria>\n", catAcom.valorDiaria);
+                    fprintf(exportaXml, "\t\t\t<quantidade_adultos>%d</quantidade_adultos>\n", catAcom.qtdeAdultos);
+                    fprintf(exportaXml, "\t\t\t<quantidade_criancas>%d</quantidade_criancas>\n", catAcom.qtdeCriancas);
                     fprintf(exportaXml, "\t\t</registro>\n");
                 }
                 fprintf(exportaXml, "\t</tabela=categoria_acomodacao>\n");
@@ -327,12 +327,12 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                 
                 while (fread(&produto, sizeof(Produto), 1, produtoBin) == 1) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", produto.codigo);
-                    fprintf(exportaXml, "\t\t\t<Descricao>%s</Descricao>\n", produto.descricao);
-                    fprintf(exportaXml, "\t\t\t<Estoque>%d</Estoque>\n", produto.estoque);
-                    fprintf(exportaXml, "\t\t\t<EstoqueMin>%d</EstoqueMin>\n", produto.estoqueMin);
-                    fprintf(exportaXml, "\t\t\t<PrecoCusto>%.2f</PrecoCusto>\n", produto.precoCusto);
-                    fprintf(exportaXml, "\t\t\t<PrecoVenda>%.2f</PrecoVenda>\n", produto.precoVenda);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", produto.codigo);
+                    fprintf(exportaXml, "\t\t\t<descricao>%s</descricao>\n", produto.descricao);
+                    fprintf(exportaXml, "\t\t\t<estoque>%d</estoque>\n", produto.estoque);
+                    fprintf(exportaXml, "\t\t\t<estoque_minimo>%d</estoque_minimo>\n", produto.estoqueMin);
+                    fprintf(exportaXml, "\t\t\t<preco_custo>%.2f</preco_custo>\n", produto.precoCusto);
+                    fprintf(exportaXml, "\t\t\t<preco_venda>%.2f</preco_venda>\n", produto.precoVenda);
                     fprintf(exportaXml, "\t\t</registro>\n");
                 }
                 fprintf(exportaXml, "\t</tabela=produto>\n");
@@ -358,12 +358,12 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                           &produto.codigo, produto.descricao, &produto.estoque,
                           &produto.estoqueMin, &produto.precoCusto, &produto.precoVenda) == 6) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", produto.codigo);
-                    fprintf(exportaXml, "\t\t\t<Descricao>%s</Descricao>\n", produto.descricao);
-                    fprintf(exportaXml, "\t\t\t<Estoque>%d</Estoque>\n", produto.estoque);
-                    fprintf(exportaXml, "\t\t\t<EstoqueMin>%d</EstoqueMin>\n", produto.estoqueMin);
-                    fprintf(exportaXml, "\t\t\t<PrecoCusto>%.2f</PrecoCusto>\n", produto.precoCusto);
-                    fprintf(exportaXml, "\t\t\t<PrecoVenda>%.2f</PrecoVenda>\n", produto.precoVenda);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", produto.codigo);
+                    fprintf(exportaXml, "\t\t\t<descricao>%s</descricao>\n", produto.descricao);
+                    fprintf(exportaXml, "\t\t\t<estoque>%d</estoque>\n", produto.estoque);
+                    fprintf(exportaXml, "\t\t\t<estoque_minimo>%d</estoque_minimo>\n", produto.estoqueMin);
+                    fprintf(exportaXml, "\t\t\t<preco_custo>%.2f</preco_custo>\n", produto.precoCusto);
+                    fprintf(exportaXml, "\t\t\t<preco_venda>%.2f</preco_venda>\n", produto.precoVenda);
                     fprintf(exportaXml, "\t\t</registro>\n");
                 }
                 fprintf(exportaXml, "\t</tabela=produto>\n");
@@ -392,13 +392,13 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                 
                 while (fread(&fornecedor, sizeof(Fornecedor), 1, fornecedorBin) == 1) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", fornecedor.codigo);
-                    fprintf(exportaXml, "\t\t\t<Razao_social>%s</Razao_social>\n", fornecedor.razaoSocial);
-                    fprintf(exportaXml, "\t\t\t<Inscricao_estadual>%s</Inscricao_estadual>\n", fornecedor.inscricaoEstadual);
-                    fprintf(exportaXml, "\t\t\t<CNPJ>%s</CNPJ>\n", fornecedor.cnpj);
-                    fprintf(exportaXml, "\t\t\t<Endereco>%s</Endereco>\n", fornecedor.endereco);
-                    fprintf(exportaXml, "\t\t\t<Telefone>%s</Telefone>\n", fornecedor.telefone);
-                    fprintf(exportaXml, "\t\t\t<Email>%s</Email>\n", fornecedor.email);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", fornecedor.codigo);
+                    fprintf(exportaXml, "\t\t\t<razao_social>%s</razao_social>\n", fornecedor.razaoSocial);
+                    fprintf(exportaXml, "\t\t\t<inscricao_estadual>%s</inscricao_estadual>\n", fornecedor.inscricaoEstadual);
+                    fprintf(exportaXml, "\t\t\t<cnpj>%s</cnpj>\n", fornecedor.cnpj);
+                    fprintf(exportaXml, "\t\t\t<endereco>%s</endereco>\n", fornecedor.endereco);
+                    fprintf(exportaXml, "\t\t\t<telefone>%s</telefone>\n", fornecedor.telefone);
+                    fprintf(exportaXml, "\t\t\t<email>%s</email>\n", fornecedor.email);
                     fprintf(exportaXml, "\t\t</registro>\n");
                 }
                 fprintf(exportaXml, "\t</tabela=fornecedor>\n");
@@ -425,13 +425,13 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                           fornecedor.inscricaoEstadual, fornecedor.cnpj, fornecedor.endereco,
                           fornecedor.telefone, fornecedor.email) == 8) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", fornecedor.codigo);
-                    fprintf(exportaXml, "\t\t\t<Razao_social>%s</Razao_social>\n", fornecedor.razaoSocial);
-                    fprintf(exportaXml, "\t\t\t<Inscricao_estadual>%s</Inscricao_estadual>\n", fornecedor.inscricaoEstadual);
-                    fprintf(exportaXml, "\t\t\t<CNPJ>%s</CNPJ>\n", fornecedor.cnpj);
-                    fprintf(exportaXml, "\t\t\t<Endereco>%s</Endereco>\n", fornecedor.endereco);
-                    fprintf(exportaXml, "\t\t\t<Telefone>%s</Telefone>\n", fornecedor.telefone);
-                    fprintf(exportaXml, "\t\t\t<Email>%s</Email>\n", fornecedor.email);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", fornecedor.codigo);
+                    fprintf(exportaXml, "\t\t\t<razao_social>%s</razao_social>\n", fornecedor.razaoSocial);
+                    fprintf(exportaXml, "\t\t\t<inscricao_estadual>%s</inscricao_estadual>\n", fornecedor.inscricaoEstadual);
+                    fprintf(exportaXml, "\t\t\t<cnpj>%s</cnpj>\n", fornecedor.cnpj);
+                    fprintf(exportaXml, "\t\t\t<endereco>%s</endereco>\n", fornecedor.endereco);
+                    fprintf(exportaXml, "\t\t\t<telefone>%s</telefone>\n", fornecedor.telefone);
+                    fprintf(exportaXml, "\t\t\t<email>%s</email>\n", fornecedor.email);
                     fprintf(exportaXml, "\t\t</registro>\n");
                 }
                 fprintf(exportaXml, "\t</tabela=fornecedor>\n");
@@ -464,11 +464,11 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                     int permissoes;
                 while (fread(&operador, sizeof(Operador), 1, operadorBin) == 1) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", operador.codigo);
-                    fprintf(exportaXml, "\t\t\t<Nome>%s</Nome>\n", operador.nome);
-                    fprintf(exportaXml, "\t\t\t<Usuario>%s</Usuario>\n", operador.usuario);
-                    fprintf(exportaXml, "\t\t\t<Senha>%s</Senha>\n", operador.senha);
-                    fprintf(exportaXml, "\t\t\t<Permissoes>%d</Permissoes>\n", operador.permissoes);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", operador.codigo);
+                    fprintf(exportaXml, "\t\t\t<nome>%s</nome>\n", operador.nome);
+                    fprintf(exportaXml, "\t\t\t<usuario>%s</usuario>\n", operador.usuario);
+                    fprintf(exportaXml, "\t\t\t<senha>%s</senha>\n", operador.senha);
+                    fprintf(exportaXml, "\t\t\t<permissoes>%d</permissoes>\n", operador.permissoes);
                     fprintf(exportaXml, "\t\t</registro>\n");
                 }
                 fprintf(exportaXml, "\t</tabela=operador>\n");
@@ -494,11 +494,11 @@ void exportaDados(int formaArmazenamento, int opcHotel, int opcHospede, int opcA
                           &operador.codigo, operador.nome, operador.usuario,
                           operador.senha, &operador.permissoes) == 5) {
                     fprintf(exportaXml, "\t\t<registro>\n");
-                    fprintf(exportaXml, "\t\t\t<Codigo>%d</Codigo>\n", operador.codigo);
-                    fprintf(exportaXml, "\t\t\t<Nome>%s</Nome>\n", operador.nome);
-                    fprintf(exportaXml, "\t\t\t<Usuario>%s</Usuario>\n", operador.usuario);
-                    fprintf(exportaXml, "\t\t\t<Senha>%s</Senha>\n", operador.senha);
-                    fprintf(exportaXml, "\t\t\t<Permissoes>%d</Permissoes>\n", operador.permissoes);
+                    fprintf(exportaXml, "\t\t\t<codigo>%d</codigo>\n", operador.codigo);
+                    fprintf(exportaXml, "\t\t\t<nome>%s</nome>\n", operador.nome);
+                    fprintf(exportaXml, "\t\t\t<usuario>%s</usuario>\n", operador.usuario);
+                    fprintf(exportaXml, "\t\t\t<senha>%s</senha>\n", operador.senha);
+                    fprintf(exportaXml, "\t\t\t<permissoes>%d</permissoes>\n", operador.permissoes);
                     fprintf(exportaXml, "\t\t</registro>\n");
                 }
                 fprintf(exportaXml, "\t</tabela=operador>\n");
