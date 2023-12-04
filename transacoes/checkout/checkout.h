@@ -23,7 +23,7 @@ void efetuarCheckOutDinheiro (ContaHospede conta, int opcao);
 void efetuarCheckOutCartao (ContaHospede conta, int opcao, int diaVencCartao, int mesVencCartao, int anoVencCartao);
 void deletarConta (int codigoHospede, int opcao);
 ContaHospede retornarConta (int codigoHospede, int opcao);
-int contaHospedeExiste (int codigoHospede, int opcao);
+int contaHospedeExiste (int codigoHospede, int codigoConta, int opcao);
 
 
 #ifdef __cplusplus

@@ -86,8 +86,8 @@ void baixarRecebimento (int opcao) {
             /* Pegando o montante atual do caixa. */
             caixa.montante = retornarMontanteCaixa(opcao);
 
-            while (fscanf(contasReceberTxt, "*s %f\n%*s [^\n]\n%*s %d\n%*s %d\n",
-                          &contasReceber.montante, contasReceber.descricao,
+            while (fscanf(contasReceberTxt, "%*s %d\n*s %f\n%*s [^\n]\n%*s %d\n%*s %d\n",
+                          &contasReceber.codigoHospede, &contasReceber.montante, contasReceber.descricao,
                           &contasReceber.diaRecebimento, &contasReceber.mesRecebimento,
                           &contasReceber.anoRecebimento) == 5) {
                 if (contasReceber.diaRecebimento == diaAtual &&
@@ -95,8 +95,8 @@ void baixarRecebimento (int opcao) {
                     contasReceber.anoRecebimento == anoAtual) {
                     totalReceber += contasReceber.montante;
                 } else {
-                    fprintf(contasReceberTxt_tmp, "Montante: %f\nDescrição: %s\nDiaPagamento: %d\nMesPagamento: %d\nAnoPagamento: %d\n",
-                            contasReceber.montante, contasReceber.descricao,
+                    fprintf(contasReceberTxt_tmp, "Hóspede: %d\nMontante: %f\nDescrição: %s\nDiaPagamento: %d\nMesPagamento: %d\nAnoPagamento: %d\n",
+                            contasReceber.codigoHospede,contasReceber.montante, contasReceber.descricao,
                             contasReceber.diaRecebimento, contasReceber.mesRecebimento,
                             contasReceber.anoRecebimento);
                 }

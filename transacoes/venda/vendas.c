@@ -14,6 +14,7 @@ void inserirVendaAVista (int *produtos, int qtdeProdutos, int opcao) {
     float total = 0;
     Caixa caixa;
     Produto produtoAtual;
+    int dinheiroOuCartao = 1;
     
     /* Primeiro, calculamos o total da venda feita para o hóspede. */
     for (int i = 0; i < qtdeProdutos; i++) {
@@ -43,6 +44,8 @@ void inserirVendaAVista (int *produtos, int qtdeProdutos, int opcao) {
             
             /* Agora, colocando o lançamento do caixa no arquivo de lançamentos. */
             inserirLancamento(total, "Venda de produto", opcao);
+            
+            inserirVendaArquivo(total, dinheiroOuCartao, opcao);
 
             fclose(caixaBin);
         break;
@@ -64,6 +67,8 @@ void inserirVendaAVista (int *produtos, int qtdeProdutos, int opcao) {
             
             /* Agora, colocando o lançamento do caixa no arquivo de lançamentos. */
             inserirLancamento(total, "Venda de produto", opcao);
+            
+            inserirVendaArquivo(total, dinheiroOuCartao, opcao);
 
             fclose(caixaTxt);
         break;
@@ -74,6 +79,7 @@ void inserirVendaAnotar (int codigoHospede, int *produtos, int qtdeProdutos, int
     float total = 0;
     ContaHospede conta;
     Produto produtoAtual;
+    int dinheiroOuCartao = 2;
     
     /* Primeiro, calculamos o total da venda feita para o hóspede. */
     for (int i = 0; i < qtdeProdutos; i++) {
@@ -114,6 +120,8 @@ void inserirVendaAnotar (int codigoHospede, int *produtos, int qtdeProdutos, int
                 }
             }
             
+            inserirVendaArquivo(total, dinheiroOuCartao, opcao);
+            
             fclose(arqConta);
             fclose(arqConta_tmp);
             
@@ -146,6 +154,8 @@ void inserirVendaAnotar (int codigoHospede, int *produtos, int qtdeProdutos, int
                 }
             }
             
+            inserirVendaArquivo(total, dinheiroOuCartao, opcao);
+            
             fclose(arqContaTxt);
             fclose(arqContaTxt_tmp);
             
@@ -161,7 +171,7 @@ void gerarNota (int *produtos, int qtdeProdutos, int opcao) {
     Produto produtoAtual;
     float total = 0;
     
-    strcat(nota, "PRODUTO | PREÇO UNITÁRIO\n")
+    strcat(nota, "PRODUTO | PREÇO UNITÁRIO\n");
 
     for (int i = 0; i < qtdeProdutos; i++) {
         produtoAtual = retornarProduto(produtos[i], opcao);
@@ -177,4 +187,91 @@ void gerarNota (int *produtos, int qtdeProdutos, int opcao) {
     strcat(nota, temp);
 
     printf("%s", nota);
+}
+
+void inserirVendaArquivo (float total, int dinheiroOuCartao, int opcao) {
+    Venda venda;
+    
+    do {
+        venda.codigoVenda = rand()%100000;
+    }
+    while (vendaExiste(venda.codigoVenda, opcao) == 1);
+    
+    venda.totalVenda = total;
+    venda.dinheiroOuCartao = dinheiroOuCartao;
+    
+    switch (opcao) {
+        case 1:
+            FILE* vendasBin;
+            vendasBin = fopen(VENDAS_BIN, "ab");
+            if (vendasBin == NULL) {
+                printf("Falha na abertura do arquivo.");
+                exit(1);
+            }
+            
+            fwrite(&venda, sizeof(Venda), 1, vendasBin);
+            
+            fclose(vendasBin);
+        break;
+        case 2:
+            FILE* vendasTxt;
+            vendasTxt = fopen(VENDAS_TXT, "a");
+            
+            if (vendasTxt == NULL) {
+                printf("Falha na abertura do arquivo.");
+                exit(1);
+            }
+            
+            fprintf(vendasTxt, "Código: %d\nTotal: %f\nPagamento: %d", venda.codigoVenda, venda.totalVenda, venda.dinheiroOuCartao);
+            
+            fclose(vendasTxt);
+        break;
+    }
+}
+
+int vendaExiste (int codigo, int opcao) {
+    Venda venda;
+    int encontrado = 0;
+    
+    switch (opcao) {
+        case 1:
+            FILE* vendasBin;
+            vendasBin = fopen(VENDAS_BIN, "rb");
+            if (vendasBin == NULL) {
+                printf("Falha na abertura do arquivo.");
+                exit(1);
+            }
+            
+            while (fread(&venda, sizeof(Venda), 1, vendasBin) == 1) {
+                if(venda.codigoVenda == codigo) {
+                    encontrado = 1;
+                    break;
+                }
+            }
+            
+            fclose(vendasBin);
+            
+            return encontrado;
+        break;
+        case 2:
+            FILE* vendasTxt;
+            vendasTxt = fopen(VENDAS_TXT, "r");
+            
+            if (vendasTxt == NULL) {
+                printf("Falha na abertura do arquivo.");
+                exit(1);
+            }
+            
+            while (fscanf(vendasTxt, "%*s %d\n%*s %f\n%*s %d\n", &venda.codigoVenda, &venda.totalVenda, &venda.dinheiroOuCartao) == 3) {
+                if (venda.codigoVenda == codigo) {
+                    encontrado = 1;
+                    break;
+                }
+            }
+            
+            fclose(vendasTxt);
+            
+            return encontrado;
+        break;
+    }
 }

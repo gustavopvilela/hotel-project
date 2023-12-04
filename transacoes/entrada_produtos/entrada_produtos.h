@@ -9,6 +9,14 @@ extern "C" {
 
 
 typedef struct {
+    int codigoProduto;
+    char descricao[200];
+    float precoCusto;
+    int quantidade;
+    float precoTotal;
+} ProdutosComprados;
+
+typedef struct {
     int codigoFornecedor;
     float precoFrete;
     float imposto;
@@ -16,13 +24,6 @@ typedef struct {
     int qtdeProdutosDiferentes; /* Usado para percorrer o vetor de produtos comprados. */
 } NotaFiscal;
 
-typedef struct {
-    int codigoProduto;
-    char descricao[200];
-    float precoCusto;
-    int quantidade;
-    float precoTotal;
-} ProdutosComprados;
 
 #ifdef __cplusplus
 }

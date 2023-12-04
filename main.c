@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 
 /* Bibliotecas. */
 #include "gestao_dados/acomodacao/acomodacao.h"
@@ -13,6 +14,13 @@
 #include "gestao_dados/operador/operador.h"
 #include "gestao_dados/produto/produto.h"
 #include "reserva/reserva.h"
+#include "transacoes/checkin/checkin.h"
+#include "transacoes/checkout/checkout.h"
+#include "transacoes/controle_caixa/caixa/caixa.h"
+#include "transacoes/controle_caixa/contas_pagar/contas_pagar.h"
+#include "transacoes/controle_caixa/contas_receber/contas_receber.h"
+#include "transacoes/entrada_produtos/entrada_produtos.h"
+#include "transacoes/venda/vendas.h"
 
 void pressioneParaContinuar () {
     printf("Pressione \"Enter\" para continuar...");
@@ -113,7 +121,60 @@ void menuOperadores () {
     printf("6 - Voltar\n");
 }
 
+void menuReservas(){
+    printf("\e[1;1H\e[2J");
+    printf("=== MENU DE RESERVAS ===\n");
+    printf("1 - Cadastrar reserva\n");
+    printf("2 - Buscar reserva por código\n");
+    printf("3 - Listar reservas\n");
+    printf("4 - Atualizar reserva por código\n");
+    printf("5 - Cancelar reserva por código\n");
+    printf("6 - Buscar quarto disponível\n");
+    printf("7 - Voltar\n");
+}
+
+void menuTransacoes () {
+    printf("\e[1;1H\e[2J");
+    printf("=== MENU DE TRANSAÇÕES ===\n");
+    printf("1 - Checkin\n");
+    printf("2 - Checkout\n");
+    printf("3 - Entrada de produtos\n");
+    printf("4 - Venda de produtos\n");
+    printf("5 - Voltar\n");
+}
+
+void menuCheckIn () {
+    printf("\e[1;1H\e[2J");
+    printf("=== MENU DE CHECK-IN ===\n");
+    printf("1 - Efetuar check-in\n");
+    printf("2 - Voltar\n");
+}
+
+void menuCheckOut () {
+    printf("\e[1;1H\e[2J");
+    printf("=== MENU DE CHECK-OUT ===\n");
+    printf("1 - Efetuar check-out no dinheiro\n");
+    printf("2 - Efetuar check-out no cartão\n");
+    printf("3 - Voltar\n");
+}
+
+void menuEntradaProdutos () {
+    printf("\e[1;1H\e[2J");
+    printf("=== MENU DE ENTRADA DE PRODUTOS ===\n");
+    printf("1 - Entrar com produtos\n");
+    printf("2 - Voltar\n");
+}
+
+void menuVendaProdutos () {
+    printf("\e[1;1H\e[2J");
+    printf("=== MENU DE VENDA DE PRODUTOS ===\n");
+    printf("1 - Vender produtos\n");
+    printf("2 - Voltar\n");
+}
+
 int main(int argc, char** argv) {
+    srand(time(NULL));
+    
     int formaArmazenamento = 0,
         opcaoOperador = 0,
         opcaoModulo = 0,
@@ -123,7 +184,13 @@ int main(int argc, char** argv) {
         opcaoCatAcom = 0,
         opcaoAcomodacao = 0,
         opcaoProduto = 0,
-        opcaoFornecedor = 0;
+        opcaoFornecedor = 0,
+        opcaoReserva = 0,
+        opcaoTransacao = 0,
+        opcaoCheckIn = 0,
+        opcaoCheckout = 0,
+        opcaoEntradaProdutos = 0,
+        opcaoVenda = 0;
     
     Operador operador; /* Aqui ficará os dados do operador logado no sistema,
                         * bem como será utilizado para adicionar dados aos
@@ -157,6 +224,25 @@ int main(int argc, char** argv) {
     Fornecedor *listaFornecedores = NULL;
     int contadorFornecedores = 0;
     
+    Reserva reserva;
+    Reserva *listaReservas = NULL;
+    int contadorReservas = 0;
+    
+    Checkin checkIn;
+    int codigoHospede;
+    int codigoReserva;
+    int codigoConta;
+    
+    NotaFiscal notaFiscal;
+    ProdutosComprados produtoAtual;
+    ProdutosComprados *listaProdutosComprados = NULL;
+    int qtdeProdutosDiferentes = 0;
+    int opcaoMaisProdutos = 0;
+    float totalComprado = 0;
+    
+    int* produtosVenda = NULL;
+    int qtdeProdutos = 0;
+    
     /* ===================================================================== */
     
     /* Chama a função de inicializar todos os arquivos, para garantir
@@ -182,6 +268,160 @@ int main(int argc, char** argv) {
         }
     }
     while (formaArmazenamento < 1 || formaArmazenamento > 3);
+    
+    printf("\e[1;1H\e[2J");
+    
+    /* Verificando se existe um hotel nos arquivos. */
+    if (formaArmazenamento == 3) {
+        printf("Primeiro, adicione um hotel.\n");
+        
+        printf("Digite o nome fantasia do hotel: ");
+        scanf(" %[^\n]s", hotel.nomeFantasia);
+
+        printf("Digite a razão social do hotel: ");
+        scanf(" %[^\n]s", hotel.razaoSocial);
+
+        printf("Digite a inscrição estadual do hotel: ");
+        scanf(" %[^\n]s", hotel.inscricaoEstadual);
+
+        printf("Digite o CNPJ do hotel: ");
+        scanf("%s", hotel.cnpj);
+
+        printf("Digite o endereço do hotel: ");
+        scanf(" %[^\n]s", hotel.endereco);
+
+        printf("Digite o telefone do hotel: ");
+        scanf("%s", hotel.telefone);
+
+        printf("Digite o email do hotel: ");
+        scanf("%s", hotel.email);
+
+        printf("Digite o nome do responsável pelo hotel: ");
+        scanf(" %[^\n]s", hotel.responsavel);
+
+        printf("Digite o telefone do responsável pelo hotel: ");
+        scanf("%s", hotel.telefoneResponsavel);
+
+        printf("Digite o horário de check-in do hotel: ");
+        scanf("%s", hotel.horarioCheckIn);
+
+        printf("Digite o horário de check-out do hotel: ");
+        scanf("%s", hotel.horarioCheckOut);
+
+        if (contadorHotel > 0) {
+            contadorHotel = 0;
+            /* Evita de adicionar mais
+             * de um hotel no vetor. */
+        }
+
+        inserirHotelMemoria(hotel, &listaHotel, &contadorHotel);
+
+        opcaoHotel = 0;
+        pressioneParaContinuar();
+    }
+    else {
+        FILE* arqHotel;
+        
+        if (formaArmazenamento == 1) {
+            arqHotel = fopen(HOTEL_BIN, "rb");
+            if (arqHotel == NULL || fread(&hotel, sizeof(Hotel), 1, arqHotel) != 1) {
+                fclose(arqHotel);
+                
+                /* Abrindo para escrita. */
+                arqHotel = fopen(HOTEL_BIN, "ab");
+                
+                printf("Para continuar, insira um hotel.\n");
+                
+                printf("Digite o nome fantasia do hotel: ");
+                scanf(" %[^\n]s", hotel.nomeFantasia);
+
+                printf("Digite a razão social do hotel: ");
+                scanf(" %[^\n]s", hotel.razaoSocial);
+
+                printf("Digite a inscrição estadual do hotel: ");
+                scanf(" %[^\n]s", hotel.inscricaoEstadual);
+
+                printf("Digite o CNPJ do hotel: ");
+                scanf("%s", hotel.cnpj);
+
+                printf("Digite o endereço do hotel: ");
+                scanf(" %[^\n]s", hotel.endereco);
+
+                printf("Digite o telefone do hotel: ");
+                scanf("%s", hotel.telefone);
+
+                printf("Digite o email do hotel: ");
+                scanf("%s", hotel.email);
+
+                printf("Digite o nome do responsável pelo hotel: ");
+                scanf(" %[^\n]s", hotel.responsavel);
+
+                printf("Digite o telefone do responsável pelo hotel: ");
+                scanf("%s", hotel.telefoneResponsavel);
+
+                printf("Digite o horário de check-in do hotel: ");
+                scanf("%s", hotel.horarioCheckIn);
+
+                printf("Digite o horário de check-out do hotel: ");
+                scanf("%s", hotel.horarioCheckOut);
+
+                inserirHotel(hotel, formaArmazenamento);
+                pressioneParaContinuar();
+            }
+        }
+        else {
+            arqHotel = fopen(HOTEL_TXT, "r");
+            if (arqHotel == NULL || fscanf(arqHotel, "%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %[^\n]\n%*s %f", hotel.nomeFantasia,
+                                  hotel.razaoSocial, hotel.inscricaoEstadual,
+                                  hotel.cnpj, hotel.endereco, hotel.telefone,
+                                  hotel.email, hotel.responsavel,
+                                  hotel.telefoneResponsavel, hotel.horarioCheckIn,
+                                  hotel.horarioCheckOut, hotel.margemLucro) != 12) {
+                fclose(arqHotel);
+                
+                /* Abrindo para escrita. */
+                arqHotel = fopen(HOTEL_TXT, "a");
+                
+                printf("Para continuar, insira um hotel.\n");
+                
+                printf("Digite o nome fantasia do hotel: ");
+                scanf(" %[^\n]s", hotel.nomeFantasia);
+
+                printf("Digite a razão social do hotel: ");
+                scanf(" %[^\n]s", hotel.razaoSocial);
+
+                printf("Digite a inscrição estadual do hotel: ");
+                scanf(" %[^\n]s", hotel.inscricaoEstadual);
+
+                printf("Digite o CNPJ do hotel: ");
+                scanf("%s", hotel.cnpj);
+
+                printf("Digite o endereço do hotel: ");
+                scanf(" %[^\n]s", hotel.endereco);
+
+                printf("Digite o telefone do hotel: ");
+                scanf("%s", hotel.telefone);
+
+                printf("Digite o email do hotel: ");
+                scanf("%s", hotel.email);
+
+                printf("Digite o nome do responsável pelo hotel: ");
+                scanf(" %[^\n]s", hotel.responsavel);
+
+                printf("Digite o telefone do responsável pelo hotel: ");
+                scanf("%s", hotel.telefoneResponsavel);
+
+                printf("Digite o horário de check-in do hotel: ");
+                scanf("%s", hotel.horarioCheckIn);
+
+                printf("Digite o horário de check-out do hotel: ");
+                scanf("%s", hotel.horarioCheckOut);
+
+                inserirHotel(hotel, formaArmazenamento);
+                pressioneParaContinuar();
+            }
+        }
+    }
     
     printf("\e[1;1H\e[2J");
     
@@ -369,7 +609,10 @@ int main(int argc, char** argv) {
         printf("=== MENU DE MÓDULOS ===\n");
         printf("1 - Módulo de cadastro e gestão de dados\n");
         printf("2 - Módulo de reservas\n");
-        printf("3 - Sair do programa\n");
+        printf("3 - Módulo de transações\n");
+        printf("4 - Módulo de feedback\n");
+        printf("5 - Módulo de importação/exportação de dados\n");
+        printf("6 - Sair do programa\n");
         printf("Digite a opção desejada: ");
         scanf("%d", &opcaoModulo);
         
@@ -1228,67 +1471,669 @@ int main(int argc, char** argv) {
                 break;
                 case 2: /* Módulo de reservas. */
                     if (operador.permissoes < 2000) {
+                        printf("\e[1;1H\e[2J");
+                        printf("=== Você não tem permissão para acessar este módulo ===\n");
                         pressioneParaContinuar();
                         opcaoModulo = 0;
                     }
                     else {
-                        Reserva newReserva;
-                        Acomodacao newAcomodacao;
-                        CategoriaAcomodacao newCategoria;
-                        Data datas;
-                        int categoria;
-                        int qtdAdul;
-                        int qtdCrian;
-                        int facilidade;
-                        int opc;
-                        
-                        listarReservas(2);
-                        
-                        printf("---Reserva---\n\n");
-                        printf("procure por um quarto\n");
-                        printf("os campos que não forem de seu interesse digite apenas um 0");
-                        printf("\nA data de entrada e saída é obrigatória");
+                        do {
+                            Data datas;
+                            int categoria;
+                            int qtdAdul;
+                            int qtdCrian;
+                            int facilidade;
+                            int opc;
+                            menuReservas();
+                            printf("Digite: ");
+                            scanf("%d", &opcaoReserva);
 
-                        printf("Qual a opção??\n");
-                        printf("1. Binário\n2. TXT\n3. Memória\n");
-                        printf("Opção desejada: ");
-                        scanf("%d", &opc);
+                            switch (opcaoReserva) {
+                                case 1:
+                                    //cadastrar reserva
+                                    printf("\e[1;1H\e[2J");
+                                     
+                                    int opc;
+                                    
+                                    do{
+                                        printf("Você já possui um código de hóspede?\n");
+                                        printf("1 - Sim\n");
+                                        printf("2 - Não\n");
+                                        scanf("%d",&opc);
+                                        
+                                        if(opc != 1 && opc != 2){
+                                            printf("Opção inválida!\n");
+                                        }
+                                    }while(opc < 1 || opc > 2);
+                                    
+                                    if(opc == 1){
+                                        printf("Digite o código do hóspede: ");
+                                        scanf("%d", &reserva.codigoHospede);
+                                    }else{
+                                        inserirHospede(hospede, formaArmazenamento);
+                                        reserva.codigoHospede = hospede.codigo;
+                                    }
+                                    
+                                    printf("Digite o código da reserva: ");
+                                    scanf("%d", &reserva.codigo);
+                                    
+                                    if(existeReserva(reserva.codigo, formaArmazenamento) == 0){
+                                        printf("Código já existente!");
+                                        opcaoHospede = 0;
+                                        pressioneParaContinuar();
+                                    }
+                                    
+                                    printf("Digite o código da acomdação: ");
+                                    scanf("%d", &reserva.codigoAcomodacao);
+                                    
+                                    if(acomodacaoExiste(reserva.codigoAcomodacao, formaArmazenamento) == 0){
+                                        printf("Acomodação inexistente!");
+                                        opcaoReserva = 0;
+                                        pressioneParaContinuar();
+                                    }
+                                    
+                                    printf("Digite o dia de entrada: ");
+                                    scanf("%d", &reserva.diaEntrada);
+                                    
+                                    printf("Digite o mês de entrada: ");
+                                    scanf("%d", &reserva.mesEntrada);
+                                    
+                                    printf("Digite o ano de entrada: ");
+                                    scanf("%d", &reserva.anoEntrada);
+                                    
+                                    printf("Digite o dia de saída: ");
+                                    scanf("%d", &reserva.diaSaida);
+                                    
+                                    printf("Digite o mês de saída: ");
+                                    scanf("%d", &reserva.mesSaida);
+                                    
+                                    printf("Digite o ano de saída: ");
+                                    scanf("%d", &reserva.anoSaida);
+                                    
+                                    cadastrarReserva(reserva, formaArmazenamento);
+                                    
+                                    opcaoReserva = 0;
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 2:
+                                    //buscar reserva por código
+                                    printf("\e[1;1H\e[2J");
+                                    printf("Digite o código da reserva: ");
+                                    scanf("%d", &reserva.codigo);
 
-                        printf("\n\nDia entrada: ");
-                        scanf("%d", &datas.diaEntrada);
+                                    lerReserva(reserva.codigo, formaArmazenamento);
+                                    
+                                    opcaoReserva = 0;
+                                    
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 3: 
+                                    //listar reservas
+                                    printf("\e[1;1H\e[2J");
+                                    listarReservas(formaArmazenamento);
+                                    opcaoReserva = 0;
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 4:
+                                    //atualizar reseva por código
+                                    printf("\e[1;1H\e[2J");
+                                                
+                                    printf("Digite o código da reserva que deseja atualizar: ");
+                                    scanf("%d", &reserva.codigo);
 
-                        printf("\nMês entrada: ");
-                        scanf("%d", &datas.mesEntrada);
+                                    if (existeReserva(reserva.codigo, formaArmazenamento) == 0) {
+                                        printf("Código não existente!");
+                                        opcaoReserva = 0;
+                                        pressioneParaContinuar();
+                                    }
+                                    
+                                    printf("Digite o novo código da acomdação: ");
+                                    scanf("%d", &reserva.codigoAcomodacao);
+                                    
+                                    printf("Digite o novo código do hóspede: ");
+                                    scanf("%d", &reserva.codigoHospede);
+                                    
+                                    printf("Digite o novo dia de entrada: ");
+                                    scanf("%d", &reserva.diaEntrada);
+                                    
+                                    printf("Digite o novo mês de entrada: ");
+                                    scanf("%d", &reserva.mesEntrada);
+                                    
+                                    printf("Digite o novo ano de entrada: ");
+                                    scanf("%d", &reserva.anoEntrada);
+                                    
+                                    printf("Digite o novo dia de saída: ");
+                                    scanf("%d", &reserva.diaSaida);
+                                    
+                                    printf("Digite o novo mês de saída: ");
+                                    scanf("%d", &reserva.mesSaida);
+                                    
+                                    printf("Digite o novo ano de saída: ");
+                                    scanf("%d", &reserva.anoSaida);
 
-                        printf("\nAno entrada: ");
-                        scanf("%d", &datas.anoEntrada);
+                                    atualizarReserva(reserva, reserva.codigo, formaArmazenamento);
+                                    opcaoReserva = 0;
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 5:
+                                    //deletar reserva por código
+                                    printf("\e[1;1H\e[2J");
+                                                
+                                    printf("Digite o código da reserva que deseja deletar: ");
+                                    scanf("%d", &reserva.codigo);
 
-                        printf("\n\nDia saída: ");
-                        scanf("%d", &datas.diaSaida);
+                                    cancelarReserva(reserva.codigo, formaArmazenamento);
+                                    opcaoReserva = 0;
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 6:
+                                    //buscar quartos disponíveis(filtros)
+                                    printf("\e[1;1H\e[2J");
+                                    printf("Os campos marcados com * são obrigatórios\n");
+                                    printf("Caso não deseje inserir um campo opcional digite 0\n");
+                                    
+                                    printf("\n*Dia entrada: ");
+                                    scanf("%d", &datas.diaEntrada);
 
-                        printf("\nMês saída: ");
-                        scanf("%d", &datas.mesSaida);
+                                    printf("\n*Mês entrada: ");
+                                    scanf("%d", &datas.mesEntrada);
 
-                        printf("\nAno saída: ");
-                        scanf("%d", &datas.anoSaida);
+                                    printf("\n*Ano entrada: ");
+                                    scanf("%d", &datas.anoEntrada);
 
-                        printf("\nCategoria: ");
-                        scanf("%d", &categoria);
+                                    printf("\n\n*Dia saída: ");
+                                    scanf("%d", &datas.diaSaida);
 
-                        printf("\nQuantidade adultos: ");
-                        scanf("%d", &qtdAdul);
-                        printf("\nQuantidade criancas: ");
-                        scanf("%d", &qtdCrian);
+                                    printf("\n*Mês saída: ");
+                                    scanf("%d", &datas.mesSaida);
 
-                        printf("\nAlguma facilidade? (Ex. banheira, tv...)");
-                        scanf("%d", &facilidade);
+                                    printf("\n*Ano saída: ");
+                                    scanf("%d", &datas.anoSaida);
 
-                        pesquisa(datas, categoria, qtdAdul, qtdCrian, facilidade, opc);
-                        
+                                    printf("\nCategoria: ");
+                                    scanf("%d", &categoria);
+
+                                    printf("\n*Quantidade adultos: ");
+                                    scanf("%d", &qtdAdul);
+                                    
+                                    printf("\nQuantidade criancas: ");
+                                    scanf("%d", &qtdCrian);
+
+                                    printf("\nAlguma facilidade? (Ex. banheira, tv...)");
+                                    scanf("%d", &facilidade);
+                                    
+                                    pesquisa(datas, categoria, qtdAdul, qtdCrian, facilidade, formaArmazenamento);
+                                    opcaoReserva = 0;
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 7:
+                                    opcaoReserva = 0;
+                                break;
+                                
+                                default:
+                                    printf("Opção inválida\n");
+                            }
+                        }while(opcaoReserva != 0);
+                    }
+                case 3: /* Módulo de transações. */
+                    if (operador.permissoes < 3000) {
+                        printf("\e[1;1H\e[2J");
+                        printf("=== Você não tem permissão para acessar este módulo ===\n");
                         pressioneParaContinuar();
                         opcaoModulo = 0;
                     }
-                case 3:
+                    else {
+                        do {
+                            menuTransacoes();
+                            printf("Digite: ");
+                            scanf("%d", &opcaoTransacao);
+                            
+                            switch (opcaoTransacao) {
+                                case 1:
+                                    do {
+                                        int checkinOuCheckout;
+                                        ContaHospede novaConta;
+                                        
+                                        menuCheckIn();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoCheckIn);
+                                        
+                                        switch (opcaoCheckIn) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Digite o código do hóspede: ");
+                                                scanf("%d", &codigoHospede);
+                                                
+                                                printf("Digite o código da reserva: ");
+                                                scanf("%d", &codigoReserva);
+                                                
+                                                efetuarCheckIn(codigoHospede, codigoReserva, formaArmazenamento);
+                                                
+                                                /* Se o check-in foi feito com sucesso, criamos a conta do hóspede. */
+                                                if (checkInExiste(codigoHospede, codigoReserva, formaArmazenamento) == 1) {
+                                                    printf("Pagará as diárias no check-in ou check-out?\n");
+                                                    printf("1 - Check-in\n");
+                                                    printf("2 - Check-out\n");
+                                                    do {
+                                                        printf("Digite: ");
+                                                        scanf("%d", &checkinOuCheckout);
+                                                    }
+                                                    while (checkinOuCheckout < 1 || checkinOuCheckout > 2);
+                                                    
+                                                    /* Gerando um código de conta para o hóspede. */
+                                                    do {
+                                                        novaConta.codigoConta = rand()%10000;
+                                                    }
+                                                    while (contaHospedeExiste(codigoHospede, novaConta.codigoConta, formaArmazenamento) == 1);
+                                                    
+                                                    novaConta.codigoHospede = codigoHospede;
+                                                    novaConta.totalConsumo = 0; /* No momento do chekc-in ainda não há consumo. */
+                                                    
+                                                    /* Colocando as diárias. */
+                                                    if (checkinOuCheckout == 1) {
+                                                        printf("\nO total das diárias é R$ %.2f e já foram pagas.", retornarTotalDiarias(codigoReserva, formaArmazenamento));
+                                                        novaConta.totalDiarias = 0;
+                                                    }
+                                                    else {
+                                                        printf("\nO total das diárias é R$ %.2f e já foram colocadas na conta do hóspede.", retornarTotalDiarias(codigoReserva, formaArmazenamento));
+                                                        novaConta.totalDiarias = retornarTotalDiarias(codigoReserva, formaArmazenamento);
+                                                    }
+                                                }
+                                                
+                                                printf("\nConta criada! Seu código é: %d.\n", novaConta.codigoConta);
+                                                
+                                                opcaoCheckIn = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                opcaoTransacao = 0;
+                                            break;
+                                            default:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Opção inválida!\n\n");
+                                                pressioneParaContinuar();
+                                        }
+                                    }
+                                    while (opcaoCheckIn < 1 || opcaoCheckIn > 2);
+                                break;
+                                case 2:
+                                    int contadorTentativas = 0;
+                                    int diaVenc;
+                                    int mesVenc;
+                                    int anoVenc;
+                                    ContaHospede conta;
+                                    
+                                    do {
+                                        menuCheckOut();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoCheckout);
+                                        
+                                        switch (opcaoCheckout) {
+                                            case 1:
+                                                do {
+                                                    printf("Digite o seu código de hóspede (se não souber, coloque -1): ");
+                                                    scanf("%d", &codigoHospede);
+
+                                                    printf("Digite o código da sua conta: ");
+                                                    scanf("%d", &codigoConta);
+                                                    
+                                                    if (codigoHospede == -1 && codigoConta == -1) {
+                                                        printf("Você deve informar pelo menos um dos campos.\n");
+                                                        contadorTentativas++;
+                                                    }
+                                                    
+                                                    if (contadorTentativas == 3) {
+                                                        printf("Você tentou vezes demais. Voltando ao menu de transações...\n");
+                                                        opcaoTransacao = 0;
+                                                        pressioneParaContinuar();
+                                                    }
+                                                }
+                                                while (codigoHospede == -1 && codigoConta == -1);
+                                                
+                                                if (contaHospedeExiste(codigoHospede, codigoConta, formaArmazenamento) == 1) {
+                                                    conta = retornarConta(codigoHospede, formaArmazenamento);
+                                                }
+                                                else {
+                                                    printf("Essa conta não existe.");
+                                                    opcaoCheckout = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("O total da estadia é R$ %.2f. Efetuando check-out...", (conta.totalConsumo + conta.totalDiarias));
+                                                
+                                                efetuarCheckOutDinheiro(conta, formaArmazenamento);
+                                                
+                                                opcaoCheckout = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                do {
+                                                    printf("Digite o seu código de hóspede (se não souber, coloque -1): ");
+                                                    scanf("%d", &codigoHospede);
+
+                                                    printf("Digite o código da sua conta: ");
+                                                    scanf("%d", &codigoConta);
+                                                    
+                                                    if (codigoHospede == -1 && codigoConta == -1) {
+                                                        printf("Você deve informar pelo menos um dos campos.\n");
+                                                        contadorTentativas++;
+                                                    }
+                                                    
+                                                    if (contadorTentativas == 3) {
+                                                        printf("Você tentou vezes demais. Voltando ao menu de transações...\n");
+                                                        opcaoTransacao = 0;
+                                                        contadorTentativas = 0;
+                                                        pressioneParaContinuar();
+                                                    }
+                                                }
+                                                while (codigoHospede == -1 && codigoConta == -1);
+                                                
+                                                if (contaHospedeExiste(codigoHospede, codigoConta, formaArmazenamento) == 1) {
+                                                    conta = retornarConta(codigoHospede, formaArmazenamento);
+                                                }
+                                                else {
+                                                    printf("Essa conta não existe.\n");
+                                                    opcaoCheckout = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("\nO total da estadia é R$ %.2f. Informe os dados a seguir:\n", (conta.totalConsumo + conta.totalDiarias));
+                                                
+                                                do {
+                                                    printf("Digite o dia do próximo vencimento de seu cartão: ");
+                                                    scanf("%d", &diaVenc);
+
+                                                    printf("Digite o mês do próximo vencimento de seu cartão: ");
+                                                    scanf("%d", &mesVenc);
+
+                                                    printf("Digite o ano do próximo vencimento de seu cartão: ");
+                                                    scanf("%d", &anoVenc);
+                                                    
+                                                    if (mesVenc < retornarMesAtual() && anoVenc < retornarAnoAtual()) {
+                                                        printf("\nDigite uma data posterior à de hoje.\n");
+                                                        contadorTentativas++;
+                                                    }
+                                                    
+                                                    if (contadorTentativas == 3) {
+                                                        printf("Você tentou vezes demais. Voltando ao menu de transações...\n");
+                                                        opcaoTransacao = 0;
+                                                        contadorTentativas;
+                                                        pressioneParaContinuar();
+                                                    }
+                                                }
+                                                while (mesVenc < retornarMesAtual() && anoVenc < retornarAnoAtual());
+                                                
+                                                efetuarCheckOutCartao(conta, formaArmazenamento, diaVenc, mesVenc, anoVenc);
+                                                
+                                                opcaoCheckout = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 3:
+                                                opcaoTransacao = 0;
+                                            break;
+                                            default:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Opção inválida!\n\n");
+                                                pressioneParaContinuar();
+                                        }
+                                    }
+                                    while (opcaoCheckout < 1 || opcaoCheckout > 3);
+                                break;
+                                case 3:
+                                    int aPrazoOuAVista;
+                                    int diaPag;
+                                    int mesPag;
+                                    int anoPag;
+                                    float entrada;
+                                    float aPrazo;
+                                    
+                                    do {
+                                        menuEntradaProdutos();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoEntradaProdutos);
+                                        
+                                        switch (opcaoEntradaProdutos) {
+                                            case 1:
+                                                printf("\e[1;1H\e[2J");
+                                                totalComprado = 0;
+                                                
+                                                do {
+                                                    printf("\nDigite o código do produto: ");
+                                                    scanf("%d", &produtoAtual.codigoProduto);
+                                                    
+                                                    printf("Digite a descrição do produto: ");
+                                                    scanf("%[^\n]s", produtoAtual.descricao);
+                                                    
+                                                    printf("Digite o preço de custo do produto: ");
+                                                    scanf("%f", &produtoAtual.precoCusto);
+                                                    
+                                                    printf("Digite a quantidade comprada do produto: ");
+                                                    scanf("%d", &produtoAtual.quantidade);
+                                                    
+                                                    produtoAtual.precoTotal = produtoAtual.precoCusto * produtoAtual.quantidade;
+                                                    
+                                                    totalComprado += produtoAtual.precoTotal;
+                                                    
+                                                    /* Colocando no vetor de produtos comprados. */
+                                                    listaProdutosComprados = (ProdutosComprados*)realloc(listaProdutosComprados, (qtdeProdutosDiferentes + 1) * sizeof(ProdutosComprados));
+                                                    qtdeProdutosDiferentes++;
+                                                    
+                                                    printf("\nDeseja adicionar mais produtos?");
+                                                    printf("\n1 - Sim");
+                                                    printf("\n2 - Não");
+                                                    printf("\nDigite: ");
+                                                    scanf("%d", &opcaoMaisProdutos);
+                                                }
+                                                while (opcaoMaisProdutos != 2);
+                                                    
+                                                /* Lendo os dados da nota fiscal. */
+                                                printf("Digite o código do fornecedor da nota fiscal: ");
+                                                scanf("%d", &notaFiscal.codigoFornecedor);
+                                                
+                                                if (fornecedorExiste(notaFiscal.codigoFornecedor, formaArmazenamento) == 0) {
+                                                    printf("Fornecedor não existe. Cadastre-o primeiro.");
+                                                    opcaoTransacao = 0;
+                                                    pressioneParaContinuar();
+                                                    break;
+                                                }
+                                                
+                                                printf("Digite o preço total do frete dos produto: ");
+                                                scanf("%f", &notaFiscal.precoFrete);
+                                                
+                                                printf("Digite o preço do imposto total dos produtos: ");
+                                                scanf("%f", &notaFiscal.imposto);
+                                                
+                                                notaFiscal.qtdeProdutosDiferentes = qtdeProdutosDiferentes;
+                                                
+                                                entradaProdutos(notaFiscal, listaProdutosComprados, formaArmazenamento);
+                                                
+                                                do  {
+                                                    printf("\nA compra é à vista ou a prazo?");
+                                                    printf("\n1 - À vista");
+                                                    printf("\n2 - A prazo");
+                                                    printf("Digite: ");
+                                                    scanf("%d", &aPrazoOuAVista);
+                                                }
+                                                while (aPrazoOuAVista < 1 || aPrazoOuAVista > 2);
+                                                
+                                                /* Entrando com os produtos. */
+                                                entradaProdutos(notaFiscal, listaProdutosComprados, formaArmazenamento);
+                                                
+                                                if (aPrazoOuAVista == 1) {
+                                                    pagamentoProdutosAVista(totalComprado, formaArmazenamento);
+                                                }
+                                                else {
+                                                    printf("\nDigite a entrada do pagamento (se não houver digite 0): ");
+                                                    scanf("%f", &entrada);
+                                                    
+                                                    if (entrada == 0) {
+                                                        aPrazo = totalComprado;
+                                                    }
+                                                    else {
+                                                        aPrazo = totalComprado - entrada;
+                                                    }
+                                                    
+                                                    printf("\nO pagamento a prazo foi calculado e é de R$ %.2f.", aPrazo);
+                                                    
+                                                    /* Entrada da data do pagamento. */
+                                                    do {
+                                                        printf("Digite o dia do pagamento: ");
+                                                        scanf("%d", &diaPag);
+
+                                                        printf("Digite o mes do pagamento: ");
+                                                        scanf("%d", &mesPag);
+
+                                                        printf("Digite o ano do pagamento: ");
+                                                        scanf("%d", &anoPag);
+                                                        
+                                                        if ((mesPag < retornarMesAtual() && anoPag < retornarAnoAtual()) || anoPag < retornarAnoAtual()) {
+                                                            printf("\nDigite uma data posterior à de hoje.");
+                                                        }
+                                                    }
+                                                    while ((mesPag < retornarMesAtual() && anoPag < retornarAnoAtual()) || anoPag < retornarAnoAtual());
+                                                    
+                                                    pagamentoProdutosAPrazo(entrada, aPrazo, diaPag, mesPag, anoPag, formaArmazenamento);
+                                                }
+                                                
+                                                opcaoEntradaProdutos = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                opcaoTransacao = 0;
+                                            break;
+                                            default:
+                                                printf("\e[1;1H\e[2J");
+                                                printf("Opção inválida!\n\n");
+                                                pressioneParaContinuar();
+                                        }
+                                    }
+                                    while (opcaoEntradaProdutos < 1 || opcaoEntradaProdutos > 2);
+                                break;
+                                case 4:
+                                    int maisProdutosVenda;
+                                    int codigoProduto;
+                                    int quantidade;
+                                    int aVistaOuParaAnotar;
+                                    
+                                    do {
+                                        menuVendaProdutos();
+                                        printf("Digite: ");
+                                        scanf("%d", &opcaoVenda);
+                                        
+                                        switch (opcaoVenda) {
+                                            case 1:
+                                                do {
+                                                    printf("Digite o código do produto que deseja comprar: ");
+                                                    scanf("%d", &codigoProduto);
+                                                    
+                                                    if (produtoExiste(codigoProduto, formaArmazenamento) == 0) {
+                                                        printf("\nProduto não existe!");
+                                                        maisProdutosVenda = 0;
+                                                        continue;
+                                                    }
+                                                    
+                                                    printf("Digite a quantidade desse produto: ");
+                                                    scanf("%d", &quantidade);
+                                                    
+                                                    /* Inserindo os produtos no vetor. */
+                                                    for (int i = 0; i < quantidade; i++) {
+                                                        produtosVenda = (int*)realloc(produtosVenda, (qtdeProdutos + 1) * sizeof(int));
+                                                        produtosVenda[qtdeProdutos] = codigoProduto;
+                                                        qtdeProdutos++;
+                                                    }
+                                                    
+                                                    do  {
+                                                        printf("\nDeseja adicionar mais produtos?");
+                                                        printf("1 - Sim");
+                                                        printf("2 - Não");
+                                                        printf("Digite: ");
+                                                        scanf("%d", &maisProdutosVenda);
+                                                    }
+                                                    while (maisProdutosVenda < 1 || maisProdutosVenda > 2);
+                                                    
+                                                    if (maisProdutosVenda == 2) {
+                                                        do {
+                                                            printf("\nQual a forma de pagamento?");
+                                                            printf("\n1 - À vista");
+                                                            printf("\n2 - Para anotar");
+                                                            printf("Digite: ");
+                                                            scanf("%d", &aVistaOuParaAnotar);
+                                                        }
+                                                        while (aVistaOuParaAnotar < 1 || aVistaOuParaAnotar > 2);
+                                                        
+                                                        if (aVistaOuParaAnotar == 1) {
+                                                            inserirVendaAVista(produtosVenda, qtdeProdutos, formaArmazenamento);
+                                                            
+                                                            /* Liberando a memória. */
+                                                            produtosVenda = (int*)realloc(produtosVenda, 0 * sizeof(int));
+                                                            free(produtosVenda);
+                                                            qtdeProdutos = 0;
+                                                        }
+                                                        else {
+                                                            do {
+                                                                printf("\nDigite o seu código de hóspede: ");
+                                                                scanf("%d", &codigoHospede);
+                                                            }
+                                                            while (hospedeExiste(codigoHospede, formaArmazenamento) == 0);
+                                                            
+                                                            inserirVendaAnotar(codigoHospede, produtosVenda, qtdeProdutos, formaArmazenamento);
+                                                            
+                                                            /* Liberando a memória. */
+                                                            produtosVenda = (int*)realloc(produtosVenda, 0 * sizeof(int));
+                                                            free(produtosVenda);
+                                                            qtdeProdutos = 0;
+                                                        }
+                                                    }
+                                                }
+                                                while (maisProdutosVenda != 2);
+                                                
+                                                opcaoVenda = 0;
+                                                pressioneParaContinuar();
+                                            break;
+                                            case 2:
+                                                opcaoTransacao = 0;
+                                            break;
+                                        }
+                                    }
+                                    while (opcaoVenda < 1 || opcaoVenda > 2);
+                                break;
+                                case 5:
+                                    opcaoModulo = 0;
+                                break;
+                                default:
+                                    printf("\e[1;1H\e[2J");
+                                    printf("Opção inválida!\n\n");
+                                    pressioneParaContinuar();
+                            }
+                        }
+                        while (opcaoTransacao < 1 || opcaoTransacao > 5);
+                    }
+                break;
+                case 4: /* Módulo de feedback. */
+                    if (operador.permissoes < 4000) {
+                        printf("\e[1;1H\e[2J");
+                        printf("=== Você não tem permissão para acessar este módulo ===\n");
+                        pressioneParaContinuar();
+                        opcaoModulo = 0;
+                    }
+                break;
+                case 5: /* Módulo de importação/exportação de dados. */
+                    if (operador.permissoes < 5000) {
+                        printf("\e[1;1H\e[2J");
+                        printf("=== Você não tem permissão para acessar este módulo ===\n");
+                        pressioneParaContinuar();
+                        opcaoModulo = 0;
+                    }
+                break;
+                case 6:
                     printf("\nEncerrando o programa...\n");
                     
                     /* Liberando a memória caso ela tenha sido usada. */
@@ -1299,6 +2144,7 @@ int main(int argc, char** argv) {
                     free(listaHotel);
                     free(listaOperadores);
                     free(listaProdutos);
+                    free(listaReservas);
                 break;
                 default:
                     printf("\e[1;1H\e[2J");
@@ -1361,6 +2207,12 @@ int main(int argc, char** argv) {
                                                 
                                                 printf("Digite o horário de check-out do hotel: ");
                                                 scanf("%s", hotel.horarioCheckOut);
+                                                
+                                                if (contadorHotel > 0) {
+                                                    contadorHotel = 0;
+                                                    /* Evita de adicionar mais
+                                                     * de um hotel no vetor. */
+                                                }
                                                 
                                                 inserirHotelMemoria(hotel, &listaHotel, &contadorHotel);
                                                 
@@ -2151,14 +3003,222 @@ int main(int argc, char** argv) {
                             }}
                         while (opcaoGestaoDados < 1 || opcaoGestaoDados > 8);
                     }
-                        break;
+                break;
+                
                 case 2: /* Reservas. */
                     if (operador.permissoes < 2000) {
                         pressioneParaContinuar();
                         opcaoModulo = 0;
                     }
                     else {
-                        
+                        do {
+                            Data datas;
+                            int categoria;
+                            int qtdAdul;
+                            int qtdCrian;
+                            int facilidade;
+                            menuReservas();
+                            printf("Digite: ");
+                            scanf("%d", &opcaoReserva);
+
+                            switch (opcaoReserva) {
+                                case 1:
+                                    //cadastrar reserva
+                                    printf("\e[1;1H\e[2J");
+                                     
+                                    int opc;
+                                    
+                                    do{
+                                        printf("Você já possui um código de hóspede?\n");
+                                        printf("1 - Sim\n");
+                                        printf("2 - Não\n");
+                                        scanf("%d",&opc);
+                                        
+                                        if(opc != 1 && opc != 2){
+                                            printf("Opção inválida!\n");
+                                        }
+                                    }while(opc < 1 || opc > 2);
+                                    
+                                    if(opc == 1){
+                                        printf("Digite o código do hóspede: ");
+                                        scanf("%d", &reserva.codigoHospede);
+                                    }else{
+                                        inserirHospedeMemoria(hospede, &listaHospedes, &contadorHospedes);
+                                        reserva.codigoHospede = hospede.codigo;
+                                    }
+                                    
+                                    printf("Digite o código da reserva: ");
+                                    scanf("%d", &reserva.codigo);
+                                    
+                                    if(existeReservaMemoria(&listaReservas, contadorReservas, reserva.codigo) == 0){
+                                        printf("Código inexistente!");
+                                        opcaoHospede = 0;
+                                        pressioneParaContinuar();
+                                    }
+                                    
+                                    printf("Digite o código da acomdação: ");
+                                    scanf("%d", &reserva.codigoAcomodacao);
+                                    
+                                    if(acomodacaoExisteMemoria(&listaAcomodacao, contadorAcomodacao, reserva.codigoAcomodacao) == 0){
+                                        printf("Acomodação inexistente!");
+                                        opcaoReserva = 0;
+                                        pressioneParaContinuar();
+                                    }
+                                    
+                                    printf("Digite o dia de entrada: ");
+                                    scanf("%d", &reserva.diaEntrada);
+                                    
+                                    printf("Digite o mês de entrada: ");
+                                    scanf("%d", &reserva.mesEntrada);
+                                    
+                                    printf("Digite o ano de entrada: ");
+                                    scanf("%d", &reserva.anoEntrada);
+                                    
+                                    printf("Digite o dia de saída: ");
+                                    scanf("%d", &reserva.diaSaida);
+                                    
+                                    printf("Digite o mês de saída: ");
+                                    scanf("%d", &reserva.mesSaida);
+                                    
+                                    printf("Digite o ano de saída: ");
+                                    scanf("%d", &reserva.anoSaida);
+                                    
+                                    cadastrarReservaMemoria(reserva, &listaReservas, &contadorReservas, &listaAcomodacao, contadorAcomodacao);
+                                    
+                                    opcaoReserva = 0;
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 2:
+                                    //buscar reserva por código
+                                    printf("\e[1;1H\e[2J");
+                                    printf("Digite o código da reserva: ");
+                                    scanf("%d", &reserva.codigo);
+
+                                    lerReservaMemoria(&listaReservas, contadorReservas, reserva.codigo);
+                                    
+                                    opcaoReserva = 0;
+                                    
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 3: 
+                                    //listar reservas
+                                    printf("\e[1;1H\e[2J");
+                                    listarReservasMemoria(&listaReservas, contadorReservas);
+                                    opcaoReserva = 0;
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 4:
+                                    //atualizar reseva por código
+                                    printf("\e[1;1H\e[2J");
+                                                
+                                    printf("Digite o código da reserva que deseja atualizar: ");
+                                    scanf("%d", &reserva.codigo);
+
+                                    if(existeReservaMemoria(&listaReservas, contadorReservas, reserva.codigo) == 0){
+                                        printf("Código já existente!");
+                                        opcaoHospede = 0;
+                                        pressioneParaContinuar();
+                                    }
+                                    
+                                    printf("Digite o novo código da acomdação: ");
+                                    scanf("%d", &reserva.codigoAcomodacao);
+                                    
+                                    if(acomodacaoExisteMemoria(&listaAcomodacao, contadorAcomodacao, reserva.codigoAcomodacao) == 0){
+                                        printf("Acomodação inexistente!");
+                                        opcaoReserva = 0;
+                                        pressioneParaContinuar();
+                                    }
+                                    
+                                    printf("Digite o novo código do hóspede: ");
+                                    scanf("%d", &reserva.codigoHospede);
+                                    
+                                    printf("Digite o novo dia de entrada: ");
+                                    scanf("%d", &reserva.diaEntrada);
+                                    
+                                    printf("Digite o novo mês de entrada: ");
+                                    scanf("%d", &reserva.mesEntrada);
+                                    
+                                    printf("Digite o novo ano de entrada: ");
+                                    scanf("%d", &reserva.anoEntrada);
+                                    
+                                    printf("Digite o novo dia de saída: ");
+                                    scanf("%d", &reserva.diaSaida);
+                                    
+                                    printf("Digite o novo mês de saída: ");
+                                    scanf("%d", &reserva.mesSaida);
+                                    
+                                    printf("Digite o novo ano de saída: ");
+                                    scanf("%d", &reserva.anoSaida);
+
+                                    atualizarReservaMemoria(&listaReservas, reserva, reserva.codigo, contadorReservas, &listaAcomodacao, contadorAcomodacao);
+                                    opcaoReserva = 0;
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 5:
+                                    //deletar reserva por código
+                                    printf("\e[1;1H\e[2J");
+                                                
+                                    printf("Digite o código da reserva que deseja deletar: ");
+                                    scanf("%d", &reserva.codigo);
+
+                                    cancelarReservaMemoria(&listaReservas, &contadorReservas, reserva.codigo);
+                                    opcaoReserva = 0;
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 6:
+                                    //buscar quartos disponíveis(filtros)
+                                    printf("\e[1;1H\e[2J");
+                                    printf("Os campos marcados com * são obrigatórios\n");
+                                    printf("Caso não deseje inserir um campo opcional digite 0\n");
+                                    
+                                    printf("*Dia entrada: ");
+                                    scanf("%d", &datas.diaEntrada);
+
+                                    printf("*Mês entrada: ");
+                                    scanf("%d", &datas.mesEntrada);
+
+                                    printf("*Ano entrada: ");
+                                    scanf("%d", &datas.anoEntrada);
+
+                                    printf("\n*Dia saída: ");
+                                    scanf("%d", &datas.diaSaida);
+
+                                    printf("*Mês saída: ");
+                                    scanf("%d", &datas.mesSaida);
+
+                                    printf("*Ano saída: ");
+                                    scanf("%d", &datas.anoSaida);
+
+                                    printf("\nCategoria: ");
+                                    scanf("%d", &categoria);
+
+                                    printf("*Quantidade adultos: ");
+                                    scanf("%d", &qtdAdul);
+                                    
+                                    printf("Quantidade criancas: ");
+                                    scanf("%d", &qtdCrian);
+
+                                    printf("Alguma facilidade? (Ex. banheira, tv...)");
+                                    scanf("%d", &facilidade);
+                                    
+                                    pesquisaMemoria(datas, categoria, qtdAdul, qtdCrian, facilidade, &listaAcomodacao, contadorAcomodacao, &listaCatAcom, contadorCatAcom, &listaReservas, &contadorReservas);
+                                    opcaoReserva = 0;
+                                    pressioneParaContinuar();
+                                break;
+                                
+                                case 7:
+                                    opcaoReserva = 0;
+                                break;
+                                
+                                default:
+                                    printf("Opção inválida\n");
+                            }
+                        }while(opcaoReserva != 0);
                     }
                 break;
                 case 3:

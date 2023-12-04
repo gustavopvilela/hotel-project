@@ -12,6 +12,7 @@ extern "C" {
 
 /* Estrutura referente às contas a receber. */
 typedef struct {
+    int codigoHospede;
     float montante;
     char descricao[200];
     int diaRecebimento;

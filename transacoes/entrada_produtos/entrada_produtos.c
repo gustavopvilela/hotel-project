@@ -179,7 +179,7 @@ void pagamentoProdutosAPrazo (float entrada, float aPrazo, int diaPag, int mesPa
             }
             
             contasPagar.montante = aPrazo;
-            contasPagar.descricao = "Entrada de produtos";
+            strcpy(contasPagar.descricao, "Entrada de produtos");
             contasPagar.diaPagamento = diaPag;
             contasPagar.mesPagamento = mesPag;
             contasPagar.anoPagamento = anoPag;
@@ -260,9 +260,11 @@ void gerarNotaFiscal (NotaFiscal dados, ProdutosComprados* listaProdutosComprado
     /* Pegando os dados do fornecedor para inserir na nota fiscal. */
     Fornecedor fornecedor = retornarFornecedor(dados.codigoFornecedor, opcao);
     
+    char nomeArquivo[100];
+    
     switch (opcao) {
         case 1:
-            char nomeArquivo[100];
+            
             snprintf(nomeArquivo, sizeof(nomeArquivo), "notaFiscal-%s.bin", retornarHoraAtual());
             snprintf(nomeArquivo, sizeof(nomeArquivo), "%s%s", CAMINHO_NOTA_FISCAL, nomeArquivo);
             
@@ -279,7 +281,6 @@ void gerarNotaFiscal (NotaFiscal dados, ProdutosComprados* listaProdutosComprado
             fclose(notaFiscalBin);
         break;
         case 2:
-            char nomeArquivo[100];
             snprintf(nomeArquivo, sizeof(nomeArquivo), "notaFiscal-%s.txt", retornarHoraAtual());
             snprintf(nomeArquivo, sizeof(nomeArquivo), "%s%s", CAMINHO_NOTA_FISCAL, nomeArquivo);
 

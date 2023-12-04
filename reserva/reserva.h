@@ -25,7 +25,7 @@ typedef struct{
 
 
 /*estrutura referente aos dados de cada reserva*/
-typedef struct {
+typedef struct{
     int codigo;
     int codigoAcomodacao; //chave estrangeira da acomodação
     int codigoHospede; //chave estrangeira do hóspede
@@ -35,7 +35,7 @@ typedef struct {
     int diaSaida;
     int mesSaida;
     int anoSaida;
-} Reserva;
+}Reserva;
 
 int validaData(Data datas);
 void pesquisaData(Data datas, int *contadorData, int **quartosDisponiveisData, int opcao);
@@ -59,9 +59,13 @@ void lerReservaMemoria(Reserva *listaReservas, int tamanho, int codigo);
 void listarReservas(int opcao);
 void listarReservasMemoria (Reserva *listaReservas, int tamanho);
 void atualizarReserva (Reserva novosDados, int codigo, int opcao);
-void atualizarReservaMemoria (Reserva *listaReservas, Reserva novosDados, int codigo, int tamanho, Acomodacao listaAcomodacoes,  int contadorAcomodacoes);
+void atualizarReservaMemoria (Reserva *listaReservas, Reserva novosDados, int codigo, int tamanho, Acomodacao *listaAcomodacoes,  int contadorAcomodacoes);
 void cancelarReserva(int codigo, int opcao);
 void cancelarReservaMemoria (Reserva *listaReservas, int *tamanho, int codigo);
+float retornarTotalDiarias (int codigoReserva, int opcao);
+int anoEBissexto(int ano);
+int calcularDiaJuliano(int dia, int mes, int ano);
+int calcularDiferencaDatas(int dia1, int mes1, int ano1, int dia2, int mes2, int ano2);
 
 
 #ifdef __cplusplus
@@ -69,4 +73,3 @@ void cancelarReservaMemoria (Reserva *listaReservas, int *tamanho, int codigo);
 #endif
 
 #endif /* RESERVA_H */
-

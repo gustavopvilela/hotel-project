@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../../reserva/reserva.h"
 #include "../controle_caixa/caixa/caixa.h"
 #include "../controle_caixa/contas_receber/contas_receber.h"
@@ -62,7 +63,7 @@ void efetuarCheckOutDinheiro (ContaHospede conta, int opcao) {
             total += conta.totalConsumo; /* Adicionando o total de consumo. */
             
             /* Pegando o montante atual do caixa. */
-            caixa.montante = retornarMontanteCaixa();
+            caixa.montante = retornarMontanteCaixa(opcao);
             
             /* Agora, escrevendo o novo montante no arquivo. */
             caixa.montante += total;
@@ -137,8 +138,9 @@ void efetuarCheckOutCartao (ContaHospede conta, int opcao, int diaVencCartao, in
                 exit(1);
             }
             
+            contasReceber.codigoHospede = conta.codigoHospede;
             contasReceber.montante = total;
-            contasReceber.descricao = "Check-out";
+            strcpy(contasReceber.descricao, "Check-out");
             contasReceber.diaRecebimento = diaVencCartao;
             contasReceber.mesRecebimento = mesVencCartao;
             contasReceber.anoRecebimento = anoVencCartao;
@@ -171,13 +173,14 @@ void efetuarCheckOutCartao (ContaHospede conta, int opcao, int diaVencCartao, in
                 exit(1);
             }
 
+            contasReceber.codigoHospede = conta.codigoHospede;
             contasReceber.montante = total;
             strcpy(contasReceber.descricao, "Check-out");
             contasReceber.diaRecebimento = diaVencCartao;
             contasReceber.mesRecebimento = mesVencCartao;
             contasReceber.anoRecebimento = anoVencCartao;
 
-            fprintf(contasReceberTxt, "Montante: %.2f\nDescrição: %s\nDiaRecebimento: %d\nMesRecebimento: %d\nAnoRecebimento: %d\n", contasReceber.montante, contasReceber.descricao,
+            fprintf(contasReceberTxt, "Hóspede: %d\nMontante: %.2f\nDescrição: %s\nDiaRecebimento: %d\nMesRecebimento: %d\nAnoRecebimento: %d\n", contasReceber.codigoHospede, contasReceber.montante, contasReceber.descricao,
                     contasReceber.diaRecebimento, contasReceber.mesRecebimento, contasReceber.anoRecebimento);
 
             fclose(contasReceberTxt);
@@ -312,7 +315,7 @@ ContaHospede retornarConta (int codigoHospede, int opcao) {
     }
 }
 
-int contaHospedeExiste (int codigoHospede, int opcao) {
+int contaHospedeExiste (int codigoHospede, int codigoConta, int opcao) {
     ContaHospede conta;
     int encontrado = 0;
     
@@ -328,7 +331,10 @@ int contaHospedeExiste (int codigoHospede, int opcao) {
 
             while (fread(&conta, sizeof(ContaHospede), 1, arqContaBin) == 1) {
                 if (conta.codigoHospede == codigoHospede) {
-                    fclose(arqContaBin);
+                    encontrado = 1; // A conta existe
+                    break;
+                }
+                if (conta.codigoConta == codigoConta) {
                     encontrado = 1; // A conta existe
                     break;
                 }
@@ -348,8 +354,12 @@ int contaHospedeExiste (int codigoHospede, int opcao) {
 
             while (fscanf(arqContaTxt, "%*s %d\n%*s %d\n%*s %f\n%*s %f", &conta.codigoConta, &conta.codigoHospede, &conta.totalDiarias, &conta.totalConsumo) == 4) {
                 if (conta.codigoHospede == codigoHospede) {
-                    fclose(arqContaTxt);
                     encontrado = 1; // A conta existe
+                    break;
+                }
+                if (conta.codigoConta == codigoConta) {
+                    encontrado = 1; // A conta existe
+                    break;
                 }
             }
 

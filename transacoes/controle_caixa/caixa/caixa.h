@@ -43,6 +43,7 @@ int retornarMesAtual();
 int retornarAnoAtual();
 float retornarMontanteCaixa (int opcao);
 void inserirLancamento (float total, char* descricao, int opcao);
+void inserirRetirada (float total, char* descricao, int opcao);
 
 #ifdef __cplusplus
 }

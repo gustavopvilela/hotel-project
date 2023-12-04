@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "reserva.h"
+#include "../reserva/reserva.h"
 #include "../gestao_dados/acomodacao/acomodacao.h"
 #include "../gestao_dados/categoria_acomodacao/categoria_acomodacao.h"
 
@@ -1012,12 +1012,12 @@ int existeReserva(int codigo, int opcao) {
             rewind(reservaBin);
             while (fread(&reserva, sizeof (Reserva), 1, reservaBin) == 1) {
                 if (reserva.codigo == codigo) {
-                    return 0; //já existe uma reserva com esse código
+                    return 1; //já existe uma reserva com esse código
                 }
             }
             fclose(reservaBin);
-            return 1;
-            break;
+            return 0;
+        break;
 
         case 2:
             FILE *reservaTxt;
@@ -1038,14 +1038,16 @@ int existeReserva(int codigo, int opcao) {
                     reserva.mesEntrada, reserva.anoEntrada, reserva.diaSaida,
                     reserva.mesSaida, reserva.anoSaida) == 9) {
                 if (reserva.codigo == codigo) {
-                    return 0; //já existe uma reserva com esse código
+                    return 1; //já existe uma reserva com esse código
                 }
             }
 
             fclose(reservaTxt);
-            return 1;
-            break;
+            return 0;
+        break;
     }
+    
+    return 1;
 }
 
 int existeReservaMemoria(Reserva *listaReservas, int tamanho, int codigo) {
@@ -1061,8 +1063,8 @@ int existeReservaMemoria(Reserva *listaReservas, int tamanho, int codigo) {
 
 void cadastrarReserva(Reserva reserva, int opcao) {
     Data datas;
-    int *quartosDisponiveis;
-    int contadorDisponiveis;
+    int *quartosDisponiveis = NULL;
+    int contadorDisponiveis = 0;
     /*Bloqueando o terminal*/
     freopen("/dev/null", "w", stdout);
 
@@ -1083,7 +1085,8 @@ void cadastrarReserva(Reserva reserva, int opcao) {
 
     /* Desbloqueando o terminal. */
     freopen("/dev/tty", "w", stdout);
-
+    
+    free(quartosDisponiveis);
     if (flag == 1) {
         if (existeReserva(reserva.codigo, opcao) != 0) {
             switch (opcao) {
@@ -1149,8 +1152,8 @@ void cadastrarReserva(Reserva reserva, int opcao) {
 
 void cadastrarReservaMemoria(Reserva novaReserva, Reserva **listaReservas, int *contador, Acomodacao *listaAcomodacoes, int contadorAcomodacoes) {
     Data datas;
-    int *quartosDisponiveis;
-    int contadorDisponiveis;
+    int *quartosDisponiveis = NULL;
+    int contadorDisponiveis = 0;
 
     /*Bloqueando o terminal*/
     freopen("/dev/null", "w", stdout);
@@ -1169,6 +1172,8 @@ void cadastrarReservaMemoria(Reserva novaReserva, Reserva **listaReservas, int *
             flag = 1;
         }
     }
+    
+    free(quartosDisponiveis);
 
     /* Desbloqueando o terminal. */
     freopen("/dev/tty", "w", stdout);
@@ -1362,8 +1367,8 @@ void listarReservasMemoria(Reserva *listaReservas, int tamanho) {
 
 void atualizarReserva(Reserva novosDados, int codigo, int opcao) {
     Data datas;
-    int *quartosDisponiveis;
-    int contadorDisponiveis;
+    int *quartosDisponiveis = NULL;
+    int contadorDisponiveis = 0;
 
     /*Bloqueando o terminal*/
     freopen("/dev/null", "w", stdout);
@@ -1383,6 +1388,7 @@ void atualizarReserva(Reserva novosDados, int codigo, int opcao) {
         }
     }
 
+    free(quartosDisponiveis);
     /* Desbloqueando o terminal. */
     freopen("/dev/tty", "w", stdout);
 
@@ -1438,7 +1444,7 @@ void atualizarReserva(Reserva novosDados, int codigo, int opcao) {
     }
 }
 
-void atualizarReservaMemoria(Reserva *listaReservas, Reserva novosDados, int codigo, int tamanho, Acomodacao listaAcomodacoes, int contadorAcomodacoes) {
+void atualizarReservaMemoria(Reserva *listaReservas, Reserva novosDados, int codigo, int tamanho, Acomodacao *listaAcomodacoes, int contadorAcomodacoes) {
     int encontrado = 0;
     Data datas;
     int *quartosDisponiveis;
@@ -1613,4 +1619,160 @@ void cancelarReservaMemoria(Reserva *listaReservas, int *tamanho, int codigo) {
     if (encontrado == 0) {
         printf("Cancelamento não concluído. Reserva não encontrado.\n");
     }
+}
+
+float retornarTotalDiarias (int codigoReserva, int opcao) {
+    Reserva reserva;
+    Acomodacao acomodacao;
+    CategoriaAcomodacao catAcom;
+    
+    int qtdeDiarias;
+    float valorDiaria;
+    
+    switch (opcao) {
+        case 1:
+            FILE *reservaBin;
+            reservaBin = fopen(RESERVA_BIN, "rb");
+
+            /* Verificação da abertura. */
+            if (reservaBin == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            FILE *acomodacaoBin;
+            acomodacaoBin = fopen(ACOMODACAO_BIN, "rb");
+
+            /* Verificação da abertura. */
+            if(acomodacaoBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            FILE *catAcomBin;
+            catAcomBin = fopen(CATACOM_BIN, "rb");
+
+            /* Verificação da abertura. */
+            if(catAcomBin == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+
+            rewind(reservaBin);
+            while (fread(&reserva, sizeof (Reserva), 1, reservaBin) == 1) {
+                if (reserva.codigo == codigoReserva) {
+                    qtdeDiarias = calcularDiferencaDatas(reserva.diaEntrada, reserva.mesEntrada, reserva.anoEntrada, reserva.diaSaida, reserva.mesSaida, reserva.anoSaida);
+                    
+                    rewind(acomodacaoBin);
+                    while (fread(&acomodacao, sizeof(Acomodacao), 1, acomodacaoBin) == 1) {
+                        if (acomodacao.codigo == reserva.codigoAcomodacao) {
+                            rewind(catAcomBin);
+                            while (fread(&catAcom, sizeof(CategoriaAcomodacao), 1, catAcomBin) == 1) {
+                                if (catAcom.codigo == acomodacao.categoria) {
+                                    valorDiaria = catAcom.valorDiaria;
+                                    break;
+                                }
+                            }
+                            
+                            break;
+                        }
+                    }
+                    
+                    break;
+                }
+            }
+            
+            /* Fechando os arquivos. */
+            fclose(reservaBin);
+            fclose(acomodacaoBin);
+            fclose(catAcomBin);
+            
+            return qtdeDiarias * valorDiaria;
+        break;
+        case 2:
+            FILE *reservaTxt;
+            reservaTxt = fopen(RESERVA_TXT, "r");
+
+            /* Verificação da abertura. */
+            if (reservaTxt == NULL) {
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            FILE *acomodacaoTxt;
+            acomodacaoTxt = fopen(ACOMODACAO_TXT, "r");
+
+            /* Verificação da abertura. */
+            if(acomodacaoTxt == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            FILE *catAcomTxt;
+            catAcomTxt = fopen(CATACOM_TXT, "r");
+
+            /* Verificação da abertura. */
+            if(catAcomTxt == NULL){
+                printf("Erro na abertura do arquivo.\n");
+                exit(1);
+            }
+            
+            rewind(reservaTxt);
+            while (fscanf(reservaTxt, "%*s%*s %d\n%*s%*s %d\n%*s%*s %d\n%*s%*s %d\n%*s%*s %d\n%*s%*s %d\n%*s%*s %d\n%*s%*s %d\n%*s%*s %d\n",
+                   &reserva.codigo, reserva.codigoAcomodacao, reserva.codigoHospede, reserva.diaEntrada,
+                   reserva.mesEntrada, reserva.anoEntrada, reserva.diaSaida,
+                   reserva.mesSaida, reserva.anoSaida) == 9) {
+                if (reserva.codigo == codigoReserva) {
+                    qtdeDiarias = calcularDiferencaDatas(reserva.diaEntrada, reserva.mesEntrada, reserva.anoEntrada, reserva.diaSaida, reserva.mesSaida, reserva.anoSaida);
+                    
+                    rewind(acomodacaoTxt);
+                    while (fscanf(acomodacaoTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %d",
+                           &acomodacao.codigo, acomodacao.descricao, &acomodacao.facilidades, &acomodacao.categoria) == 4) {
+                        if (acomodacao.codigo == reserva.codigoAcomodacao) {
+                            rewind(catAcomTxt);
+                            while (fscanf(catAcomTxt, "%*s %d\n%*s %[^\n]\n%*s %d\n%*s %f\n%*s %d\n%*s %d",
+                                   &catAcom.codigo, catAcom.descricao, &catAcom.categoria, &catAcom.valorDiaria, &catAcom.qtdeAdultos, &catAcom.qtdeCriancas) == 6) {
+                                if (catAcom.codigo == acomodacao.categoria) {
+                                    valorDiaria = catAcom.valorDiaria;
+                                    break;
+                                }
+                            }
+                            
+                            break;
+                        }
+                    }
+                    
+                    break;
+                }
+            }
+            
+            /* Fechando os arquivos. */
+            fclose(reservaTxt);
+            fclose(acomodacaoTxt);
+            fclose(catAcomTxt);
+            
+            return qtdeDiarias * valorDiaria;
+        break;
+    }
+}
+
+// Função para verificar se um ano é bissexto
+int anoEBissexto(int ano) {
+    return ((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0));
+}
+
+// Função para calcular o número de dias julianos até uma determinada data
+int calcularDiaJuliano(int dia, int mes, int ano) {
+    int a = (14 - mes) / 12;
+    int y = ano + 4800 - a;
+    int m = mes + 12 * a - 3;
+    return dia + (153 * m + 2) / 5 + 365 * y + y / 4 - y / 100 + y / 400 - 32045;
+}
+
+// Função para calcular a diferença entre duas datas
+int calcularDiferencaDatas(int dia1, int mes1, int ano1, int dia2, int mes2, int ano2) {
+    int diaJuliano1 = calcularDiaJuliano(dia1, mes1, ano1);
+    int diaJuliano2 = calcularDiaJuliano(dia2, mes2, ano2);
+
+    return diaJuliano2 - diaJuliano1;
 }

@@ -7,6 +7,7 @@
 void efetuarCheckIn (int codigoHospede, int codigoReserva, int opcao) {
      Reserva reserva;
      Checkin checkin;
+     int checkInEfeutado = 0;
     
     switch (opcao) {
         case 1:
@@ -35,11 +36,16 @@ void efetuarCheckIn (int codigoHospede, int codigoReserva, int opcao) {
                     
                     fwrite(&checkin, sizeof(Checkin), 1, checkInBin);
                     
-                    printf("Check-in efeutado!");
+                    checkInEfeutado = 1;
                 }
             }
             
-            
+            if (checkInEfeutado == 0) {
+                printf("Erro ao realizar check-in!");
+            }
+            else {
+                printf("Check-in efeutado!");
+            }
             
             fclose(reservaBin);
             fclose(checkInBin);
@@ -72,8 +78,15 @@ void efetuarCheckIn (int codigoHospede, int codigoReserva, int opcao) {
 
                     fprintf(checkInTxt, "Hóspede: %d\nReserva: %d\n", checkin.codigoHospede, checkin.codigoReserva);
                     
-                    printf("Check-in efeutado!");
+                    checkInEfeutado = 1;
                 }
+            }
+            
+            if (checkInEfeutado == 0) {
+                printf("Erro ao realizar check-in!");
+            }
+            else {
+                printf("Check-in efeutado!");
             }
 
             fclose(reservaTxt);
@@ -81,6 +94,8 @@ void efetuarCheckIn (int codigoHospede, int codigoReserva, int opcao) {
         break;
     }
 }
+
+
 
 int checkInExiste (int codigoHospede, int codigoReserva, int opcao) {
     Checkin checkin;
