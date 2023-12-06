@@ -271,6 +271,13 @@ int main(int argc, char** argv) {
     
     printf("\e[1;1H\e[2J");
     
+    /* Baixando recebimentos e retiradas. */
+    printf("=== BAIXANDO RECEBIMENTOS E RETIRADAS ===");
+    baixarRecebimento(formaArmazenamento);
+    baixarRetirada(formaArmazenamento);
+    printf("\e[1;1H\e[2J");
+    
+    
     /* Verificando se existe um hotel nos arquivos. */
     if (formaArmazenamento == 3) {
         printf("Primeiro, adicione um hotel.\n");

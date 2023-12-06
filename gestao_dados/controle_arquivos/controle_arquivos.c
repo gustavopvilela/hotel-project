@@ -9,6 +9,11 @@
 #include "../produto/produto.h"
 #include "../../reserva/reserva.h"
 #include "../../transacoes/checkin/checkin.h"
+#include "../../transacoes/checkout/checkout.h"
+#include "../../transacoes/controle_caixa/caixa/caixa.h"
+#include "../../transacoes/controle_caixa/contas_pagar/contas_pagar.h"
+#include "../../transacoes/controle_caixa/contas_receber/contas_receber.h"
+#include "../../transacoes/venda/vendas.h"
 
 void inicializarArquivos () {
     /* Hotel */
@@ -213,4 +218,129 @@ void inicializarArquivos () {
     }
     
     fclose(checkInTxt);
+    
+    /* Conta do hóspede. */
+    FILE* arqContaBin;
+    arqContaBin = fopen(CONTA_HOSPEDE_BIN, "ab");
+    if (arqContaBin == NULL) {
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+    
+    fclose(arqContaBin);
+    
+    FILE* arqContaTxt;
+    arqContaTxt = fopen(CONTA_HOSPEDE_TXT, "a");
+
+    if (arqContaTxt == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    
+    fclose(arqContaTxt);
+    
+    /* Caixa. */
+    FILE* caixaBin;
+    caixaBin = fopen(CAIXA_BIN, "ab");
+    if (caixaBin == NULL) {
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+
+    fclose(caixaBin);
+    
+    FILE* caixaTxt;
+    caixaTxt = fopen(CAIXA_TXT, "a");
+    if (caixaTxt == NULL) {
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+
+    fclose(caixaTxt);
+    
+    /* Lançamentos. */
+    FILE* lancamentosBin;
+    lancamentosBin = fopen(LANCAMENTOS_BIN, "ab");
+    if (lancamentosBin == NULL) {
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+    fclose(lancamentosBin);
+    
+    FILE *lancamentosTxt;
+    lancamentosTxt = fopen(LANCAMENTOS_TXT, "a");
+
+    if (lancamentosTxt == NULL) {
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+    fclose(lancamentosTxt);
+    
+    /* Retiradas. */
+    FILE* retiradasBin;
+    retiradasBin = fopen(RETIRADAS_BIN, "ab");
+    if (retiradasBin == NULL) {
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+    fclose(retiradasBin);
+    
+    FILE* retiradasTxt;
+    retiradasTxt = fopen(RETIRADAS_TXT, "a");
+    if (retiradasTxt == NULL) {
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+    fclose(retiradasTxt);
+    
+    /* Contas a pagar. */
+    FILE* contasPagarBin;
+    contasPagarBin = fopen(CONTAS_PAGAR_BIN, "ab");
+    if (contasPagarBin == NULL) {
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+    fclose(contasPagarBin);
+    
+    FILE* contasPagarTxt = fopen(CONTAS_PAGAR_TXT, "a");
+    if (contasPagarTxt == NULL) {
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+    fclose(contasPagarTxt);
+    
+    /* Contas a receber. */
+    FILE* contasReceberBin;
+    contasReceberBin = fopen(CONTAS_RECEBER_BIN, "ab");
+    if (contasReceberBin == NULL) {
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+    fclose(contasReceberBin);
+    
+    FILE *contasReceberTxt;
+    contasReceberTxt = fopen(CONTAS_RECEBER_TXT, "a");
+    if (contasReceberTxt == NULL) {
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+    fclose(contasReceberTxt);
+    
+    /* Vendas. */
+    FILE* vendasBin;
+    vendasBin = fopen(VENDAS_BIN, "ab");
+    if (vendasBin == NULL) {
+        printf("Falha na abertura do arquivo.");
+        exit(1);
+    }
+    fclose(vendasBin);
+    
+    FILE* vendasTxt;
+    vendasTxt = fopen(VENDAS_TXT, "a");
+
+    if (vendasTxt == NULL) {
+        printf("Falha na abertura do arquivo.");
+        exit(1);
+    }
+    fclose(vendasTxt);
 }

@@ -10,7 +10,12 @@ build/Debug/Cygwin-Windows/gestao_dados/controle_arquivos/controle_arquivos.o: \
  gestao_dados/controle_arquivos/../../reserva/reserva.h \
  gestao_dados/controle_arquivos/../../reserva/../gestao_dados/acomodacao/acomodacao.h \
  gestao_dados/controle_arquivos/../../reserva/../gestao_dados/categoria_acomodacao/categoria_acomodacao.h \
- gestao_dados/controle_arquivos/../../transacoes/checkin/checkin.h
+ gestao_dados/controle_arquivos/../../transacoes/checkin/checkin.h \
+ gestao_dados/controle_arquivos/../../transacoes/checkout/checkout.h \
+ gestao_dados/controle_arquivos/../../transacoes/controle_caixa/caixa/caixa.h \
+ gestao_dados/controle_arquivos/../../transacoes/controle_caixa/contas_pagar/contas_pagar.h \
+ gestao_dados/controle_arquivos/../../transacoes/controle_caixa/contas_receber/contas_receber.h \
+ gestao_dados/controle_arquivos/../../transacoes/venda/vendas.h
 gestao_dados/controle_arquivos/../acomodacao/acomodacao.h:
 gestao_dados/controle_arquivos/../categoria_acomodacao/categoria_acomodacao.h:
 gestao_dados/controle_arquivos/../fornecedor/fornecedor.h:
@@ -22,3 +27,8 @@ gestao_dados/controle_arquivos/../../reserva/reserva.h:
 gestao_dados/controle_arquivos/../../reserva/../gestao_dados/acomodacao/acomodacao.h:
 gestao_dados/controle_arquivos/../../reserva/../gestao_dados/categoria_acomodacao/categoria_acomodacao.h:
 gestao_dados/controle_arquivos/../../transacoes/checkin/checkin.h:
+gestao_dados/controle_arquivos/../../transacoes/checkout/checkout.h:
+gestao_dados/controle_arquivos/../../transacoes/controle_caixa/caixa/caixa.h:
+gestao_dados/controle_arquivos/../../transacoes/controle_caixa/contas_pagar/contas_pagar.h:
+gestao_dados/controle_arquivos/../../transacoes/controle_caixa/contas_receber/contas_receber.h:
+gestao_dados/controle_arquivos/../../transacoes/venda/vendas.h:
